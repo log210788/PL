@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paolo's Fill-in-the-Blanks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Nunito',sans-serif;background:#0d1b35;color:#f8f1dc;min-height:100vh;padding:22px 14px}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(880px,100%);margin:0 auto}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:22px;flex-wrap:wrap}
+    .back{border:1.5px solid #2a4060;color:#c9a227;border-radius:999px;padding:10px 15px;font-weight:900;background:#142746}
+    .hero{background:linear-gradient(145deg,#142746,#1a2e50);border:1px solid rgba(201,162,39,.28);border-radius:28px;padding:30px;margin-bottom:18px;box-shadow:0 22px 60px rgba(0,0,0,.25)}
+    .eyebrow{color:#7ab5d5;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+    h1{font-family:'Fredoka One',cursive;color:#c9a227;font-size:clamp(34px,7vw,58px);line-height:1;margin-bottom:12px}
+    .hero p{color:#b9c9d8;line-height:1.6;font-size:17px}
+    .bank{background:#142746;border:1px solid rgba(122,155,181,.18);border-radius:24px;padding:22px;margin-bottom:18px}
+    .bank h3{color:#c9a227;font-size:15px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+    .chips{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{background:rgba(201,162,39,.14);border:1px solid rgba(201,162,39,.32);color:#c9a227;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700}
+    .quiz{display:grid;gap:16px}
+    .question{background:#142746;border:1px solid rgba(122,155,181,.18);border-radius:24px;padding:22px}
+    .question p{color:#f8f1dc;font-size:17px;line-height:1.6;margin-bottom:14px}
+    select,input[type=text]{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(122,155,181,.22);border-radius:12px;padding:12px;color:#f8f1dc;font-family:'Nunito',sans-serif;font-size:15px}
+    select:focus,input:focus{outline:none;border-color:#c9a227}
+    .hint{display:block;color:#7a9bb5;font-size:13px;margin-top:8px;font-style:italic}
+    .answer{display:none;color:#c9a227;font-weight:900;margin-top:12px;line-height:1.5}
+    .answer.show{display:block}
+    .correct{border-color:#3ddc84;background:rgba(61,220,132,.10)}
+    .wrong{border-color:#ff6b6b;background:rgba(255,107,107,.10)}
+    .controls{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}
+    button{border:none;border-radius:16px;padding:14px 20px;font-family:'Nunito',sans-serif;font-weight:900;cursor:pointer;transition:transform .2s}
+    button:hover{transform:translateY(-2px)}
+    .submit{background:#c9a227;color:#0d1b35}
+    .reset{background:#1a2e50;color:#c9a227;border:1.5px solid #2a4060}
+    .result{display:none;background:#fff4d0;color:#0d1b35;border-radius:22px;padding:22px;margin-bottom:18px;font-weight:900;line-height:1.6}
+    .result.show{display:block}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top">
+      <a class="back" href="./index.html">← Back to Paolo's Hub</a>
+      <a class="back" href="./paul_idiom_flashcards_italian.html">Review Flashcards</a>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">Homework · Recall</div>
+      <h1>Fill in the Blanks</h1>
+      <p>Choose the idiom that best completes each sentence. Use the word bank below if you need a hint.</p>
+    </section>
+
+    <section class="bank">
+      <h3>Word Bank</h3>
+      <div class="chips">
+        <span class="chip">hit the ground running</span>
+        <span class="chip">keep at it</span>
+        <span class="chip">go the extra mile</span>
+        <span class="chip">bite off more than you can chew</span>
+        <span class="chip">easier said than done</span>
+        <span class="chip">on the same page</span>
+        <span class="chip">beat around the bush</span>
+        <span class="chip">get straight to the point</span>
+      </div>
+    </section>
+
+    <section id="result" class="result"></section>
+    <form id="quiz" class="quiz"></form>
+
+    <div class="controls">
+      <button class="submit" type="button" onclick="checkAnswers()">Check my answers</button>
+      <button class="reset" type="button" onclick="resetQuiz()">Try again</button>
+      <button class="reset" type="button" onclick="downloadPDF()" id="pdf-btn" style="display:none;">Download PDF</button>
+    </div>
+  </main>
+
+  <script>
+    const questions = [
+      {sentence:"I told the new manager: don't ___, just tell us what you really think.", answer:"beat around the bush", hint:"to avoid the main topic"},
+      {sentence:"Learning English is ___ — it sounds simple but it takes years of practice.", answer:"easier said than done", hint:"sounds simple, harder in practice"},
+      {sentence:"Paolo started his new job and ___ from day one — already running meetings in English.", answer:"hit the ground running", hint:"start quickly with energy"},
+      {sentence:"Don't ___ — taking five new courses at once is too much for one semester.", answer:"bite off more than you can chew", hint:"to take on too much"},
+      {sentence:"Before the meeting, let's quickly check we're all ___ about the deadlines.", answer:"on the same page", hint:"same understanding"},
+      {sentence:"She always ___ — she stays late to help her team and never complains.", answer:"goes the extra mile", hint:"more effort than required (use 'goes')"},
+      {sentence:"I'll ___: your speaking has improved a lot since January.", answer:"get straight to the point", hint:"say it directly"},
+      {sentence:"English grammar is hard, but ___ — a little every day adds up.", answer:"keep at it", hint:"continue trying"}
+    ];
+
+    function renderQuiz() {
+      const quiz = document.getElementById('quiz');
+      quiz.innerHTML = '';
+      questions.forEach((q, i) => {
+        const card = document.createElement('article');
+        card.className = 'question';
+        card.id = 'q-' + i;
+        const parts = q.sentence.split('___');
+        card.innerHTML = `
+          <p>${i + 1}. ${parts[0]}<strong style="color:#c9a227">______</strong>${parts[1]}</p>
+          <input type="text" id="input-${i}" placeholder="Type the idiom here..." autocomplete="off">
+          <span class="hint">Hint: ${q.hint}</span>
+          <div class="answer" id="answer-${i}">Correct answer: <em>${q.answer}</em></div>
+        `;
+        quiz.appendChild(card);
+      });
+    }
+
+    function normalize(s) {
+      return (s || '').toLowerCase().replace(/[^a-z\s]/g,'').replace(/\s+/g,' ').trim();
+    }
+
+    function checkAnswers() {
+      let score = 0;
+      const userAnswers = [];
+      questions.forEach((q, i) => {
+        const card = document.getElementById('q-' + i);
+        const input = document.getElementById('input-' + i);
+        const ans = document.getElementById('answer-' + i);
+        card.classList.remove('correct','wrong');
+        ans.classList.add('show');
+        const userVal = normalize(input.value);
+        const correctVal = normalize(q.answer);
+        const isCorrect = userVal === correctVal || (userVal && correctVal.includes(userVal) && userVal.length >= correctVal.length - 4);
+        if (isCorrect) { score++; card.classList.add('correct'); }
+        else { card.classList.add('wrong'); }
+        userAnswers.push({sentence:q.sentence, typed:input.value || '(no answer)', correct:isCorrect, correctAnswer:q.answer});
+      });
+      const percent = Math.round((score / questions.length) * 100);
+      const result = document.getElementById('result');
+      result.textContent = `Your score: ${score} / ${questions.length} (${percent}%). ${score === questions.length ? 'Perfect, Paolo!' : 'Review the flashcards and try again.'}`;
+      result.classList.add('show');
+      document.getElementById('pdf-btn').style.display = 'inline-block';
+      window.scrollTo({top:0,behavior:'smooth'});
+      window.userAnswers = userAnswers;
+      window.score = score;
+      window.percent = percent;
+    }
+
+    function resetQuiz() {
+      document.getElementById('quiz').reset();
+      document.getElementById('result').classList.remove('show');
+      document.getElementById('pdf-btn').style.display = 'none';
+      questions.forEach((_, i) => {
+        document.getElementById('q-' + i).classList.remove('correct','wrong');
+        document.getElementById('answer-' + i).classList.remove('show');
+      });
+    }
+
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({unit:'pt', format:'a4'});
+      const margin = 50;
+      const maxWidth = 595 - margin * 2;
+      let y = margin;
+
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(18);
+      doc.text("Paolo's Fill-in-the-Blanks Results", margin, y); y += 24;
+
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(11);
+      doc.text(`Date: ${new Date().toLocaleDateString()}`, margin, y); y += 16;
+      doc.setFont('helvetica','bold');
+      doc.text(`Score: ${window.score} / ${questions.length} (${window.percent}%)`, margin, y); y += 24;
+
+      window.userAnswers.forEach((a, i) => {
+        if (y > 740) { doc.addPage(); y = margin; }
+        doc.setFont('helvetica','bold');
+        doc.setFontSize(12);
+        const head = `${i + 1}. ${a.correct ? '[CORRECT]' : '[WRONG]'}`;
+        doc.text(head, margin, y); y += 16;
+        doc.setFont('helvetica','normal');
+        doc.setFontSize(11);
+        const sentence = doc.splitTextToSize(`Sentence: ${a.sentence}`, maxWidth);
+        doc.text(sentence, margin, y); y += sentence.length * 14;
+        const typed = doc.splitTextToSize(`You typed: ${a.typed}`, maxWidth);
+        doc.text(typed, margin, y); y += typed.length * 14;
+        const correct = doc.splitTextToSize(`Correct answer: ${a.correctAnswer}`, maxWidth);
+        doc.text(correct, margin, y); y += correct.length * 14 + 10;
+      });
+
+      doc.save(`paolo-fill-blanks-${new Date().toISOString().slice(0,10)}.pdf`);
+    }
+
+    renderQuiz();
+  </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paolo's English Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Nunito',sans-serif;background:#0d1b35;color:#f8f1dc;min-height:100vh}
+    a{color:inherit;text-decoration:none}
+    .page{width:min(1120px,100%);margin:0 auto;padding:28px 18px 44px}
+    .hero{display:grid;grid-template-columns:1.25fr .75fr;gap:22px;align-items:stretch;margin-bottom:22px}
+    .panel{background:linear-gradient(145deg,#142746,#1a2e50);border:1px solid rgba(201,162,39,.28);border-radius:28px;box-shadow:0 24px 70px rgba(0,0,0,.28)}
+    .hero-main{padding:44px}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;color:#7ab5d5;background:rgba(122,181,213,.12);border:1px solid rgba(122,181,213,.22);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:22px}
+    h1{font-family:'Fredoka One',cursive;color:#c9a227;font-size:clamp(38px,7vw,78px);line-height:.95;margin-bottom:18px}
+    .hero-text{color:#c9d7e6;font-size:clamp(17px,2vw,21px);line-height:1.6;max-width:680px;margin-bottom:30px}
+    .actions{display:flex;flex-wrap:wrap;gap:14px}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:16px;padding:14px 20px;font-weight:900;transition:transform .2s,background .2s,border-color .2s}
+    .button:hover{transform:translateY(-2px)}
+    .button-primary{background:#c9a227;color:#0d1b35}
+    .button-secondary{border:1.5px solid #2a4060;color:#c9a227;background:rgba(255,255,255,.03)}
+    .hero-side{padding:28px;display:flex;flex-direction:column;justify-content:space-between;gap:20px}
+    .stat{background:rgba(13,27,53,.52);border:1px solid rgba(122,155,181,.16);border-radius:22px;padding:22px}
+    .stat strong{display:block;color:#c9a227;font-family:'Fredoka One',cursive;font-size:34px;margin-bottom:6px}
+    .stat span{color:#a9bed2}
+    .section-title{font-family:'Fredoka One',cursive;color:#f8f1dc;font-size:28px;margin:30px 0 16px}
+    .resource-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{position:relative;overflow:hidden;min-height:230px;padding:26px;border-radius:24px;background:#142746;border:1px solid rgba(122,155,181,.18);display:flex;flex-direction:column;justify-content:space-between;transition:transform .2s,border-color .2s,background .2s}
+    .card:hover{transform:translateY(-4px);border-color:#c9a227;background:#1a2e50}
+    .card.active{background:linear-gradient(145deg,#c9a227,#f0d46d);color:#0d1b35}
+    .card .tag{align-self:flex-start;border-radius:999px;padding:6px 11px;background:rgba(122,181,213,.14);color:#7ab5d5;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+    .card.active .tag{background:rgba(13,27,53,.16);color:#0d1b35}
+    .card h2{font-size:25px;line-height:1.1;margin:28px 0 10px}
+    .card p{color:#a9bed2;line-height:1.55}
+    .card.active p{color:#2f2610}
+    .arrow{font-size:28px;font-weight:900}
+    .lesson-box{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .mini{padding:24px;border-radius:24px;background:rgba(255,255,255,.04);border:1px solid rgba(122,155,181,.16)}
+    .mini h3{color:#c9a227;margin-bottom:10px;font-size:20px}
+    .mini p,.mini li{color:#b9c9d8;line-height:1.6}
+    .mini ul{padding-left:20px}
+    footer{text-align:center;color:#7a9bb5;margin-top:36px;font-size:14px}
+    @media (max-width:850px){
+      .hero,.lesson-box{grid-template-columns:1fr}
+      .resource-grid{grid-template-columns:1fr}
+      .hero-main{padding:32px 24px}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="panel hero-main">
+        <div class="eyebrow">Preply English Notes</div>
+        <h1>Paolo's English Hub</h1>
+        <p class="hero-text">Welcome Paolo! This is your personal study hub for our Preply lessons. <b style="color:#c9a227">Your homework is due this Wednesday</b> &mdash; complete the activities, download the PDFs, and send them to me on Preply.</p>
+        <div class="actions">
+          <a class="button button-primary" href="#homework">See This Week's Homework</a>
+          <a class="button button-secondary" href="./paul_idiom_flashcards_italian.html">Open Flashcards</a>
+        </div>
+      </div>
+      <aside class="panel hero-side">
+        <div class="stat" style="border-color:rgba(201,162,39,.45);background:rgba(201,162,39,.10)">
+          <strong>Wed</strong>
+          <span><b style="color:#f8f1dc">Homework due this Wednesday.</b> Finish the 3 activities below and upload the PDFs to Preply.</span>
+        </div>
+        <div class="stat">
+          <strong>8</strong>
+          <span>idioms to learn with English meanings + Italian translations</span>
+        </div>
+      </aside>
+    </section>
+
+    <h2 class="section-title" id="homework">Homework for this Wednesday</h2>
+    <section class="lesson-box" style="grid-template-columns:1fr;">
+      <div class="mini" style="border-color:rgba(201,162,39,.4);background:rgba(201,162,39,.08)">
+        <h3>What to do</h3>
+        <ol style="padding-left:20px;color:#b9c9d8;line-height:1.7">
+          <li>Review the <a href="./paul_idiom_flashcards_italian.html" style="color:#c9a227;font-weight:900">Idiom Flashcards</a> until you know all 8.</li>
+          <li>Take the <a href="./idiom_test.html" style="color:#c9a227;font-weight:900">Idiom Test</a> &rarr; click <b>Download PDF</b> at the end.</li>
+          <li>Do the <a href="./idiom_fill_blanks.html" style="color:#c9a227;font-weight:900">Fill in the Blanks</a> &rarr; click <b>Download PDF</b> at the end.</li>
+          <li>Finish the <a href="./speaking_prompts.html" style="color:#c9a227;font-weight:900">Speaking Prompts</a> &rarr; click <b>Download PDF for Preply</b>.</li>
+          <li>Send all 3 PDFs to me on Preply <b>before our Wednesday lesson</b>.</li>
+        </ol>
+      </div>
+      <div class="mini">
+        <h3>How to upload your PDF to Preply</h3>
+        <ol style="padding-left:20px;color:#b9c9d8;line-height:1.7">
+          <li>Open <b>preply.com</b> and log in.</li>
+          <li>Go to <b>Messages</b> and open the chat with your teacher.</li>
+          <li>Click the <b>paperclip / attachment icon</b> in the message box.</li>
+          <li>Choose the PDF from your Downloads folder (e.g. <code style="background:rgba(122,181,213,.14);padding:2px 6px;border-radius:6px;color:#7ab5d5">paolo-idiom-quiz-2026-05-20.pdf</code>).</li>
+          <li>Add a short message like &ldquo;Homework for Wednesday&rdquo; and press <b>Send</b>.</li>
+        </ol>
+        <p style="margin-top:10px;color:#7a9bb5;font-size:13px;font-style:italic">Tip: on a phone, the paperclip might say &ldquo;Attach file&rdquo; &mdash; choose <b>File / Document</b> and find the PDF in your Downloads.</p>
+      </div>
+    </section>
+
+    <h2 class="section-title" id="resources">Study Resources</h2>
+    <section class="resource-grid">
+      <a class="card active" href="./paul_idiom_flashcards_italian.html">
+        <div>
+          <span class="tag">Flashcards</span>
+          <h2>Idiom Flashcards</h2>
+          <p>Practise English idioms, flip the cards, and reveal Italian support when needed.</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card" href="./idiom_test.html">
+        <div>
+          <span class="tag">Test</span>
+          <h2>Idiom Test</h2>
+          <p>Check your understanding of the lesson idioms with a short multiple-choice quiz.</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card" href="./idiom_fill_blanks.html">
+        <div>
+          <span class="tag">Homework</span>
+          <h2>Fill in the Blanks</h2>
+          <p>Type the correct idiom into each sentence. Active recall practice with hints.</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card" href="./speaking_prompts.html">
+        <div>
+          <span class="tag">Speaking</span>
+          <h2>Speaking Prompts</h2>
+          <p>Answer 8 short questions using the idioms. Bring your answers to the next lesson.</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </section>
+
+    <h2 class="section-title">Tips</h2>
+    <section class="lesson-box">
+      <div class="mini">
+        <h3>Quick review</h3>
+        <ul>
+          <li>Say each idiom out loud before flipping the card.</li>
+          <li>Make your own example sentence for each one.</li>
+          <li>Use the Italian button only when you really need a hint.</li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h3>If you get stuck</h3>
+        <p>Go back to the <a href="./paul_idiom_flashcards_italian.html" style="color:#c9a227;font-weight:900">flashcards</a>, then try the activity again. It's normal to need 2&ndash;3 tries before everything sticks!</p>
+      </div>
+    </section>
+  </main>
+  <footer>Made for Paolo's English practice</footer>
+</body>
+</html>

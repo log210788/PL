@@ -1,0 +1,132 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body,.wrap{font-family:'Nunito',sans-serif}
+  .wrap{background:#0d1b35;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 16px}
+  .title{font-family:'Fredoka One',cursive;color:#c9a227;font-size:26px;margin-bottom:6px;text-align:center}
+  .subtitle{color:#7a9bb5;font-size:14px;margin-bottom:28px;text-align:center}
+  .card-area{perspective:900px;width:340px;height:240px;cursor:pointer;margin-bottom:20px}
+  .card-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.55s cubic-bezier(.4,0,.2,1)}
+  .card-inner.flipped{transform:rotateY(180deg)}
+  .card-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px}
+  .card-front{background:#1a2e50;border:2.5px solid #c9a227}
+  .card-back{background:#c9a227;transform:rotateY(180deg)}
+  .card-front .idiom{font-family:'Fredoka One',cursive;color:#c9a227;font-size:22px;text-align:center;line-height:1.3}
+  .card-front .tap-hint{color:#4a6a8a;font-size:12px;margin-top:14px}
+  .card-back .meaning{font-family:'Fredoka One',cursive;color:#0d1b35;font-size:15px;text-align:center;line-height:1.4;margin-bottom:8px}
+  .card-back .example{color:#3a2a00;font-size:12px;text-align:center;font-style:italic;line-height:1.5;margin-bottom:12px}
+  .it-btn{background:#0d1b35;border:none;color:#c9a227;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;cursor:pointer;transition:all 0.2s}
+  .it-btn:hover{background:#1a2e50}
+  .it-reveal{color:#0d1b35;font-size:13px;text-align:center;font-weight:700;margin-top:8px;display:none;background:#fff4d0;border-radius:8px;padding:6px 10px;width:100%}
+  .it-reveal.show{display:block}
+  .it-flag{font-size:13px;margin-right:4px}
+  .nav-row{display:flex;gap:14px;align-items:center;margin-bottom:20px}
+  .nav-btn{background:#1a2e50;border:1.5px solid #2a4060;color:#c9a227;font-family:'Nunito',sans-serif;font-size:20px;width:44px;height:44px;border-radius:50%;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center}
+  .nav-btn:hover{background:#c9a227;color:#0d1b35;border-color:#c9a227}
+  .counter{color:#7a9bb5;font-size:14px;min-width:60px;text-align:center}
+  .dots{display:flex;gap:7px;margin-bottom:22px}
+  .dot{width:9px;height:9px;border-radius:50%;background:#2a4060;transition:background 0.2s}
+  .dot.active{background:#c9a227}
+  .category-badge{background:#2a4060;color:#7ab5d5;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:0.8px;margin-bottom:20px;text-transform:uppercase}
+  .shuffle-btn{background:transparent;border:1.5px solid #2a4060;color:#7a9bb5;font-family:'Nunito',sans-serif;font-size:13px;padding:8px 18px;border-radius:8px;cursor:pointer;transition:all 0.2s}
+  .shuffle-btn:hover{border-color:#c9a227;color:#c9a227}
+</style>
+
+<div class="wrap">
+  <h2 style="position:absolute;width:1px;height:1px;overflow:hidden">Idiom flashcards with Italian translations for Paul</h2>
+  <div class="title">Idiom Flashcards</div>
+  <div class="subtitle">Tap the card to flip &bull; reveal Italian if needed</div>
+
+  <div class="category-badge" id="cat-badge">Motivation</div>
+
+  <div class="card-area" onclick="flipCard()" id="card-area">
+    <div class="card-inner" id="card-inner">
+      <div class="card-face card-front">
+        <div class="idiom" id="idiom-text">Hit the ground running</div>
+        <div class="tap-hint">tap to flip</div>
+      </div>
+      <div class="card-face card-back">
+        <div class="meaning" id="meaning-text">To start something quickly with energy and enthusiasm</div>
+        <div class="example" id="example-text">"Paul hit the ground running — 8 months of non-stop studying!"</div>
+        <button class="it-btn" id="it-btn" onclick="toggleIt(event)">🇮🇹 Italiano</button>
+        <div class="it-reveal" id="it-reveal"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dots" id="dots"></div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="move(-1)" aria-label="Previous">&#8592;</button>
+    <div class="counter" id="counter">1 / 8</div>
+    <button class="nav-btn" onclick="move(1)" aria-label="Next">&#8594;</button>
+  </div>
+
+  <button class="shuffle-btn" onclick="shuffle()">Shuffle cards</button>
+</div>
+
+<script>
+const allCards = [
+  {cat:"Motivation", idiom:"Hit the ground running", meaning:"To start something quickly with energy and enthusiasm", example:'"Paul hit the ground running — 8 months of non-stop studying!"', it:"Partire a pieno ritmo / iniziare con grande energia"},
+  {cat:"Motivation", idiom:"Keep at it", meaning:"To continue trying or working hard at something", example:'"English is tough, but keep at it — progress takes time."', it:"Continua così / non mollare"},
+  {cat:"Motivation", idiom:"Go the extra mile", meaning:"To make more effort than expected or required", example:'"He goes the extra mile — podcasts, Instagram, apps every day."', it:"Fare il passo in più / impegnarsi oltre il necessario"},
+  {cat:"Difficulty", idiom:"Bite off more than you can chew", meaning:"To try to do something too difficult for you", example:'"Don\'t bite off more than you can chew — one idiom a day is enough!"', it:"Fare il passo più lungo della gamba"},
+  {cat:"Difficulty", idiom:"Easier said than done", meaning:"Something sounds simple but is much harder in practice", example:'"Speaking fluently? Easier said than done, but you\'re getting there!"', it:"Più facile a dirsi che a farsi"},
+  {cat:"Communication", idiom:"On the same page", meaning:"To have the same understanding about something", example:'"Let\'s make sure we\'re on the same page about lesson times."', it:"Essere sulla stessa lunghezza d\'onda"},
+  {cat:"Communication", idiom:"Beat around the bush", meaning:"To avoid the main topic; to be indirect", example:'"Don\'t beat around the bush — just ask the question!"', it:"Menare il can per l\'aia / girare intorno al problema"},
+  {cat:"Communication", idiom:"Get straight to the point", meaning:"To say clearly and directly what you mean", example:'"I\'ll get straight to the point: your English is really improving."', it:"Andare dritti al punto / non perdersi in chiacchiere"},
+];
+
+let cards = [...allCards];
+let current = 0;
+let flipped = false;
+let itShown = false;
+
+function render() {
+  const c = cards[current];
+  flipped = false;
+  itShown = false;
+  document.getElementById('card-inner').classList.remove('flipped');
+  document.getElementById('idiom-text').textContent = c.idiom;
+  document.getElementById('meaning-text').textContent = c.meaning;
+  document.getElementById('example-text').textContent = c.example;
+  document.getElementById('it-reveal').textContent = c.it;
+  document.getElementById('it-reveal').classList.remove('show');
+  document.getElementById('it-btn').textContent = '🇮🇹 Italiano';
+  document.getElementById('cat-badge').textContent = c.cat;
+  document.getElementById('counter').textContent = (current+1) + ' / ' + cards.length;
+  const dots = document.getElementById('dots');
+  dots.innerHTML = '';
+  cards.forEach((_,i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===current?' active':'');
+    dots.appendChild(d);
+  });
+}
+
+function flipCard() {
+  flipped = !flipped;
+  document.getElementById('card-inner').classList.toggle('flipped', flipped);
+}
+
+function toggleIt(e) {
+  e.stopPropagation();
+  itShown = !itShown;
+  document.getElementById('it-reveal').classList.toggle('show', itShown);
+  document.getElementById('it-btn').textContent = itShown ? 'Nascondi' : '🇮🇹 Italiano';
+}
+
+function move(dir) {
+  current = (current + dir + cards.length) % cards.length;
+  render();
+}
+
+function shuffle() {
+  cards = cards.sort(() => Math.random() - 0.5);
+  current = 0;
+  render();
+}
+
+render();
+</script>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paolo's Idiom Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Nunito',sans-serif;background:#0d1b35;color:#f8f1dc;min-height:100vh;padding:22px 14px}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(880px,100%);margin:0 auto}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:22px;flex-wrap:wrap}
+    .back{border:1.5px solid #2a4060;color:#c9a227;border-radius:999px;padding:10px 15px;font-weight:900;background:#142746}
+    .hero{background:linear-gradient(145deg,#142746,#1a2e50);border:1px solid rgba(201,162,39,.28);border-radius:28px;padding:30px;box-shadow:0 22px 60px rgba(0,0,0,.25);margin-bottom:18px}
+    .eyebrow{color:#7ab5d5;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+    h1{font-family:'Fredoka One',cursive;color:#c9a227;font-size:clamp(34px,7vw,58px);line-height:1;margin-bottom:12px}
+    .hero p{color:#b9c9d8;line-height:1.6;font-size:17px}
+    .quiz{display:grid;gap:16px}
+    .question{background:#142746;border:1px solid rgba(122,155,181,.18);border-radius:24px;padding:22px}
+    .question h2{font-size:19px;color:#f8f1dc;margin-bottom:14px;line-height:1.35}
+    .options{display:grid;gap:10px}
+    label{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.04);border:1px solid rgba(122,155,181,.14);border-radius:14px;padding:12px;color:#c9d7e6;cursor:pointer;line-height:1.45}
+    label:hover{border-color:#c9a227}
+    input{margin-top:4px;accent-color:#c9a227}
+    .controls{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}
+    button{border:none;border-radius:16px;padding:14px 20px;font-family:'Nunito',sans-serif;font-weight:900;cursor:pointer;transition:transform .2s,background .2s}
+    button:hover{transform:translateY(-2px)}
+    .submit{background:#c9a227;color:#0d1b35}
+    .reset{background:#1a2e50;color:#c9a227;border:1.5px solid #2a4060}
+    .result{display:none;background:#fff4d0;color:#0d1b35;border-radius:22px;padding:22px;margin-bottom:18px;font-weight:900;line-height:1.6}
+    .result.show{display:block}
+    .correct{border-color:#3ddc84;background:rgba(61,220,132,.12)}
+    .wrong{border-color:#ff6b6b;background:rgba(255,107,107,.12)}
+    .answer{display:none;color:#c9a227;font-weight:900;margin-top:12px;line-height:1.5}
+    .answer.show{display:block}
+    @media (max-width:650px){.hero,.question{padding:20px}.top{align-items:flex-start}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top">
+      <a class="back" href="./index.html">← Back to Paolo's Hub</a>
+      <a class="back" href="./paul_idiom_flashcards_italian.html">Review Flashcards</a>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">Lesson Test</div>
+      <h1>Idiom Check</h1>
+      <p>Choose the best meaning for each idiom. When you finish, check your score and review the correct answers.</p>
+    </section>
+
+    <section id="result" class="result"></section>
+    <form id="quiz" class="quiz"></form>
+
+    <div class="controls">
+      <button class="submit" type="button" onclick="checkAnswers()">Check my answers</button>
+      <button class="reset" type="button" onclick="resetQuiz()">Try again</button>
+      <button class="reset" type="button" onclick="downloadPDF()" id="pdf-btn" style="display:none;">Download PDF</button>
+    </div>
+  </main>
+
+  <script>
+    const questions = [
+      {idiom:'Hit the ground running', answer:'To start something quickly with energy and enthusiasm', options:['To start something quickly with energy and enthusiasm','To stop because something is too difficult','To avoid talking about the real topic']},
+      {idiom:'Keep at it', answer:'To continue trying or working hard at something', options:['To continue trying or working hard at something','To understand someone perfectly','To speak very directly']},
+      {idiom:'Go the extra mile', answer:'To make more effort than expected or required', options:['To make more effort than expected or required','To travel far away','To do less work than necessary']},
+      {idiom:'Bite off more than you can chew', answer:'To try to do something too difficult for you', options:['To try to do something too difficult for you','To speak clearly and directly','To begin with lots of energy']},
+      {idiom:'Easier said than done', answer:'Something sounds simple but is much harder in practice', options:['Something sounds simple but is much harder in practice','Something is simple to finish','Something should be explained in Italian']},
+      {idiom:'On the same page', answer:'To have the same understanding about something', options:['To have the same understanding about something','To read the same book','To avoid the main topic']},
+      {idiom:'Beat around the bush', answer:'To avoid the main topic; to be indirect', options:['To avoid the main topic; to be indirect','To work harder than expected','To agree completely']},
+      {idiom:'Get straight to the point', answer:'To say clearly and directly what you mean', options:['To say clearly and directly what you mean','To keep practising every day','To start a project quickly']}
+    ];
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function renderQuiz() {
+      const quiz = document.getElementById('quiz');
+      quiz.innerHTML = '';
+      questions.forEach((q, index) => {
+        const shuffledOptions = shuffleArray([...q.options]);
+        const card = document.createElement('article');
+        card.className = 'question';
+        card.id = 'question-' + index;
+        card.innerHTML = `
+          <h2>${index + 1}. What does “${q.idiom}” mean?</h2>
+          <div class="options">
+            ${shuffledOptions.map(option => `
+              <label>
+                <input type="radio" name="q${index}" value="${option}">
+                <span>${option}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div class="answer" id="answer-${index}">Correct answer: ${q.answer}</div>
+        `;
+        quiz.appendChild(card);
+      });
+    }
+
+    function checkAnswers() {
+      let score = 0;
+      const userAnswers = [];
+      questions.forEach((q, index) => {
+        const card = document.getElementById('question-' + index);
+        const answer = document.getElementById('answer-' + index);
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        card.classList.remove('correct','wrong');
+        answer.classList.add('show');
+        const isCorrect = selected && selected.value === q.answer;
+        if (isCorrect) {
+          score++;
+          card.classList.add('correct');
+        } else {
+          card.classList.add('wrong');
+        }
+        userAnswers.push({
+          idiom: q.idiom,
+          correct: isCorrect,
+          selected: selected ? selected.value : '(no answer)',
+          correctAnswer: q.answer
+        });
+      });
+      const result = document.getElementById('result');
+      const percent = Math.round((score / questions.length) * 100);
+      result.textContent = `Your score: ${score} / ${questions.length} (${percent}%). ${score === questions.length ? 'Excellent work, Paolo!' : 'Review the flashcards and try again.'}`;
+      result.classList.add('show');
+      document.getElementById('pdf-btn').style.display = 'inline-block';
+      window.scrollTo({top:0,behavior:'smooth'});
+      window.userAnswers = userAnswers;
+      window.score = score;
+      window.percent = percent;
+    }
+
+    function resetQuiz() {
+      document.getElementById('quiz').reset();
+      document.getElementById('result').classList.remove('show');
+      document.getElementById('pdf-btn').style.display = 'none';
+      questions.forEach((_, index) => {
+        document.getElementById('question-' + index).classList.remove('correct','wrong');
+        document.getElementById('answer-' + index).classList.remove('show');
+      });
+    }
+
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({unit:'pt', format:'a4'});
+      const margin = 50;
+      const maxWidth = 595 - margin * 2;
+      let y = margin;
+
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(18);
+      doc.text("Paolo's Idiom Quiz Results", margin, y); y += 24;
+
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(11);
+      doc.text(`Date: ${new Date().toLocaleDateString()}`, margin, y); y += 16;
+      doc.setFont('helvetica','bold');
+      doc.text(`Score: ${window.score} / ${questions.length} (${window.percent}%)`, margin, y); y += 24;
+
+      window.userAnswers.forEach((a, i) => {
+        if (y > 760) { doc.addPage(); y = margin; }
+        doc.setFont('helvetica','bold');
+        doc.setFontSize(12);
+        const head = `${i + 1}. ${a.idiom}  ${a.correct ? '[CORRECT]' : '[WRONG]'}`;
+        doc.text(doc.splitTextToSize(head, maxWidth), margin, y);
+        y += 16;
+        doc.setFont('helvetica','normal');
+        doc.setFontSize(11);
+        doc.text(doc.splitTextToSize(`Your answer: ${a.selected}`, maxWidth), margin, y);
+        y += doc.splitTextToSize(`Your answer: ${a.selected}`, maxWidth).length * 14;
+        doc.text(doc.splitTextToSize(`Correct answer: ${a.correctAnswer}`, maxWidth), margin, y);
+        y += doc.splitTextToSize(`Correct answer: ${a.correctAnswer}`, maxWidth).length * 14 + 10;
+      });
+
+      doc.save(`paolo-idiom-quiz-${new Date().toISOString().slice(0,10)}.pdf`);
+    }
+
+    renderQuiz();
+  </script>
+</body>
+</html>
