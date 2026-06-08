@@ -3,164 +3,1615 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paolo's English Hub</title>
+  <title>Paolo's Conversation & Idioms Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Nunito',sans-serif;background:#0d1b35;color:#f8f1dc;min-height:100vh}
-    a{color:inherit;text-decoration:none}
-    .page{width:min(1120px,100%);margin:0 auto;padding:28px 18px 44px}
-    .hero{display:grid;grid-template-columns:1.25fr .75fr;gap:22px;align-items:stretch;margin-bottom:22px}
-    .panel{background:linear-gradient(145deg,#142746,#1a2e50);border:1px solid rgba(201,162,39,.28);border-radius:28px;box-shadow:0 24px 70px rgba(0,0,0,.28)}
-    .hero-main{padding:44px}
-    .eyebrow{display:inline-flex;align-items:center;gap:8px;color:#7ab5d5;background:rgba(122,181,213,.12);border:1px solid rgba(122,181,213,.22);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:22px}
-    h1{font-family:'Fredoka One',cursive;color:#c9a227;font-size:clamp(38px,7vw,78px);line-height:.95;margin-bottom:18px}
-    .hero-text{color:#c9d7e6;font-size:clamp(17px,2vw,21px);line-height:1.6;max-width:680px;margin-bottom:30px}
-    .actions{display:flex;flex-wrap:wrap;gap:14px}
-    .button{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:16px;padding:14px 20px;font-weight:900;transition:transform .2s,background .2s,border-color .2s}
-    .button:hover{transform:translateY(-2px)}
-    .button-primary{background:#c9a227;color:#0d1b35}
-    .button-secondary{border:1.5px solid #2a4060;color:#c9a227;background:rgba(255,255,255,.03)}
-    .hero-side{padding:28px;display:flex;flex-direction:column;justify-content:space-between;gap:20px}
-    .stat{background:rgba(13,27,53,.52);border:1px solid rgba(122,155,181,.16);border-radius:22px;padding:22px}
-    .stat strong{display:block;color:#c9a227;font-family:'Fredoka One',cursive;font-size:34px;margin-bottom:6px}
-    .stat span{color:#a9bed2}
-    .section-title{font-family:'Fredoka One',cursive;color:#f8f1dc;font-size:28px;margin:30px 0 16px}
-    .resource-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .card{position:relative;overflow:hidden;min-height:230px;padding:26px;border-radius:24px;background:#142746;border:1px solid rgba(122,155,181,.18);display:flex;flex-direction:column;justify-content:space-between;transition:transform .2s,border-color .2s,background .2s}
-    .card:hover{transform:translateY(-4px);border-color:#c9a227;background:#1a2e50}
-    .card.active{background:linear-gradient(145deg,#c9a227,#f0d46d);color:#0d1b35}
-    .card .tag{align-self:flex-start;border-radius:999px;padding:6px 11px;background:rgba(122,181,213,.14);color:#7ab5d5;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
-    .card.active .tag{background:rgba(13,27,53,.16);color:#0d1b35}
-    .card h2{font-size:25px;line-height:1.1;margin:28px 0 10px}
-    .card p{color:#a9bed2;line-height:1.55}
-    .card.active p{color:#2f2610}
-    .arrow{font-size:28px;font-weight:900}
-    .lesson-box{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .mini{padding:24px;border-radius:24px;background:rgba(255,255,255,.04);border:1px solid rgba(122,155,181,.16)}
-    .mini h3{color:#c9a227;margin-bottom:10px;font-size:20px}
-    .mini p,.mini li{color:#b9c9d8;line-height:1.6}
-    .mini ul{padding-left:20px}
-    footer{text-align:center;color:#7a9bb5;margin-top:36px;font-size:14px}
-    @media (max-width:850px){
-      .hero,.lesson-box{grid-template-columns:1fr}
-      .resource-grid{grid-template-columns:1fr}
-      .hero-main{padding:32px 24px}
+    :root {
+      --bg: #0d1b35;
+      --panel: #142746;
+      --panel-light: #1a2e50;
+      --primary: #c9a227;
+      --primary-hover: #e5b934;
+      --accent: #7ab5d5;
+      --text: #f8f1dc;
+      --text-muted: #a9bed2;
+      --correct: #2ecc71;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    header {
+      background: linear-gradient(180deg, rgba(20, 39, 70, 0.8) 0%, rgba(13, 27, 53, 0) 100%);
+      padding: 24px 18px 12px;
+      border-bottom: 1px solid rgba(201, 162, 39, 0.15);
+    }
+    .header-wrap {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-badge {
+      font-family: 'Fredoka One', cursive;
+      font-size: 24px;
+      color: var(--bg);
+      background: var(--primary);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(201, 162, 39, 0.35);
+    }
+    .logo-text h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 22px;
+      color: var(--primary);
+      line-height: 1.1;
+    }
+    .logo-text p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      background: rgba(13, 27, 53, 0.6);
+      padding: 6px;
+      border-radius: 16px;
+      border: 1px solid rgba(122, 155, 181, 0.15);
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 14px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .tab-btn.active {
+      color: var(--bg);
+      background: var(--primary);
+      box-shadow: 0 4px 12px rgba(201, 162, 39, 0.2);
+    }
+
+    .main-content {
+      flex: 1;
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      padding: 24px 18px 44px;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.35s ease-out;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* COMMON PANEL STYLES */
+    .panel {
+      background: linear-gradient(145deg, var(--panel), var(--panel-light));
+      border: 1px solid rgba(201, 162, 39, 0.22);
+      border-radius: 28px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      padding: 30px;
+      margin-bottom: 24px;
+    }
+    .panel-title {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      font-size: 24px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ROADMAP TAB */
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      background: rgba(122, 181, 213, 0.12);
+      border: 1px solid rgba(122, 181, 213, 0.22);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    .hero-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(34px, 5vw, 64px);
+      color: var(--primary);
+      line-height: 1.0;
+      margin-bottom: 14px;
+    }
+    .hero-text {
+      color: var(--text-muted);
+      font-size: 17px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 14px;
+      padding: 12px 20px;
+      font-weight: 900;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      transition: all 0.2s;
+      border: none;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--bg);
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1.5px solid #2a4060;
+      color: var(--primary);
+    }
+    .btn-secondary:hover {
+      background: rgba(201, 162, 39, 0.08);
+      border-color: var(--primary);
+    }
+
+    .stat-card {
+      background: rgba(13, 27, 53, 0.52);
+      border: 1px solid rgba(122, 155, 181, 0.16);
+      border-radius: 22px;
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+    .stat-card strong {
+      display: block;
+      color: var(--primary);
+      font-family: 'Fredoka One', cursive;
+      font-size: 30px;
+      margin-bottom: 4px;
+    }
+    .stat-card span {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    /* TIMELINE */
+    .timeline {
+      position: relative;
+      margin: 30px 0;
+      padding: 10px 0;
+    }
+    .timeline-track {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-50%);
+      z-index: 1;
+      border-radius: 3px;
+    }
+    .timeline-progress {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      height: 6px;
+      background: var(--primary);
+      transform: translateY(-50%);
+      z-index: 2;
+      border-radius: 3px;
+      width: 11%; /* Lesson 1 completed, Lesson 2 active */
+      transition: width 0.5s ease;
+    }
+    .timeline-steps {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      z-index: 3;
+    }
+    .timeline-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+    .step-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--text-muted);
+      transition: all 0.3s;
+    }
+    .timeline-step.completed .step-dot {
+      background: var(--correct);
+      border-color: var(--correct);
+      color: var(--bg);
+    }
+    .timeline-step.active .step-dot {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--bg);
+      box-shadow: 0 0 12px var(--primary);
+    }
+    .step-label {
+      margin-top: 8px;
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .timeline-step.active .step-label {
+      color: var(--primary);
+    }
+
+    .homework-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .hw-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(122, 155, 181, 0.15);
+      border-radius: 20px;
+      padding: 22px;
+    }
+    .hw-card h3 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .hw-card ol {
+      padding-left: 20px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* PRACTICE LAB */
+    .lab-layout {
+      display: grid;
+      grid-template-columns: 0.7fr 1.3fr;
+      gap: 24px;
+    }
+    .lab-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .lab-menu-item {
+      display: flex;
+      flex-direction: column;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(122,155,181,0.1);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+    }
+    .lab-menu-item:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(201, 162, 39, 0.2);
+    }
+    .lab-menu-item.active {
+      background: rgba(201, 162, 39, 0.08);
+      border-color: var(--primary);
+    }
+    .lab-menu-item span.badge {
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .lab-menu-item.active span.badge {
+      color: var(--primary);
+    }
+    .lab-menu-item h4 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .lab-details {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .detail-section {
+      background: rgba(13, 27, 53, 0.4);
+      border: 1px solid rgba(122,155,181,0.12);
+      border-radius: 20px;
+      padding: 20px;
+    }
+    .detail-section-title {
+      font-family: 'Fredoka One', cursive;
+      color: var(--accent);
+      font-size: 15px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      border-bottom: 1px dashed rgba(255,255,255,0.08);
+      padding-bottom: 6px;
+    }
+    .idioms-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .idiom-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(122,155,181,0.1);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .idiom-card h5 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 15px;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .idiom-card .it {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .idiom-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .mechanics-tip {
+      background: rgba(122, 181, 213, 0.05);
+      border-left: 4px solid var(--accent);
+      padding: 14px;
+      border-radius: 0 14px 14px 0;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .mechanics-tip strong {
+      color: var(--accent);
+    }
+
+    .drills-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .drill-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(122,155,181,0.08);
+      border-radius: 12px;
+      padding: 12px 18px;
+    }
+    .drill-word-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .drill-word-info strong {
+      font-family: 'Fredoka One', cursive;
+      font-size: 18px;
+      color: var(--primary);
+    }
+    .drill-word-info code {
+      background: rgba(122, 181, 213, 0.12);
+      color: var(--accent);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+    .drill-cue {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* VOCAL TRACT DIAGRAM */
+    .vocal-tract-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: center;
+    }
+    .vocal-tract-svg {
+      width: 100%;
+      max-height: 380px;
+      background: rgba(10, 15, 30, 0.4);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 10px;
+    }
+    .articulator {
+      fill: none;
+      stroke: #334155;
+      stroke-width: 5;
+      stroke-linecap: round;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .articulator-fill {
+      fill: rgba(51, 65, 85, 0.1);
+      stroke: #334155;
+      stroke-width: 2;
+      stroke-linecap: round;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    svg .active[data-part="lips"] { stroke: #f43f5e; filter: drop-shadow(0 0 6px #f43f5e); }
+    svg .active[data-part="teeth"] { stroke: #f8fafc; filter: drop-shadow(0 0 6px #ffffff); }
+    svg .active[data-part="alveolar"] { stroke: #6366f1; filter: drop-shadow(0 0 6px #6366f1); }
+    svg .active[data-part="palate"] { stroke: #a855f7; filter: drop-shadow(0 0 6px #a855f7); }
+    svg .active[data-part="velum"] { stroke: #ec4899; filter: drop-shadow(0 0 6px #ec4899); }
+    svg .active[data-part="tongue-tip"] { stroke: #f97316; filter: drop-shadow(0 0 6px #f97316); }
+    svg .active[data-part="tongue-body"] { stroke: #ef4444; fill: rgba(239, 68, 68, 0.25); filter: drop-shadow(0 0 6px #ef4444); }
+    svg .active[data-part="throat"] { stroke: #10b981; filter: drop-shadow(0 0 6px #10b981); }
+
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-left: 4px solid transparent;
+      font-size: 0.88rem;
+    }
+    .legend-item:hover { background: rgba(255,255,255,0.05); }
+    .legend-item.active { background: rgba(255,255,255,0.06); }
+    .legend-item.lips { border-color: #f43f5e; }
+    .legend-item.teeth { border-color: #f8fafc; }
+    .legend-item.alveolar { border-color: #6366f1; }
+    .legend-item.palate { border-color: #a855f7; }
+    .legend-item.velum { border-color: #ec4899; }
+    .legend-item.tongue-tip { border-color: #f97316; }
+    .legend-item.tongue-body { border-color: #ef4444; }
+    .legend-item.throat { border-color: #10b981; }
+
+    .legend-info-box {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,0.05);
+      min-height: 90px;
+    }
+
+    /* VOICE RECORDER */
+    .recorder-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+    }
+    .recorder-widget {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      height: 140px;
+      background: #070a13;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    #waveform-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .recorder-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .rec-time {
+      font-family: monospace;
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+    .record-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1.5px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+    }
+    .record-btn.recording {
+      background: #ef4444;
+      color: white;
+      animation: pulse 1.5s infinite;
+    }
+    .record-btn.recording .pulse-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: white;
+    }
+    .pulse-dot { display: none; }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    .comparison-engine {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .comp-textarea {
+      width: 100%;
+      height: 90px;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(122,155,181,0.2);
+      border-radius: 12px;
+      padding: 12px;
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      font-size: 15px;
+      resize: none;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .comp-textarea:focus {
+      border-color: var(--primary);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 28px 0;
+      font-size: 14px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-layout, .lab-layout, .vocal-tract-layout, .recorder-layout, .homework-panel {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <main class="page">
-    <section class="hero">
-      <div class="panel hero-main">
-        <div class="eyebrow">Preply English Notes</div>
-        <h1>Paolo's English Hub</h1>
-        <p class="hero-text">Welcome Paolo! This is your personal study hub for our Preply lessons. <b style="color:#c9a227">Your homework is due this Wednesday</b> &mdash; complete the activities, download the PDFs, and send them to me on Preply.</p>
-        <div class="actions">
-          <a class="button button-primary" href="#homework">See This Week's Homework</a>
-          <a class="button button-secondary" href="./paul_idiom_flashcards_italian.html">Open Flashcards</a>
-        </div>
-      </div>
-      <aside class="panel hero-side">
-        <div class="stat" style="border-color:rgba(201,162,39,.45);background:rgba(201,162,39,.10)">
-          <strong>Wed</strong>
-          <span><b style="color:#f8f1dc">Homework due this Wednesday.</b> Finish the 3 activities below and upload the PDFs to Preply.</span>
-        </div>
-        <div class="stat">
-          <strong>8</strong>
-          <span>idioms to learn with English meanings + Italian translations</span>
-        </div>
-      </aside>
-    </section>
 
-    <h2 class="section-title" id="homework">Homework for this Wednesday</h2>
-    <section class="lesson-box" style="grid-template-columns:1fr;">
-      <div class="mini" style="border-color:rgba(201,162,39,.4);background:rgba(201,162,39,.08)">
-        <h3>What to do</h3>
-        <ol style="padding-left:20px;color:#b9c9d8;line-height:1.7">
-          <li>Review the <a href="./paul_idiom_flashcards_italian.html" style="color:#c9a227;font-weight:900">Idiom Flashcards</a> until you know all 8.</li>
-          <li>Take the <a href="./idiom_test.html" style="color:#c9a227;font-weight:900">Idiom Test</a> &rarr; click <b>Download PDF</b> at the end.</li>
-          <li>Do the <a href="./idiom_fill_blanks.html" style="color:#c9a227;font-weight:900">Fill in the Blanks</a> &rarr; click <b>Download PDF</b> at the end.</li>
-          <li>Finish the <a href="./speaking_prompts.html" style="color:#c9a227;font-weight:900">Speaking Prompts</a> &rarr; click <b>Download PDF for Preply</b>.</li>
-          <li>Complete the <a href="./cinema.html" style="color:#c9a227;font-weight:900">Going to the Cinema</a> exercise &rarr; click <b>Download PDF</b> at the end.</li>
-          <li>Send all 4 PDFs to me on Preply <b>before our Wednesday lesson</b>.</li>
-        </ol>
+  <header>
+    <div class="header-wrap">
+      <div class="logo-container">
+        <div class="logo-badge">P</div>
+        <div class="logo-text">
+          <h1>Paolo's Conversation Lab</h1>
+          <p>Everyday English Fluency & Social Idioms</p>
+        </div>
       </div>
-      <div class="mini">
-        <h3>How to upload your PDF to Preply</h3>
-        <ol style="padding-left:20px;color:#b9c9d8;line-height:1.7">
-          <li>Open <b>preply.com</b> and log in.</li>
-          <li>Go to <b>Messages</b> and open the chat with your teacher.</li>
-          <li>Click the <b>paperclip / attachment icon</b> in the message box.</li>
-          <li>Choose the PDF from your Downloads folder (e.g. <code style="background:rgba(122,181,213,.14);padding:2px 6px;border-radius:6px;color:#7ab5d5">paolo-idiom-quiz-2026-05-20.pdf</code>).</li>
-          <li>Add a short message like &ldquo;Homework for Wednesday&rdquo; and press <b>Send</b>.</li>
-        </ol>
-        <p style="margin-top:10px;color:#7a9bb5;font-size:13px;font-style:italic">Tip: on a phone, the paperclip might say &ldquo;Attach file&rdquo; &mdash; choose <b>File / Document</b> and find the PDF in your Downloads.</p>
-      </div>
-    </section>
+      <nav class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('roadmap')">🗺️ Roadmap</button>
+        <button class="tab-btn" onclick="switchTab('lab')">🔬 Practice Lab</button>
+        <button class="tab-btn" onclick="switchTab('vocal')">👄 Vocal Tract</button>
+        <button class="tab-btn" onclick="switchTab('recorder')">🎙️ Recorder</button>
+      </nav>
+    </div>
+  </header>
 
-    <h2 class="section-title" id="resources">Study Resources</h2>
-    <section class="resource-grid">
-      <a class="card active" href="./paul_idiom_flashcards_italian.html">
-        <div>
-          <span class="tag">Flashcards</span>
-          <h2>Idiom Flashcards</h2>
-          <p>Practise English idioms, flip the cards, and reveal Italian support when needed.</p>
-        </div>
-        <span class="arrow">→</span>
-      </a>
-      <a class="card" href="./idiom_test.html">
-        <div>
-          <span class="tag">Test</span>
-          <h2>Idiom Test</h2>
-          <p>Check your understanding of the lesson idioms with a short multiple-choice quiz.</p>
-        </div>
-        <span class="arrow">→</span>
-      </a>
-      <a class="card" href="./idiom_fill_blanks.html">
-        <div>
-          <span class="tag">Homework</span>
-          <h2>Fill in the Blanks</h2>
-          <p>Type the correct idiom into each sentence. Active recall practice with hints.</p>
-        </div>
-        <span class="arrow">→</span>
-      </a>
-      <a class="card" href="./speaking_prompts.html">
-        <div>
-          <span class="tag">Speaking</span>
-          <h2>Speaking Prompts</h2>
-          <p>Answer 8 short questions using the idioms. Bring your answers to the next lesson.</p>
-        </div>
-        <span class="arrow">→</span>
-      </a>
-      <a class="card" href="./cinema.html">
-        <div>
-          <span class="tag">Vocabulary</span>
-          <h2>Cinema Homework</h2>
-          <p>Read the movie theater dialogue, practice vocabulary, and complete the exercises.</p>
-        </div>
-        <span class="arrow">→</span>
-      </a>
-    </section>
+  <main class="main-content">
 
-    <h2 class="section-title">Tips</h2>
-    <section class="lesson-box">
-      <div class="mini">
-        <h3>Quick review</h3>
-        <ul>
-          <li>Say each idiom out loud before flipping the card.</li>
-          <li>Make your own example sentence for each one.</li>
-          <li>Use the Italian button only when you really need a hint.</li>
-        </ul>
+    <!-- 1. ROADMAP TAB -->
+    <div id="tab-roadmap" class="tab-content active">
+      <section class="hero-layout">
+        <div class="panel" style="margin-bottom:0;">
+          <div class="eyebrow">Preply Conversation Course</div>
+          <h2 class="hero-title">Welcome to your Study Hub, Paolo!</h2>
+          <p class="hero-text">Here is your interactive training deck. Use these tools to master social English conversation, practice everyday idioms, and perfect your speech mechanics to overcome native Italian speaker transfer habits. <b style="color:var(--primary)">Your homework is due this Wednesday!</b></p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#homework">See Homework Tasks</a>
+            <a class="btn btn-secondary" href="./directions.html">Directions Lesson 🗺️</a>
+            <a class="btn btn-secondary" href="./habits.html">Play Connect 4 Game 🎮</a>
+            <a class="btn btn-secondary" href="./paul_idiom_flashcards_italian.html">Open Flashcards</a>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; justify-content:space-between;">
+          <div class="stat-card" style="border-color:rgba(201,162,39,.45); background:rgba(201,162,39,.08)">
+            <strong>Wednesday</strong>
+            <span>Homework deadline. Complete the tasks below, export PDFs, and upload to the Preply chat.</span>
+          </div>
+          <div class="stat-card">
+            <strong>Lesson 2</strong>
+            <span>Active Lesson Topic: Casual Gatherings & Weekend Plans. Focusing on plural final /s/ vs /z/.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- TIMELINE ROADMAP -->
+      <section class="panel">
+        <h3 class="panel-title">🗺️ Your 9-Lesson Social Roadmap</h3>
+        <div class="timeline">
+          <div class="timeline-track"></div>
+          <div class="timeline-progress" id="timeline-progress"></div>
+          <div class="timeline-steps">
+            <div class="timeline-step completed" onclick="jumpToLabLesson(0)">
+              <div class="step-dot">1</div>
+              <span class="step-label">Habits</span>
+            </div>
+            <div class="timeline-step active" onclick="jumpToLabLesson(1)">
+              <div class="step-dot">2</div>
+              <span class="step-label">Plans</span>
+            </div>
+            <div class="timeline-step" onclick="jumpToLabLesson(2)">
+              <div class="step-dot">3</div>
+              <span class="step-label">Trips</span>
+            </div>
+            <div class="timeline-step" onclick="jumpToLabLesson(3)">
+              <div class="step-dot">4</div>
+              <span class="step-label">Schedules</span>
+            </div>
+            <div class="timeline-step" onclick="jumpToLabLesson(4)">
+              <div class="step-dot">5</div>
+              <span class="step-label">Hosting</span>
+            </div>
+            <div class="timeline-step" onclick="jumpToLabLesson(5)">
+              <div class="step-dot">6</div>
+              <span class="step-label">Stories</span>
+            </div>
+            <div class="timeline-step" onclick="jumpToLabLesson(6)">
+              <div class="step-dot">7</div>
+              <span class="step-label">Small Talk</span>
+            </div>
+            <div class="timeline-step" onclick="jumpToLabLesson(7)">
+              <div class="step-dot">8</div>
+              <span class="step-label">Socializing</span>
+            </div>
+            <div class="timeline-step" onclick="jumpToLabLesson(8)">
+              <div class="step-dot">9</div>
+              <span class="step-label">Capstone</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GRADES PANEL -->
+      <section class="panel" id="grades">
+        <h3 class="panel-title">📈 Your Grades & Progress</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <div class="stat-card" style="border-color: rgba(46, 204, 113, 0.4); background: rgba(46, 204, 113, 0.05); border-width: 1px; border-style: solid;">
+            <strong style="color: #2ecc71;">8 / 8</strong>
+            <span style="font-weight: 700; color: var(--text); display: block; margin-bottom: 4px;">Idiom Quiz</span>
+            <span style="font-size: 13px; color: var(--text-muted);">Completed May 20, 2026 • Score: 100%</span>
+          </div>
+          <div class="stat-card" style="border-color: rgba(46, 204, 113, 0.4); background: rgba(46, 204, 113, 0.05); border-width: 1px; border-style: solid;">
+            <strong style="color: #2ecc71;">8 / 8</strong>
+            <span style="font-weight: 700; color: var(--text); display: block; margin-bottom: 4px;">Fill-in-the-Blanks</span>
+            <span style="font-size: 13px; color: var(--text-muted);">Completed May 20, 2026 • Score: 100%</span>
+          </div>
+          <div class="stat-card" style="border-color: rgba(201, 162, 39, 0.4); background: rgba(201, 162, 39, 0.05); border-width: 1px; border-style: solid;">
+            <strong style="color: #c9a227;">8 / 8</strong>
+            <span style="font-weight: 700; color: var(--text); display: block; margin-bottom: 4px;">Speaking Homework</span>
+            <span style="font-size: 13px; color: var(--text-muted);">Grade: A- (95%) • Evaluated May 22, 2026</span>
+          </div>
+        </div>
+        
+        <div style="padding: 20px; border-radius: 18px; background: rgba(13, 27, 53, 0.5); border: 1px solid rgba(122, 155, 181, 0.16);">
+          <h4 style="color: var(--primary); font-size: 17px; margin-bottom: 12px; display:flex; align-items:center; gap:8px;">📝 Tutor Feedback on Speaking Homework</h4>
+          <p style="color: var(--text-muted); line-height: 1.6; font-size: 14px; margin-bottom: 12px;">
+            Hi Paolo! Excellent work using all 8 idioms correctly in your speaking prompts. Your sentences make perfect sense and demonstrate high-level context application. Here are a few minor spelling and grammatical corrections to help improve your written accuracy:
+          </p>
+          <ul style="padding-left: 20px; color: var(--text-muted); line-height: 1.6; font-size: 13px; display: grid; gap: 8px;">
+            <li>✏️ <strong>Spelling:</strong> <em>"studyng"</em> → <strong>"studying"</strong>, <em>"entusiams"</em> → <strong>"enthusiasm"</strong>, <em>"diffcul"</em> → <strong>"difficult"</strong>, <em>"Enghish"</em> → <strong>"English"</strong>.</li>
+            <li>✏️ <strong>Grammar (Subject-Verb):</strong> <em>"Parents goes"</em> → <strong>"Parents go"</strong> (plural subject).</li>
+            <li>✏️ <strong>Grammar (Apostrophe):</strong> <em>"dont'"</em> → <strong>"don't"</strong> (place the apostrophe between n and t).</li>
+            <li>✏️ <strong>Grammar (Infinitive):</strong> <em>"Stop beat around..."</em> → <strong>"Stop beating around..."</strong> (use gerund after "stop").</li>
+            <li>✏️ <strong>Preposition:</strong> <em>"on the same page how to raise"</em> → <strong>"on the same page about how to raise"</strong>.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- HOMEWORK INSTRUCTIONS -->
+      <section class="panel" id="homework">
+        <h3 class="panel-title">✍️ Tasks for this Wednesday</h3>
+        <div class="homework-panel">
+          <div class="hw-card">
+            <h3>Activities Checklist</h3>
+            <ol>
+              <li>Review the <a href="./paul_idiom_flashcards_italian.html" style="color:var(--primary); font-weight:bold;">Idiom Flashcards</a> until you know all 8.</li>
+              <li>Take the <a href="./idiom_test.html" style="color:var(--primary); font-weight:bold;">Idiom Test</a> &rarr; click <b>Download PDF</b>.</li>
+              <li>Do the <a href="./idiom_fill_blanks.html" style="color:var(--primary); font-weight:bold;">Fill in the Blanks</a> &rarr; click <b>Download PDF</b>.</li>
+              <li>Finish the <a href="./speaking_prompts.html" style="color:var(--primary); font-weight:bold;">Speaking Prompts</a> &rarr; click <b>Download PDF</b>.</li>
+              <li>Complete the <a href="./cinema.html" style="color:var(--primary); font-weight:bold;">Going to the Cinema</a> exercise &rarr; click <b>Download PDF</b>.</li>
+              <li>Complete the <a href="./directions.html" style="color:var(--primary); font-weight:bold;">Asking & Giving Directions</a> lesson &rarr; click <b>Download PDF</b>.</li>
+              <li>Play <a href="./habits.html" style="color:var(--primary); font-weight:bold;">Connect 4</a> with a partner or practice by yourself.</li>
+            </ol>
+          </div>
+          <div class="hw-card">
+            <h3>How to upload to Preply</h3>
+            <ol>
+              <li>Log into your account at <b>preply.com</b>.</li>
+              <li>Open your chat with your tutor.</li>
+              <li>Click the <b>paperclip / attachment icon</b>.</li>
+              <li>Choose the downloaded PDF files from your Downloads folder.</li>
+              <li>Send them over with a quick message before class!</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 2. PRACTICE LAB TAB -->
+    <div id="tab-lab" class="tab-content">
+      <div class="panel" style="margin-bottom:16px;">
+        <h2 class="panel-title">🔬 Interactive Practice Lab</h2>
+        <p style="color:var(--text-muted); font-size:14px;">Select any of the 9 lessons from the curriculum below to load the speaking goals, everyday idioms, speech mechanics tip, and custom pronunciation drills.</p>
       </div>
-      <div class="mini">
-        <h3>If you get stuck</h3>
-        <p>Go back to the <a href="./paul_idiom_flashcards_italian.html" style="color:#c9a227;font-weight:900">flashcards</a>, then try the activity again. It's normal to need 2&ndash;3 tries before everything sticks!</p>
+      <div class="lab-layout">
+        <aside class="lab-menu" id="lab-menu"></aside>
+        <section class="lab-details">
+          <div class="detail-section">
+            <h4 class="detail-section-title" id="lab-lesson-title">Lesson Name</h4>
+            <p id="lab-lesson-focus" style="font-size:15px; line-height:1.6; color:var(--text); margin-bottom:14px;"></p>
+            <div class="mechanics-tip" id="lab-mechanics-tip"></div>
+          </div>
+
+          <div class="detail-section">
+            <h4 class="detail-section-title">💡 Target Idioms & Sayings</h4>
+            <div class="idioms-grid" id="lab-idioms-grid"></div>
+          </div>
+
+          <div class="detail-section">
+            <h4 class="detail-section-title">🗣️ Phonetic Drills (Click to speak in Recorder)</h4>
+            <div class="drills-list" id="lab-drills-list"></div>
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
+
+    <!-- 3. VOCAL TRACT DIAGRAM TAB -->
+    <div id="tab-vocal" class="tab-content">
+      <div class="panel">
+        <h2 class="panel-title">👄 Interactive Vocal Tract Placement Guide</h2>
+        <p style="font-size: 15px; color: var(--text-muted); margin-bottom: 24px;">Understanding physical articulation helps overcome language transfer blocks. Click on any section of the vocal tract SVG diagram or legend below to see detailed sound placement tips.</p>
+        
+        <div class="vocal-tract-layout">
+          <!-- Left side SVG -->
+          <svg viewBox="0 0 260 260" class="vocal-tract-svg" id="vocal-tract">
+            <!-- Pharynx wall -->
+            <path id="part-throat" class="articulator" data-part="throat" d="M 180,80 L 180,220" />
+            
+            <!-- Contour Face background -->
+            <path d="M 40,20 C 40,50 30,70 30,80 Q 20,90 20,100 C 35,105 35,110 30,115 C 25,120 20,122 20,128 C 20,134 35,136 30,142 C 25,148 15,150 18,158 C 20,166 35,170 30,185 C 25,200 20,210 20,230" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="2" />
+            
+            <!-- Lips -->
+            <path id="part-lips-upper" class="articulator" data-part="lips" d="M 60,95 C 70,95 78,97 82,105" />
+            <path id="part-lips-lower" class="articulator" data-part="lips" d="M 58,142 C 68,142 76,139 79,130" />
+            
+            <!-- Teeth -->
+            <path id="part-teeth" class="articulator" data-part="teeth" d="M 82,105 L 81,113 M 79,130 L 79,122" stroke-width="3" />
+            
+            <!-- Alveolar Ridge -->
+            <path id="part-alveolar" class="articulator" data-part="alveolar" d="M 82,105 C 92,105 100,101 106,92" />
+            
+            <!-- Hard Palate -->
+            <path id="part-palate" class="articulator" data-part="palate" d="M 106,92 C 115,80 135,80 150,92" />
+            
+            <!-- Soft Palate / Velum -->
+            <path id="part-velum" class="articulator" data-part="velum" d="M 150,92 C 160,102 165,112 162,125" />
+            
+            <!-- Tongue Tip -->
+            <path id="part-tongue-tip" class="articulator" data-part="tongue-tip" d="M 83,122 C 92,122 100,120 106,114" stroke-width="6" />
+            
+            <!-- Tongue Body -->
+            <path id="part-tongue-body" class="articulator-fill" data-part="tongue-body" d="M 106,114 C 120,107 145,112 155,140 C 162,160 162,185 158,195 L 122,195 C 126,180 122,150 106,140 Z" />
+            
+            <!-- Larynx cords area -->
+            <path class="articulator" data-part="throat" d="M 122,195 L 122,220" />
+            <path class="articulator" data-part="throat" d="M 158,195 L 158,220" />
+          </svg>
+          
+          <!-- Right side legend & info -->
+          <div style="display:flex; flex-direction:column; gap:20px;">
+            <div class="legend-grid">
+              <div class="legend-item lips" data-part="lips">Lips</div>
+              <div class="legend-item teeth" data-part="teeth">Teeth</div>
+              <div class="legend-item alveolar" data-part="alveolar">Alveolar Ridge</div>
+              <div class="legend-item palate" data-part="palate">Hard Palate</div>
+              <div class="legend-item velum" data-part="velum">Soft Palate (Velum)</div>
+              <div class="legend-item tongue-tip" data-part="tongue-tip">Tongue Tip</div>
+              <div class="legend-item tongue-body" data-part="tongue-body">Tongue Body</div>
+              <div class="legend-item throat" data-part="throat">Larynx/Vocal Cords</div>
+            </div>
+            
+            <div class="legend-info-box" id="vocal-articulator-info">
+              Hover or click on any articulator name or path in the diagram to reveal mechanical speaking placement tips.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. VOICE RECORDER TAB -->
+    <div id="tab-recorder" class="tab-content">
+      <div class="panel">
+        <h2 class="panel-title">🎙️ Self-Study Speech Recorder & Vocal Analyzer</h2>
+        <p style="font-size: 15px; color: var(--text-muted); margin-bottom: 24px;">Record yourself, listen to playback, and watch your voice envelope on our real-time oscilloscope. Compare your speech with the standard British model.</p>
+        
+        <div class="recorder-layout">
+          <!-- Left Recorder Widget -->
+          <div class="recorder-widget">
+            <div class="canvas-container">
+              <canvas id="waveform-canvas"></canvas>
+            </div>
+            
+            <div class="recorder-controls">
+              <button class="btn record-btn" id="record-btn" onclick="toggleRecord()">
+                <span class="pulse-dot"></span> <span id="record-btn-text">Record Voice</span>
+              </button>
+              <button class="btn btn-secondary" id="playback-btn" onclick="playRecording()" disabled>▶ Playback Voice</button>
+              <button class="btn btn-secondary" id="save-btn" onclick="saveRecording()" disabled>💾 Save to Computer</button>
+              <span class="rec-time" id="timer-display">00:00</span>
+            </div>
+          </div>
+          
+          <!-- Right comparison engine -->
+          <div class="comparison-engine">
+            <h3 style="font-family:'Fredoka One', cursive; color:var(--primary); font-size:17px;">🔊 Reference Pronunciation Model</h3>
+            <p style="font-size: 13px; color: var(--text-muted);">Enter any social phrase or word below, then click "Listen" to hear a vocal track in the standard British English accent.</p>
+            <textarea class="comp-textarea" id="comparison-text-input" placeholder="e.g. He hit the ground running with his new hobby."></textarea>
+            <button class="btn btn-primary" onclick="playReferenceText()">Play Pronunciation Model 🔊</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
-  <footer>Made for Paolo's English practice</footer>
+
+  <footer>Made for Paolo's English practice &bull; Preply Hub</footer>
+
+  <script>
+    // ----------------------------------------------------
+    // CURRICULUM DATA
+    // ----------------------------------------------------
+    const curriculumData = [
+      {
+        id: 1,
+        title: "Everyday Habits & Socializing",
+        focus: "Discussing daily routines, lifestyles, hobbies, and social interactions with ease.",
+        mechanics: "Focus on pronouncing the breathy <strong>/h/</strong> sound in <em>habit</em>, <em>hobby</em>, and <em>hit</em>. Avoid adding a quiet trailing vowel (epenthesis) to final consonants in <em>keep</em>, <em>point</em>, and <em>page</em>.",
+        idioms: [
+          { phrase: "Hit the ground running", it: "Partire a pieno ritmo", m: "To start something quickly with energy and enthusiasm." },
+          { phrase: "Keep at it", it: "Continua così / Non mollare", m: "To continue trying or working hard at something." },
+          { phrase: "Go the extra mile", it: "Fare il passo in più", m: "To make more effort than expected or required." },
+          { phrase: "Bite off more than you can chew", it: "Fare il passo più lungo della gamba", m: "To try to do something too difficult for you." },
+          { phrase: "Easier said than done", it: "Più facile a dirsi che a farsi", m: "Something sounds simple but is much harder in practice." },
+          { phrase: "On the same page", it: "Essere sulla stessa lunghezza d'onda", m: "To have the same understanding about something." },
+          { phrase: "Beat around the bush", it: "Menare il can per l'aia", m: "To avoid the main topic; to be indirect." },
+          { phrase: "Get straight to the point", it: "Andare dritti al punto", m: "To say clearly and directly what you mean." }
+        ],
+        drills: [
+          { word: "habit", ipa: "/ˈhæbɪt/", cue: "Puff air on /h/. Clip the final /t/." },
+          { word: "hobby", ipa: "/ˈhɒbi/", cue: "Check breathing on /h/. Don't drop it!" },
+          { word: "hit", ipa: "/hɪt/", cue: "Short clipped /ɪ/. Clear initial aspiration." },
+          { word: "keep", ipa: "/kiːp/", cue: "Long /iː/ vowel. Keep final /p/ dry, no -uh." },
+          { word: "point", ipa: "/pɔɪnt/", cue: "Dry nasal-consonant ending at the teeth ridge." }
+        ]
+      },
+      {
+        id: 2,
+        title: "Casual Gatherings & Weekend Plans",
+        focus: "Planning casual dinner parties, weekend activities, and catching up with friends at a café.",
+        mechanics: "Contrast the final voiceless <strong>/s/</strong> and voiced <strong>/z/</strong> plural sounds. Practice linking final consonants to vowels seamlessly (e.g. <em>'Call-it-a-day'</em>).",
+        idioms: [
+          { phrase: "Back to the drawing board", it: "Ricominciare da capo", m: "To start a task over because the previous attempt failed." },
+          { phrase: "Cut corners", it: "Prendere scorciatoie", m: "To do something in the easiest, cheapest, or fastest way." },
+          { phrase: "Learn the ropes", it: "Imparare i trucchi del mestiere", m: "To learn the basics of how an activity is done." },
+          { phrase: "In the loop", it: "Tenere al corrente", m: "To be kept informed about a specific matter." },
+          { phrase: "By the book", it: "Secondo le regole", m: "Doing something strictly according to rules." },
+          { phrase: "Touch base", it: "Contattare brevemente", m: "To make brief contact with someone to catch up." },
+          { phrase: "Put on hold", it: "Mettere in pausa", m: "To delay or pause an activity or plan." },
+          { phrase: "Call it a day", it: "Finire per oggi", m: "To stop an activity for the rest of the day." }
+        ],
+        drills: [
+          { word: "corners", ipa: "/ˈkɔːnəz/", cue: "Buzz the final /z/. Do not hiss it." },
+          { word: "ropes", ipa: "/rəʊps/", cue: "Crisp voiceless /s/ at the very end." },
+          { word: "plans", ipa: "/plænz/", cue: "Sustain throat vibration on final /z/." },
+          { word: "base", ipa: "/beɪs/", cue: "Hiss /s/ at front. Make sure it isn't voiced." },
+          { word: "loop", ipa: "/luːp/", cue: "Dry /p/. Avoid trailing schwa vowel." }
+        ]
+      },
+      {
+        id: 3,
+        title: "Planning Trips & Sharing Opinions",
+        focus: "Debating travel destinations, trip budgets, and reviews of restaurants or movies.",
+        mechanics: "Focus on clear alveolar nasal <strong>/n/</strong> endings in words like <em>pain</em> or <em>gain</em> without adding extra trailing vowel clicks.",
+        idioms: [
+          { phrase: "See eye to eye", it: "Essere d'accordo", m: "To agree fully with someone." },
+          { phrase: "Play devil's advocate", it: "Fare l'avvocato del diavolo", m: "To present an opposing view for the sake of argument." },
+          { phrase: "A penny for your thoughts", it: "A cosa stai pensando?", m: "A way of asking what someone is thinking about." },
+          { phrase: "Elephant in the room", it: "Problema evidente ignorato", m: "An obvious problem that people avoid talking about." },
+          { phrase: "Take it with a grain of salt", it: "Prenderlo con le pinze", m: "Not taking information literally or too seriously." },
+          { phrase: "Break the ice", it: "Rompere il ghiaccio", m: "To initiate social interaction or ease tension." },
+          { phrase: "Close, but no cigar", it: "Quasi, ma non del tutto", m: "Very near to success but not quite succeeding." },
+          { phrase: "No pain, no gain", it: "Nessun risultato senza sforzo", m: "You must work hard to make progress." }
+        ],
+        drills: [
+          { word: "pain", ipa: "/peɪn/", cue: "Close the sound on the nasal hum. No pain-uh!" },
+          { word: "gain", ipa: "/ɡeɪn/", cue: "Clear nasal ending. Keep throat buzzing." },
+          { word: "thoughts", ipa: "/θɔːts/", cue: "Put tongue tip past upper teeth for /θ/." },
+          { word: "ice", ipa: "/aɪs/", cue: "Hiss /s/ clearly at front." },
+          { word: "cigar", ipa: "/sɪˈɡɑː/", cue: "Stress on second syllable. Silent 'r'." }
+        ]
+      },
+      {
+        id: 4,
+        title: "Managing Hobbies & Daily Schedules",
+        focus: "Balancing sports, cooking classes, learning instruments, and a busy social life.",
+        mechanics: "Slide smoothly into initial consonant clusters like <strong>/st/</strong> or <strong>/sp/</strong> (e.g. <em>stress</em>, <em>sport</em>) without adding an initial 'e' or 'i' sound.",
+        idioms: [
+          { phrase: "Against the clock", it: "Corsa contro il tempo", m: "Working with a very strict limit of time." },
+          { phrase: "Down to the wire", it: "All'ultimo secondo", m: "Up to the very last possible moment." },
+          { phrase: "In the nick of time", it: "Giusto in tempo", m: "Just at the last possible moment." },
+          { phrase: "Burn the midnight oil", it: "Fare le ore piccole", m: "To study or work late into the night." },
+          { phrase: "Once in a blue moon", it: "Di rado / Una volta ogni morte di papa", m: "Very rarely." },
+          { phrase: "Out of hand", it: "Fuori controllo", m: "Out of control." },
+          { phrase: "On thin ice", it: "Sul ghiaccio sottile (rischio)", m: "To be in a risky situation." },
+          { phrase: "Under the weather", it: "Giù di corda / Indisposto", m: "Slightly sick or unwell." }
+        ],
+        drills: [
+          { word: "stress", ipa: "/stres/", cue: "Slide directly into /s-t/. Avoid 'es-tress'." },
+          { word: "speak", ipa: "/spiːk/", cue: "Start with pure /s/ hiss, then pop the /p/." },
+          { word: "sport", ipa: "/spɔːt/", cue: "No initial vowel. Pure non-rhotic O sound." },
+          { word: "clock", ipa: "/klɒk/", cue: "Rounded short O vowel. Crisp velar click." },
+          { word: "weather", ipa: "/ˈweðə/", cue: "Bite air with tongue for /ð/, lazy schwa end." }
+        ]
+      },
+      {
+        id: 5,
+        title: "Everyday Choices & Hosting Friends",
+        focus: "Choosing restaurants, inviting neighbors over, and planning social game nights.",
+        mechanics: "Practice contrasting long and short English vowels. Make sure <em>sit</em> (/sɪt/) does not sound like <em>seat</em> (/siːt/) and <em>miss</em> (/mɪs/) doesn't sound like <em>mees</em>.",
+        idioms: [
+          { phrase: "The ball is in your court", it: "La palla passa a te", m: "It is your responsibility to make the next step." },
+          { phrase: "Call the shots", it: "Prendere le decisioni", m: "To make the decisions or be in charge." },
+          { phrase: "Sit on the fence", it: "Essere indeciso", m: "To avoid making a decision or choice." },
+          { phrase: "Throw caution to the wind", it: "Rischiare senza prudenza", m: "To take a huge risk or act without worry." },
+          { phrase: "Up in the air", it: "Ancora in sospeso", m: "Unresolved or undecided." },
+          { phrase: "Take a rain check", it: "Rimandare a più tardi", m: "Politely decline an invitation now, suggest later." },
+          { phrase: "Miss the boat", it: "Perdere l'occasione", m: "To miss an opportunity." },
+          { phrase: "Face the music", it: "Affrontare le conseguenze", m: "To accept criticism or consequences." }
+        ],
+        drills: [
+          { word: "sit", ipa: "/sɪt/", cue: "Short /ɪ/ vowel. Tap final /t/ dry." },
+          { word: "seat", ipa: "/siːt/", cue: "Long /iː/ vowel. Smile as you say it." },
+          { word: "miss", ipa: "/mɪs/", cue: "Short /ɪ/. Hiss /s/ at front." },
+          { word: "boat", ipa: "/bəʊt/", cue: "Diphthong /əʊ/ (goat). Dry /t/ stop." },
+          { word: "court", ipa: "/kɔːt/", cue: "Long open /ɔː/ vowel, no 'r' sound." }
+        ]
+      },
+      {
+        id: 6,
+        title: "Swapping Stories & Event Reviews",
+        focus: "Talking about funny life experiences, concert reviews, and sharing stories.",
+        mechanics: "Master the voiceless <strong>/θ/</strong> sound (e.g. <em>think</em>, <em>through</em>) rather than substituting it with <strong>/t/</strong> or <strong>/s/</strong>.",
+        idioms: [
+          { phrase: "Cry over spilled milk", it: "Piangere sul latte versato", m: "To worry about past mistakes that cannot be changed." },
+          { phrase: "Bark up the wrong tree", it: "Rivolgersi a chi non c'entra", m: "To pursue a line of thought or action that is misguided." },
+          { phrase: "Blow off steam", it: "Sfogarsi / Scaricarsi", m: "To do something to get rid of stress or anger." },
+          { phrase: "Cross that bridge when we come to it", it: "Affrontare il problema quando si presenta", m: "To deal with a problem when it happens." },
+          { phrase: "Spill the beans", it: "Svelare il segreto", m: "To reveal secret information." },
+          { phrase: "Piece of cake", it: "Gioco da ragazzi", m: "Something very easy to do." },
+          { phrase: "A blessing in disguise", it: "Fortuna sfacciata", m: "Something that seems bad at first but turns out well." },
+          { phrase: "Best of both worlds", it: "Il meglio di due mondi", m: "Enjoying the advantages of two different situations." }
+        ],
+        drills: [
+          { word: "think", ipa: "/θɪŋk/", cue: "Stick tongue past teeth for /θ/. End with /ŋk/." },
+          { word: "through", ipa: "/θruː/", cue: "Blow soft air on /θ/, transition to /r/." },
+          { word: "thought", ipa: "/θɔːt/", cue: "Make /θ/ breathy, use long /ɔː/, click /t/." },
+          { word: "beans", ipa: "/biːnz/", cue: "Long /iː/ vowel. End with buzzing /z/." },
+          { word: "cake", ipa: "/keɪk/", cue: "Crisp click at back of tongue for /k/." }
+        ]
+      },
+      {
+        id: 7,
+        title: "Small Talk & Neighborhood Connections",
+        focus: "Chatting with neighbors, discussing pet care, talking to locals during travel.",
+        mechanics: "Focus on syllable stress patterns in multi-syllable words and link final consonants in speech.",
+        idioms: [
+          { phrase: "Break a leg", it: "In bocca al lupo", m: "A superstitious way to wish someone good luck." },
+          { phrase: "Costs an arm and a leg", it: "Costa un occhio", m: "Very expensive." },
+          { phrase: "A dime a dozen", it: "Comune / Di poco valore", m: "Very common and not of much value." },
+          { phrase: "Through thick and thin", it: "Nella buona e cattiva sorte", m: "Through all difficulties and good times." },
+          { phrase: "Add insult to injury", it: "Oltre al danno la beffa", m: "To make a bad situation even worse." },
+          { phrase: "Hear it through the grapevine", it: "Venir a sapere per vie traverse", m: "To hear rumors or gossip from informal sources." },
+          { phrase: "Live and learn", it: "Sbagliando si impara", m: "To learn from your errors or experiences." },
+          { phrase: "So far, so good", it: "Fino a qui tutto bene", m: "Things have gone well up to this point." }
+        ],
+        drills: [
+          { word: "grapevine", ipa: "/ˈɡreɪpvaɪn/", cue: "Stress first syllable. Keep 'v' contact clear." },
+          { word: "hospitality", ipa: "/ˌhɒspɪˈtælɪti/", cue: "Primary stress on 'tal'. Breath on 'h'." },
+          { word: "insult", ipa: "/ˈɪnsʌlt/", cue: "Stress the first syllable. Short crisp vowels." },
+          { word: "thick", ipa: "/θɪk/", cue: "Voiceless dental /θ/ start. Dry velar ending." },
+          { word: "thin", ipa: "/θɪn/", cue: "Blow through teeth for /θ/, stop cleanly on /n/." }
+        ]
+      },
+      {
+        id: 8,
+        title: "Telling Engaging Stories & Making Friends",
+        focus: "Making friends in new groups, telling engaging stories, pitching fun game night ideas, giving toasts.",
+        mechanics: "Sustain continuous breath flow and avoid dropping final consonants like /k/, /p/, /t/.",
+        idioms: [
+          { phrase: "Get the ball rolling", it: "Dare inizio alle danze", m: "To start a process or activity." },
+          { phrase: "Draw the line", it: "Porre un limite", m: "To set a limit on what you will allow or do." },
+          { phrase: "Keep your chin up", it: "Tieni duro", m: "To remain cheerful and hopeful." },
+          { phrase: "Think outside the box", it: "Pensare fuori dagli schemi", m: "To think creatively, using unconventional methods." },
+          { phrase: "Pull yourself together", it: "Datti un contegno", m: "To regain control of your emotions." },
+          { phrase: "Burn bridges", it: "Tagliare i ponti", m: "To destroy relationships or pathways back." },
+          { phrase: "Actions speak louder than words", it: "Fatti più delle parole", m: "What you do has a stronger impact." },
+          { phrase: "A penny for your thoughts", it: "Cosa pensi?", m: "Asking for someone's opinion or thoughts." }
+        ],
+        drills: [
+          { word: "think", ipa: "/θɪŋk/", cue: "Don't drop the final /k/ click!" },
+          { word: "keep", ipa: "/kiːp/", cue: "Sustain the vowel, seal lips firmly for /p/." },
+          { word: "box", ipa: "/bɒks/", cue: "Finish with a clear hiss sound." },
+          { word: "bridges", ipa: "/ˈbrɪdʒɪz/", cue: "Buzz the final plural /ɪz/ ending." },
+          { word: "words", ipa: "/wɜːdz/", cue: "Voiced end cluster, no trailing -uh." }
+        ]
+      },
+      {
+        id: 9,
+        title: "Capstone Assessment: Social Fluency",
+        focus: "Fast-paced conversation, storytelling, and playing games utilizing multiple target idioms.",
+        mechanics: "Synthesize all articulatory habits: breathy /h/, dry final stops, vowel contrasts, and natural syllable stress.",
+        idioms: [
+          { phrase: "Actions speak louder than words", it: "I fatti contano più delle parole", m: "Actions have stronger impact." },
+          { phrase: "Hit the ground running", it: "Partire a pieno ritmo", m: "Start quickly and with energy." },
+          { phrase: "On the same page", it: "Sulla stessa lunghezza d'onda", m: "Have same understanding." },
+          { phrase: "Easier said than done", it: "Più facile a dirsi che a farsi", m: "Harder in practice." }
+        ],
+        drills: [
+          { word: "conversation", ipa: "/ˌkɒnvəˈseɪʃn/", cue: "Stress on third syllable 'sa'." },
+          { word: "idioms", ipa: "/ˈɪdiəmz/", cue: "Buzz final /z/." },
+          { word: "friendly", ipa: "/ˈfrendli/", cue: "Check linking between consonants." },
+          { word: "capstone", ipa: "/ˈkæpstəʊn/", cue: "Diphthong /əʊ/ at the end." }
+        ]
+      }
+    ];
+
+    let activeLessonIndex = 1; // Start with Lesson 2 (active)
+
+    // ----------------------------------------------------
+    // TAB NAVIGATION
+    // ----------------------------------------------------
+    function switchTab(tabName) {
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
+
+      const activeBtn = Array.from(document.querySelectorAll(".tab-btn")).find(btn => btn.innerText.toLowerCase().includes(tabName));
+      if (activeBtn) activeBtn.classList.add("active");
+
+      const activeContent = document.getElementById(`tab-${tabName}`);
+      if (activeContent) activeContent.classList.add("active");
+
+      if (tabName === 'recorder') {
+        setTimeout(initCanvas, 50);
+      }
+    }
+
+    function jumpToLabLesson(index) {
+      activeLessonIndex = index;
+      loadLabLesson(index);
+      switchTab('lab');
+    }
+
+    // ----------------------------------------------------
+    // PRACTICE LAB LOGIC
+    // ----------------------------------------------------
+    function initLab() {
+      const menu = document.getElementById("lab-menu");
+      menu.innerHTML = "";
+      curriculumData.forEach((lesson, index) => {
+        const item = document.createElement("button");
+        item.className = `lab-menu-item ${index === activeLessonIndex ? 'active' : ''}`;
+        item.onclick = () => {
+          document.querySelectorAll(".lab-menu-item").forEach(i => i.classList.remove("active"));
+          item.classList.add("active");
+          activeLessonIndex = index;
+          loadLabLesson(index);
+        };
+        item.innerHTML = `
+          <span class="badge">Lesson ${lesson.id}</span>
+          <h4>${lesson.title}</h4>
+        `;
+        menu.appendChild(item);
+      });
+      loadLabLesson(activeLessonIndex);
+    }
+
+    function loadLabLesson(index) {
+      const lesson = curriculumData[index];
+      document.getElementById("lab-lesson-title").innerText = `Lesson ${lesson.id}: ${lesson.title}`;
+      document.getElementById("lab-lesson-focus").innerHTML = `<strong>Conversation Focus:</strong> ${lesson.focus}`;
+      document.getElementById("lab-mechanics-tip").innerHTML = `<strong>👄 Speech Mechanics Target:</strong> ${lesson.mechanics}`;
+
+      // Load Idioms
+      const grid = document.getElementById("lab-idioms-grid");
+      grid.innerHTML = "";
+      lesson.idioms.forEach(idm => {
+        grid.innerHTML += `
+          <div class="idiom-card">
+            <h5>${idm.phrase}</h5>
+            <div class="it">🇮🇹 ${idm.it}</div>
+            <p>${idm.m}</p>
+          </div>
+        `;
+      });
+
+      // Load Drills
+      const drillsList = document.getElementById("lab-drills-list");
+      drillsList.innerHTML = "";
+      lesson.drills.forEach(d => {
+        const item = document.createElement("div");
+        item.className = "drill-item";
+        item.innerHTML = `
+          <div class="drill-word-info">
+            <strong>${d.word}</strong>
+            <code>${d.ipa}</code>
+            <span class="drill-cue">${d.cue}</span>
+          </div>
+          <button class="btn btn-secondary" style="padding: 6px 12px; font-size:12px;" onclick="sendToRecorder('${d.word}')">🎙️ Practice</button>
+        `;
+        drillsList.appendChild(item);
+      });
+    }
+
+    function sendToRecorder(word) {
+      document.getElementById("comparison-text-input").value = word;
+      switchTab('recorder');
+    }
+
+    // ----------------------------------------------------
+    // VOCAL TRACT DIAGRAM INTERACTION
+    // ----------------------------------------------------
+    const articulatorInfoMap = {
+      lips: "<strong>Lips (Labiodental & Bilabial):</strong> Focus on closing your lips completely for clean /p/ and /b/ releases in words like 'keep' or 'chew'. Avoid adding an extra vowel sound at the end. For /f/ and /v/, touch your top teeth to your bottom lip.",
+      teeth: "<strong>Teeth (Dental Fricatives):</strong> The place for the soft /θ/ (voiceless) and /ð/ (voiced) sound in 'thick', 'thin', and 'thought'. Stick the tip of your tongue slightly between your teeth and blow air. Don't block it with your tongue tip like a /t/ or /s/.",
+      alveolar: "<strong>Alveolar Ridge (Bumpy Ridge):</strong> Located right behind your upper teeth. This is where you tap your tongue tip for /t/, /d/, /n/, and /l/. Make sure these taps are crisp, dry, and not followed by a weak 'uh' vowel.",
+      palate: "<strong>Hard Palate:</strong> Roof of the mouth. Essential for palato-alveolar friction in 'chew' (/tʃ/) or 'shoes' (/ʃ/). Pull your tongue slightly back from the alveolar ridge.",
+      velum: "<strong>Soft Palate (Velum):</strong> Back soft roof of mouth. Lift it to block nasal air for clicks like /k/ and /g/ in 'clock' and 'cake'. Ensure the tongue back seals here cleanly.",
+      "tongue-tip": "<strong>Tongue Tip:</strong> Your primary driver for dental fricatives (/θ/) and alveolar taps (/t, d, n/). Focus on keeping the tongue tip dry and release final consonants cleanly.",
+      "tongue-body": "<strong>Tongue Body:</strong> The main body of your tongue. Keep it relaxed and flat in the bottom of your mouth for the neutral schwa vowel /ə/ in words like 'habit' or 'socialize'.",
+      throat: "<strong>Larynx/Vocal Cords (Voice Box):</strong> Vibrates continuously for voiced sounds like /z, v, d, b, g/ (feel the throat buzz on 'beans' or 'plans'). Stays silent and open for voiceless sounds like /s, f, t, p, k/."
+    };
+
+    function initVocalTract() {
+      // Setup clicks on SVG paths
+      document.querySelectorAll("#vocal-tract .articulator, #vocal-tract .articulator-fill").forEach(el => {
+        const part = el.getAttribute("data-part");
+        el.addEventListener("mouseenter", () => showArticulatorInfo(part));
+        el.addEventListener("click", () => showArticulatorInfo(part));
+      });
+
+      // Setup legend item hover & click
+      document.querySelectorAll(".legend-item").forEach(item => {
+        const part = item.getAttribute("data-part");
+        item.addEventListener("mouseenter", () => {
+          showArticulatorInfo(part);
+          highlightSVGPart(part);
+        });
+        item.addEventListener("mouseleave", () => {
+          resetSVGHighlights();
+        });
+      });
+    }
+
+    function showArticulatorInfo(part) {
+      if (articulatorInfoMap[part]) {
+        document.getElementById("vocal-articulator-info").innerHTML = articulatorInfoMap[part];
+        document.querySelectorAll(".legend-item").forEach(item => {
+          if (item.getAttribute("data-part") === part) {
+            item.classList.add("active");
+          } else {
+            item.classList.remove("active");
+          }
+        });
+      }
+    }
+
+    function highlightSVGPart(part) {
+      document.querySelectorAll("#vocal-tract .articulator, #vocal-tract .articulator-fill").forEach(el => {
+        if (el.getAttribute("data-part") === part) {
+          el.classList.add("active");
+        } else {
+          el.classList.remove("active");
+        }
+      });
+    }
+
+    function resetSVGHighlights() {
+      document.querySelectorAll("#vocal-tract .articulator, #vocal-tract .articulator-fill").forEach(el => {
+        el.classList.remove("active");
+      });
+      document.querySelectorAll(".legend-item").forEach(item => item.classList.remove("active"));
+    }
+
+
+    // ----------------------------------------------------
+    // RECORDER & AUDIO ANALYSIS LOGIC
+    // ----------------------------------------------------
+    let mediaRecorder;
+    let audioChunks = [];
+    let audioContext;
+    let analyser;
+    let dataArray;
+    let bufferLength;
+    let source;
+    let isRecording = false;
+    let isPlaying = false;
+    let audioBlob;
+    let audioUrl;
+    let audioPlayer = new Audio();
+    let recorderTimer;
+    let recordingSeconds = 0;
+    let canvas = document.getElementById("waveform-canvas");
+    let ctx = canvas.getContext("2d");
+    let animationFrameId;
+
+    function initCanvas() {
+      canvas.width = canvas.parentElement.clientWidth * window.devicePixelRatio;
+      canvas.height = canvas.parentElement.clientHeight * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      drawStaticWaveform();
+    }
+
+    window.addEventListener("resize", initCanvas);
+
+    function drawStaticWaveform() {
+      ctx.fillStyle = "#070a13";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = "rgba(255,255,255,0.05)";
+      ctx.lineWidth = 1;
+      
+      // Grid lines
+      ctx.beginPath();
+      for (let i = 0; i < canvas.width; i += 30) {
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, canvas.height);
+      }
+      ctx.stroke();
+      
+      // Midline
+      ctx.strokeStyle = "rgba(201,162,39,0.2)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, canvas.height / (2 * window.devicePixelRatio));
+      ctx.lineTo(canvas.width / window.devicePixelRatio, canvas.height / (2 * window.devicePixelRatio));
+      ctx.stroke();
+    }
+
+    async function toggleRecord() {
+      const recordBtn = document.getElementById("record-btn");
+      const recordBtnText = document.getElementById("record-btn-text");
+      
+      if (!isRecording) {
+        // Start Recording
+        isRecording = true;
+        recordBtn.classList.add("recording");
+        recordBtnText.innerText = "Stop Recording";
+        document.getElementById("playback-btn").disabled = true;
+        recordingSeconds = 0;
+        document.getElementById("timer-display").innerText = "00:00";
+        
+        recorderTimer = setInterval(() => {
+          recordingSeconds++;
+          const mins = String(Math.floor(recordingSeconds / 60)).padStart(2, "0");
+          const secs = String(recordingSeconds % 60).padStart(2, "0");
+          document.getElementById("timer-display").innerText = `${mins}:${secs}`;
+        }, 1000);
+
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          analyser = audioContext.createAnalyser();
+          source = audioContext.createMediaStreamSource(stream);
+          source.connect(analyser);
+          
+          analyser.fftSize = 256;
+          bufferLength = analyser.frequencyBinCount;
+          dataArray = new Uint8Array(bufferLength);
+          
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
+          
+          mediaRecorder.ondataavailable = e => {
+            audioChunks.push(e.data);
+          };
+          
+          mediaRecorder.onstop = () => {
+            audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            audioUrl = URL.createObjectURL(audioBlob);
+            audioPlayer.src = audioUrl;
+            document.getElementById("playback-btn").disabled = false;
+            document.getElementById("save-btn").disabled = false;
+            cancelAnimationFrame(animationFrameId);
+            drawStaticWaveform();
+          };
+          
+          mediaRecorder.start();
+          visualizeRealTime();
+        } catch (err) {
+          console.warn("Microphone access unavailable. Running simulation.", err);
+          visualizeSimulation();
+        }
+      } else {
+        // Stop Recording
+        isRecording = false;
+        recordBtn.classList.remove("recording");
+        recordBtnText.innerText = "Record Voice";
+        clearInterval(recorderTimer);
+        
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+          mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        } else {
+          // Simulation stop
+          cancelAnimationFrame(animationFrameId);
+          document.getElementById("playback-btn").disabled = false;
+          document.getElementById("save-btn").disabled = false;
+          drawStaticWaveform();
+        }
+      }
+    }
+
+    function saveRecording() {
+      if (!audioBlob) return;
+      const now = new Date();
+      const timestamp = now.getFullYear().toString() +
+        String(now.getMonth() + 1).padStart(2, '0') +
+        String(now.getDate()).padStart(2, '0') + '_' +
+        String(now.getHours()).padStart(2, '0') +
+        String(now.getMinutes()).padStart(2, '0');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(audioBlob);
+      a.download = 'paolo_recording_' + timestamp + '.wav';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    function visualizeRealTime() {
+      if (!isRecording) return;
+      animationFrameId = requestAnimationFrame(visualizeRealTime);
+      
+      analyser.getByteTimeDomainData(dataArray);
+      
+      ctx.fillStyle = "#070a13";
+      ctx.fillRect(0, 0, canvas.width / window.devicePixelRatio, canvas.height / window.devicePixelRatio);
+      
+      ctx.strokeStyle = "#c9a227";
+      ctx.lineWidth = 3;
+      ctx.shadowColor = "#c9a227";
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      
+      const sliceWidth = (canvas.width / window.devicePixelRatio) / bufferLength;
+      let x = 0;
+      
+      for (let i = 0; i < bufferLength; i++) {
+        const v = dataArray[i] / 128.0;
+        const y = v * (canvas.height / window.devicePixelRatio) / 2;
+        
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+        x += sliceWidth;
+      }
+      
+      ctx.lineTo(canvas.width / window.devicePixelRatio, (canvas.height / window.devicePixelRatio) / 2);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+
+    let simTime = 0;
+    function visualizeSimulation() {
+      if (!isRecording && !isPlaying) return;
+      animationFrameId = requestAnimationFrame(visualizeSimulation);
+      
+      ctx.fillStyle = "#070a13";
+      ctx.fillRect(0, 0, canvas.width / window.devicePixelRatio, canvas.height / window.devicePixelRatio);
+      
+      ctx.strokeStyle = isRecording ? "#ef4444" : "#c9a227";
+      ctx.lineWidth = 3;
+      ctx.shadowColor = ctx.strokeStyle;
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      
+      simTime += 0.15;
+      const points = 100;
+      const sliceWidth = (canvas.width / window.devicePixelRatio) / points;
+      let x = 0;
+      
+      for (let i = 0; i <= points; i++) {
+        let factor = Math.sin(i * 0.1 + simTime) * Math.cos(i * 0.05 - simTime);
+        if (isRecording) {
+          factor += (Math.random() - 0.5) * 0.25;
+        } else {
+          factor *= Math.sin(simTime * 0.5);
+        }
+        const y = (canvas.height / window.devicePixelRatio / 2) + factor * (canvas.height / window.devicePixelRatio * 0.35);
+        
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+        x += sliceWidth;
+      }
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+
+    function playRecording() {
+      if (audioUrl) {
+        audioPlayer.play();
+        isPlaying = true;
+        document.getElementById("playback-btn").disabled = true;
+        
+        audioPlayer.onended = () => {
+          isPlaying = false;
+          document.getElementById("playback-btn").disabled = false;
+          cancelAnimationFrame(animationFrameId);
+          drawStaticWaveform();
+        };
+        visualizeSimulation();
+      } else {
+        // Simulated playback
+        isPlaying = true;
+        document.getElementById("playback-btn").disabled = true;
+        let count = 0;
+        visualizeSimulation();
+        
+        const simInterval = setInterval(() => {
+          count++;
+          if (count >= 30) {
+            clearInterval(simInterval);
+            isPlaying = false;
+            document.getElementById("playback-btn").disabled = false;
+            cancelAnimationFrame(animationFrameId);
+            drawStaticWaveform();
+          }
+        }, 100);
+      }
+    }
+
+    // Speech Synthesis
+    let voices = [];
+    function loadVoices() {
+      if ('speechSynthesis' in window) {
+        voices = window.speechSynthesis.getVoices();
+      }
+    }
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+      loadVoices();
+    }
+
+    function playReferenceText() {
+      const text = document.getElementById("comparison-text-input").value;
+      if (text.trim() === "") {
+        alert("Please select a word or type some text first!");
+        return;
+      }
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        const rpVoice = voices.find(v => v.lang.includes('GB') || v.lang.includes('en-GB') || v.name.includes('UK') || v.name.includes('Great Britain') || v.name.includes('British'));
+        if (rpVoice) {
+          utterance.voice = rpVoice;
+        }
+        utterance.rate = 0.8;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    // ----------------------------------------------------
+    // INITIALIZATION
+    // ----------------------------------------------------
+    document.addEventListener("DOMContentLoaded", () => {
+      initLab();
+      initVocalTract();
+      initCanvas();
+    });
+  </script>
 </body>
 </html>

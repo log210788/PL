@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paolo's Directions Lesson</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0d1b35;
+      --panel: #142746;
+      --panel-light: #1a2e50;
+      --primary: #c9a227;
+      --primary-hover: #e5b934;
+      --accent: #7ab5d5;
+      --text: #f8f1dc;
+      --text-muted: #a9bed2;
+      --correct: #2ecc71;
+      --wrong: #ff6b6b;
+      --correct-bg: rgba(46, 204, 113, 0.1);
+      --wrong-bg: rgba(255, 107, 107, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 22px 14px;
+    }
+    a { color: inherit; text-decoration: none; }
+    
+    .wrap {
+      width: min(900px, 100%);
+      margin: 0 auto;
+    }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    .back {
+      border: 1.5px solid #2a4060;
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 10px 15px;
+      font-weight: 900;
+      background: var(--panel);
+      transition: all 0.2s;
+    }
+    .back:hover {
+      background: var(--panel-light);
+      border-color: var(--primary);
+    }
+
+    .hero {
+      background: linear-gradient(145deg, var(--panel), var(--panel-light));
+      border: 1px solid rgba(201, 162, 39, 0.28);
+      border-radius: 28px;
+      padding: 30px;
+      margin-bottom: 24px;
+      box-shadow: 0 22px 60px rgba(0,0,0,.25);
+    }
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      font-size: clamp(30px, 6vw, 52px);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-size: 17px;
+    }
+
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      font-size: 24px;
+      margin: 32px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* MAP CONTAINER & INTERACTION */
+    .map-card {
+      background: var(--panel);
+      border: 1px solid rgba(201, 162, 39, 0.22);
+      border-radius: 28px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+    .map-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .map-header h3 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--accent);
+      font-size: 18px;
+    }
+    .map-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .map-select {
+      background: #09101d;
+      border: 1.5px solid rgba(122, 155, 181, 0.45);
+      border-radius: 12px;
+      padding: 8px 14px;
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      outline: none;
+      cursor: pointer;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .map-select:focus {
+      border-color: var(--primary);
+    }
+    .map-select option {
+      background-color: #142746;
+      color: var(--text);
+    }
+    
+    .map-container {
+      background: #09101d;
+      border-radius: 20px;
+      padding: 10px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      margin-bottom: 16px;
+    }
+    .map-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    /* SVG Map Elements Styling */
+    .street {
+      fill: #141c28;
+    }
+    .lane-line {
+      stroke: rgba(255, 255, 255, 0.12);
+      stroke-dasharray: 6, 6;
+      stroke-width: 1.5;
+    }
+    .building {
+      fill: #19273f;
+      stroke: rgba(122, 181, 213, 0.3);
+      stroke-width: 2;
+      rx: 6px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .building:hover, .building.active {
+      fill: #24395c;
+      stroke: var(--primary);
+      filter: drop-shadow(0 0 6px rgba(201, 162, 39, 0.45));
+    }
+    .building-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 11px;
+      fill: var(--text-muted);
+      pointer-events: none;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      transition: fill 0.3s;
+    }
+    .building:hover + .building-label, .building.active + .building-label {
+      fill: var(--primary);
+    }
+    .street-name {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 9px;
+      fill: rgba(248, 241, 220, 0.28);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      pointer-events: none;
+      text-anchor: middle;
+    }
+    .route-highlight {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 10, 10;
+      animation: route-flow 1.5s linear infinite;
+    }
+    @keyframes route-flow {
+      to {
+        stroke-dashoffset: -20;
+      }
+    }
+    .pin {
+      fill: #ff4757;
+      stroke: #fff;
+      stroke-width: 1.5;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+    .pin-label {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 9px;
+      fill: #fff;
+      text-anchor: middle;
+      font-style: italic;
+    }
+
+    .directions-box {
+      background: rgba(13, 27, 53, 0.45);
+      border: 1px solid rgba(122, 155, 181, 0.15);
+      border-radius: 18px;
+      padding: 16px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .directions-box strong {
+      color: var(--primary);
+      display: block;
+      margin-bottom: 6px;
+      font-size: 16px;
+    }
+    .directions-text {
+      color: var(--text);
+    }
+
+    /* VOCABULARY SECTION */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .vocab-card {
+      background: var(--panel);
+      border: 1px solid rgba(122, 155, 181, 0.18);
+      border-radius: 20px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .vocab-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .vocab-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .vocab-word {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      font-size: 18px;
+    }
+    .vocab-translation {
+      font-size: 11px;
+      background: rgba(122, 181, 213, 0.14);
+      color: var(--accent);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+    .vocab-meaning {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .vocab-example {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-style: italic;
+      border-left: 2px solid rgba(201, 162, 39, 0.3);
+      padding-left: 8px;
+      margin-top: auto;
+    }
+
+    /* DIALOGUE CHAT BUBBLES */
+    .dialogue-panel {
+      background: var(--panel);
+      border: 1px solid rgba(122, 155, 181, 0.18);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .chat-bubble {
+      padding: 14px 18px;
+      border-radius: 18px;
+      max-width: 80%;
+      line-height: 1.5;
+      font-size: 15px;
+      position: relative;
+    }
+    .bubble-sarah {
+      background: rgba(201, 162, 39, 0.06);
+      border: 1px solid rgba(201, 162, 39, 0.22);
+      border-left: 4px solid var(--primary);
+      align-self: flex-start;
+    }
+    .bubble-paolo {
+      background: rgba(122, 181, 213, 0.06);
+      border: 1px solid rgba(122, 181, 213, 0.22);
+      border-left: 4px solid var(--accent);
+      align-self: flex-end;
+    }
+    .speaker {
+      font-weight: 900;
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .bubble-sarah .speaker { color: var(--primary); }
+    .bubble-paolo .speaker { color: var(--accent); }
+
+    /* ITALIAN TRANSFER PRACTICE PANEL */
+    .transfer-panel {
+      background: rgba(122, 181, 213, 0.05);
+      border: 1.5px solid rgba(122, 181, 213, 0.25);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .transfer-title {
+      font-family: 'Fredoka One', cursive;
+      color: var(--accent);
+      font-size: 18px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .transfer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 768px) {
+      .transfer-grid { grid-template-columns: 1fr; }
+    }
+    .transfer-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .transfer-card h4 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .transfer-card ul {
+      list-style-type: none;
+      font-size: 13.5px;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .transfer-card li strong {
+      color: var(--correct);
+    }
+    .transfer-card li em {
+      color: var(--wrong);
+      font-style: normal;
+      text-decoration: line-through;
+      margin-right: 6px;
+    }
+
+    /* WORD BANK */
+    .bank {
+      background: var(--panel);
+      border: 1px solid rgba(122, 155, 181, 0.18);
+      border-radius: 24px;
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+    .bank h3 {
+      color: var(--primary);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 12px;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      background: rgba(201, 162, 39, 0.12);
+      border: 1px solid rgba(201, 162, 39, 0.28);
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* EXERCISES */
+    .quiz-container {
+      display: grid;
+      gap: 20px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(122, 155, 181, 0.18);
+      border-radius: 24px;
+      padding: 22px;
+    }
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 16px;
+      color: var(--primary);
+      border-bottom: 1px dashed rgba(255,255,255,0.08);
+      padding-bottom: 8px;
+    }
+
+    /* True False Questions */
+    .tf-question {
+      margin-bottom: 16px;
+    }
+    .tf-question:last-child {
+      margin-bottom: 0;
+    }
+    .tf-question p {
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    .tf-options {
+      display: flex;
+      gap: 16px;
+    }
+    .tf-options label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .tf-options input {
+      accent-color: var(--primary);
+    }
+
+    /* Fill in Blanks & Multiple Choice */
+    .fib-question {
+      margin-bottom: 18px;
+    }
+    .fib-question:last-child {
+      margin-bottom: 0;
+    }
+    .fib-question p {
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+    input[type=text], textarea, select {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(122, 155, 181, 0.22);
+      border-radius: 12px;
+      padding: 12px;
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+    input[type=text]:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: rgba(255,255,255,0.06);
+    }
+    .hint {
+      display: block;
+      color: #7a9bb5;
+      font-size: 13px;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .mc-question {
+      margin-bottom: 20px;
+    }
+    .mc-question:last-child {
+      margin-bottom: 0;
+    }
+    .mc-question p {
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .mc-options {
+      display: grid;
+      gap: 8px;
+    }
+    .mc-options label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(122, 155, 181, 0.12);
+      border-radius: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    .mc-options label:hover {
+      border-color: var(--primary);
+    }
+    .mc-options input {
+      accent-color: var(--primary);
+    }
+
+    /* feedback and results */
+    .correct-alert { border-color: var(--correct); background: var(--correct-bg); }
+    .wrong-alert { border-color: var(--wrong); background: var(--wrong-bg); }
+    .feedback-ans {
+      display: none;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+    .feedback-ans.show { display: block; }
+
+    .result {
+      display: none;
+      background: #fff4d0;
+      color: #0d1b35;
+      border-radius: 22px;
+      padding: 22px;
+      margin-bottom: 18px;
+      font-weight: 900;
+      line-height: 1.6;
+    }
+    .result.show { display: block; }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 24px 0;
+    }
+    button {
+      border: none;
+      border-radius: 16px;
+      padding: 14px 22px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+    }
+    button:hover {
+      transform: translateY(-2px);
+    }
+    .submit { background: var(--primary); color: var(--bg); }
+    .submit:hover { background: var(--primary-hover); }
+    .reset { background: var(--panel-light); color: var(--primary); border: 1.5px solid #2a4060; }
+    .reset:hover { background: rgba(201,162,39,0.08); }
+    .pdf-btn { background: #3ddc84; color: #0d1b35; }
+    .pdf-btn:hover { background: #32c473; }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 28px 0;
+      font-size: 14px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top">
+      <a class="back" href="./index.html">← Back to Paolo's Hub</a>
+      <a class="back" href="./paul_idiom_flashcards_italian.html">Review Flashcards</a>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">Directions Lesson · Interactive Map & Speaking</div>
+      <h1>Asking & Giving Directions</h1>
+      <p>Master the vocabulary of navigation, practice mapping routes, and address common Italian-to-English translation transfers. Use the interactive map below to trace paths during your class, and complete the exercises to download your graded PDF homework.</p>
+    </section>
+
+    <!-- INTERACTIVE TOWN MAP CARD -->
+    <h2 class="section-title">🗺️ 1. Interactive Town Map</h2>
+    <section class="map-card">
+      <div class="map-header">
+        <h3>Interactive Navigation Board</h3>
+        <div class="map-controls">
+          <label for="route-selector" style="font-weight: 700; font-size: 13.5px; color: var(--text-muted);">Select Destination:</label>
+          <select id="route-selector" class="map-select" onchange="drawSelectedRoute()">
+            <option value="">-- Choose a location --</option>
+            <option value="cafe">Cafe</option>
+            <option value="post_office">Post Office</option>
+            <option value="library">Library</option>
+            <option value="cinema">Cinema</option>
+            <option value="supermarket">Supermarket</option>
+            <option value="museum">Museum</option>
+            <option value="train_station">Train Station</option>
+            <option value="park">Park</option>
+            <option value="bus_station">Bus Station</option>
+            <option value="hospital">Hospital</option>
+            <option value="school">School</option>
+            <option value="gym">Gym</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="map-container">
+        <svg viewBox="0 0 800 400" class="map-svg" id="town-map">
+          <!-- Horizontal Streets -->
+          <rect class="street" x="0" y="60" width="800" height="40" />
+          <line class="lane-line" x1="0" y1="80" x2="800" y2="80" />
+          
+          <rect class="street" x="0" y="200" width="800" height="40" />
+          <line class="lane-line" x1="0" y1="220" x2="800" y2="220" />
+          
+          <rect class="street" x="0" y="340" width="800" height="40" />
+          <line class="lane-line" x1="0" y1="360" x2="800" y2="360" />
+
+          <!-- Vertical Streets -->
+          <rect class="street" x="80" y="0" width="40" height="400" />
+          <line class="lane-line" x1="100" y1="0" x2="100" y2="400" />
+          
+          <rect class="street" x="380" y="0" width="40" height="400" />
+          <line class="lane-line" x1="400" y1="0" x2="400" y2="400" />
+          
+          <rect class="street" x="680" y="0" width="40" height="400" />
+          <line class="lane-line" x1="700" y1="0" x2="700" y2="400" />
+
+          <!-- Street Names -->
+          <!-- Main Street (horizontal) -->
+          <text x="250" y="85" class="street-name">Main Street</text>
+          <text x="550" y="85" class="street-name">Main Street</text>
+          <!-- Broadway (horizontal) -->
+          <text x="250" y="225" class="street-name">Broadway</text>
+          <text x="550" y="225" class="street-name">Broadway</text>
+          <!-- Maple Avenue (horizontal) -->
+          <text x="250" y="365" class="street-name">Maple Avenue</text>
+          <text x="550" y="365" class="street-name">Maple Avenue</text>
+          
+          <!-- Park Road (vertical) -->
+          <text x="104" y="150" transform="rotate(-90 104 150)" class="street-name">Park Road</text>
+          <text x="104" y="290" transform="rotate(-90 104 290)" class="street-name">Park Road</text>
+          <!-- Pine Street (vertical) -->
+          <text x="404" y="150" transform="rotate(-90 404 150)" class="street-name">Pine Street</text>
+          <text x="404" y="290" transform="rotate(-90 404 290)" class="street-name">Pine Street</text>
+          <!-- High Street (vertical) -->
+          <text x="704" y="150" transform="rotate(-90 704 150)" class="street-name">High Street</text>
+          <text x="704" y="290" transform="rotate(-90 704 290)" class="street-name">High Street</text>
+
+          <!-- Buildings -->
+          <!-- Block A (Park) -->
+          <rect id="build-park" class="building" x="10" y="10" width="60" height="40" onclick="selectBuilding('park')" />
+          <text x="40" y="34" class="building-label">Park</text>
+          
+          <!-- Block B (Cafe & Post Office) -->
+          <rect id="build-cafe" class="building" x="130" y="10" width="110" height="40" onclick="selectBuilding('cafe')" />
+          <text x="185" y="34" class="building-label">Cafe</text>
+          
+          <rect id="build-post_office" class="building" x="250" y="10" width="120" height="40" onclick="selectBuilding('post_office')" />
+          <text x="310" y="34" class="building-label">Post Office</text>
+          
+          <!-- Block C (Library & Cinema) -->
+          <rect id="build-library" class="building" x="430" y="10" width="115" height="40" onclick="selectBuilding('library')" />
+          <text x="487" y="34" class="building-label">Library</text>
+          
+          <rect id="build-cinema" class="building" x="555" y="10" width="115" height="40" onclick="selectBuilding('cinema')" />
+          <text x="612" y="34" class="building-label">Cinema</text>
+          
+          <!-- Block D/H (Train Station) -->
+          <rect id="build-train_station" class="building" x="730" y="10" width="60" height="180" onclick="selectBuilding('train_station')" />
+          <text x="760" y="104" class="building-label" transform="rotate(90 760 104)">Train Station</text>
+          
+          <!-- Block E (Park continued & Compass Rose) -->
+          <rect class="building" x="10" y="110" width="60" height="80" onclick="selectBuilding('park')" style="fill:#1a3f29; stroke:rgba(46, 204, 113, 0.3);" />
+          <g id="compass-rose" transform="translate(40, 150)">
+            <circle r="16" fill="rgba(13, 27, 53, 0.75)" stroke="rgba(122, 181, 213, 0.35)" stroke-width="1" />
+            <line x1="0" y1="-12" x2="0" y2="12" stroke="var(--primary)" stroke-width="1" />
+            <line x1="-12" y1="0" x2="12" y2="0" stroke="var(--primary)" stroke-width="1" />
+            <polygon points="0,-12 -3,-2 3,-2" fill="var(--primary)" />
+            <text x="0" y="-14" font-size="7" fill="var(--text)" font-weight="bold" text-anchor="middle">N</text>
+            <text x="0" y="19" font-size="6" fill="var(--text-muted)" font-weight="bold" text-anchor="middle">S</text>
+            <text x="14" y="2" font-size="6" fill="var(--text-muted)" font-weight="bold" text-anchor="middle">E</text>
+            <text x="-14" y="2" font-size="6" fill="var(--text-muted)" font-weight="bold" text-anchor="middle">W</text>
+          </g>
+          
+          <!-- Block F (Supermarket) -->
+          <rect id="build-supermarket" class="building" x="130" y="110" width="240" height="80" onclick="selectBuilding('supermarket')" />
+          <text x="250" y="154" class="building-label">Supermarket</text>
+          
+          <!-- Block G (Museum) -->
+          <rect id="build-museum" class="building" x="430" y="110" width="240" height="80" onclick="selectBuilding('museum')" />
+          <text x="550" y="154" class="building-label">Museum</text>
+          
+          <!-- Block I (Bus Station) -->
+          <rect id="build-bus_station" class="building" x="10" y="250" width="60" height="80" onclick="selectBuilding('bus_station')" />
+          <text x="40" y="294" class="building-label" transform="rotate(-90 40 294)">Bus Station</text>
+          
+          <!-- Block J (Hospital) -->
+          <rect id="build-hospital" class="building" x="130" y="250" width="240" height="80" onclick="selectBuilding('hospital')" />
+          <text x="250" y="294" class="building-label">Hospital</text>
+          
+          <!-- Block K (School) -->
+          <rect id="build-school" class="building" x="430" y="250" width="240" height="80" onclick="selectBuilding('school')" />
+          <text x="550" y="294" class="building-label">School</text>
+          
+          <!-- Block L (Gym) -->
+          <rect id="build-gym" class="building" x="730" y="250" width="60" height="80" onclick="selectBuilding('gym')" />
+          <text x="760" y="294" class="building-label" transform="rotate(90 760 294)">Gym</text>
+
+          <!-- Glowing Route Path -->
+          <path id="route-line" class="route-highlight" d="" style="display: none;" />
+
+          <!-- "You Are Here" Marker with rotating direction indicator -->
+          <g id="user-marker" transform="translate(400, 220)">
+            <circle cx="0" cy="0" r="12" fill="#ff4757" stroke="#ffffff" stroke-width="2" class="pin" />
+            <polygon id="marker-arrow" points="0,-16 -6,-6 6,-6" fill="#ffffff" style="transition: transform 0.5s ease; transform: rotate(0deg); filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));" />
+            <circle cx="0" cy="0" r="3" fill="#ffffff" />
+          </g>
+          <text x="400" y="248" class="pin-label">YOU ARE HERE</text>
+        </svg>
+      </div>
+
+      <div class="directions-box">
+        <strong>Directions Guide:</strong>
+        <span id="directions-guide-text" class="directions-text">Select a destination building on the map or from the dropdown menu to see a route and step-by-step instructions.</span>
+      </div>
+    </section>
+
+    <!-- CORE VOCABULARY -->
+    <h2 class="section-title">📚 2. Core Vocabulary</h2>
+    <section class="vocab-grid">
+      <div class="vocab-card">
+        <div class="vocab-header">
+          <span class="vocab-word">Go straight ahead</span>
+          <span class="vocab-translation">Vai dritto</span>
+        </div>
+        <p class="vocab-meaning">Walk forward in the same direction, without turning.</p>
+        <p class="vocab-example">"Go straight ahead on Pine Street for two blocks."</p>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-header">
+          <span class="vocab-word">Turn left / right</span>
+          <span class="vocab-translation">Gira a sin./destr.</span>
+        </div>
+        <p class="vocab-meaning">Change direction to the left or to the right side.</p>
+        <p class="vocab-example">"Walk to the corner of Main Street and turn left."</p>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-header">
+          <span class="vocab-word">Take the first right</span>
+          <span class="vocab-translation">Prendi la prima a dx</span>
+        </div>
+        <p class="vocab-meaning">Turn right at the very first street or intersection you reach.</p>
+        <p class="vocab-example">"Go down Park Road, and take the first right."</p>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-header">
+          <span class="vocab-word">Go past</span>
+          <span class="vocab-translation">Supera / Passa oltre</span>
+        </div>
+        <p class="vocab-meaning">Walk or drive in front of a landmark without stopping.</p>
+        <p class="vocab-example">"Go past the supermarket. The hospital is next to it."</p>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-header">
+          <span class="vocab-word">Opposite</span>
+          <span class="vocab-translation">Di fronte (strada)</span>
+        </div>
+        <p class="vocab-meaning">On the other side of the street, facing the location.</p>
+        <p class="vocab-example">"The Post Office is opposite the Library across the street."</p>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-header">
+          <span class="vocab-word">At the corner of</span>
+          <span class="vocab-translation">All'angolo di</span>
+        </div>
+        <p class="vocab-meaning">The point where two streets intersect or join.</p>
+        <p class="vocab-example">"The Cinema is at the corner of Main Street and High Street."</p>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-header">
+          <span class="vocab-word">Off the beaten track</span>
+          <span class="vocab-translation">Fuori mano / Isolato</span>
+        </div>
+        <img src="./images/beaten_track_idiom.png" alt="Off the beaten track" style="width: 100%; height: 110px; object-fit: cover; border-radius: 10px; margin: 4px 0 8px; border: 1px solid rgba(255,255,255,0.05);" />
+        <p class="vocab-meaning">Far away from where most people live, travel, or visit.</p>
+        <p class="vocab-example">"She lives in a quiet village that is off the beaten track."</p>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-header">
+          <span class="vocab-word">In the middle of nowhere</span>
+          <span class="vocab-translation">In mezzo al nulla</span>
+        </div>
+        <img src="./images/middle_nowhere_idiom.png" alt="In the middle of nowhere" style="width: 100%; height: 110px; object-fit: cover; border-radius: 10px; margin: 4px 0 8px; border: 1px solid rgba(255,255,255,0.05);" />
+        <p class="vocab-meaning">An isolated place that is very far away from any towns or services.</p>
+        <p class="vocab-example">"Their car broke down in the middle of nowhere, with no signal."</p>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-header">
+          <span class="vocab-word">A stone's throw</span>
+          <span class="vocab-translation">A due passi</span>
+        </div>
+        <img src="./images/stones_throw_idiom.png" alt="A stone's throw" style="width: 100%; height: 110px; object-fit: cover; border-radius: 10px; margin: 4px 0 8px; border: 1px solid rgba(255,255,255,0.05);" />
+        <p class="vocab-meaning">A very short distance; very close by.</p>
+        <p class="vocab-example">"The Cafe is just a stone's throw from the Post Office."</p>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-header">
+          <span class="vocab-word">As the crow flies</span>
+          <span class="vocab-translation">In linea d'aria</span>
+        </div>
+        <img src="./images/crow_flies_idiom.png" alt="As the crow flies" style="width: 100%; height: 110px; object-fit: cover; border-radius: 10px; margin: 4px 0 8px; border: 1px solid rgba(255,255,255,0.05);" />
+        <p class="vocab-meaning">The shortest direct distance between two points (in a straight line).</p>
+        <p class="vocab-example">"It is only one mile as the crow flies, but much longer by road."</p>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-header">
+          <span class="vocab-word">Dead end</span>
+          <span class="vocab-translation">Strada senza uscita</span>
+        </div>
+        <img src="./images/dead_end_idiom.png" alt="Dead end" style="width: 100%; height: 110px; object-fit: cover; border-radius: 10px; margin: 4px 0 8px; border: 1px solid rgba(255,255,255,0.05);" />
+        <p class="vocab-meaning">A road or street that is closed at one end and goes nowhere.</p>
+        <p class="vocab-example">"Be careful not to drive down that lane; it's a dead end."</p>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-header">
+          <span class="vocab-word">Fork in the road</span>
+          <span class="vocab-translation">Bivio / Incrocio a Y</span>
+        </div>
+        <img src="./images/fork_road_idiom.png" alt="Fork in the road" style="width: 100%; height: 110px; object-fit: cover; border-radius: 10px; margin: 4px 0 8px; border: 1px solid rgba(255,255,255,0.05);" />
+        <p class="vocab-meaning">A point where a single road splits into two different directions.</p>
+        <p class="vocab-example">"When you reach the fork in the road, turn left to stay on path."</p>
+      </div>
+    </section>
+
+    <!-- DIALOGUE SCENARIO -->
+    <h2 class="section-title">🗣️ 3. Conversation Scenario: "Looking for the Hospital"</h2>
+    <section class="dialogue-panel">
+      <div class="chat-container">
+        <div class="chat-bubble bubble-sarah">
+          <span class="speaker">Sarah (Tourist)</span>
+          <p class="bubble-text">Excuse me! Can you help me? I'm trying to find the Hospital. I am staying at a place that is <strong>off the beaten track</strong>—it honestly feels like it's <strong>in the middle of nowhere</strong>—and I got completely lost trying to walk into town!</p>
+        </div>
+        <div class="chat-bubble bubble-paolo">
+          <span class="speaker">Paolo (Local)</span>
+          <p class="bubble-text">Hello! Ah, yes, some of the countryside accommodations are very isolated. But don't worry, you are in town now, and the Hospital is not far. Actually, it is just <strong>a stone's throw</strong> from the School, though it is further if you drive.</p>
+        </div>
+        <div class="chat-bubble bubble-sarah">
+          <span class="speaker">Sarah (Tourist)</span>
+          <p class="bubble-text">Oh, thank goodness! How do I get there from here?</p>
+        </div>
+        <div class="chat-bubble bubble-paolo">
+          <span class="speaker">Paolo (Local)</span>
+          <p class="bubble-text">Go straight down Pine Street heading south. Cross Broadway. Watch out, don't turn down the small side lane on the left—it's a <strong>dead end</strong>! Keep walking past the School on your left until you reach a <strong>fork in the road</strong> with Maple Avenue. Turn right there, and the Hospital will be on your right, next to the Bus Station.</p>
+        </div>
+        <div class="chat-bubble bubble-sarah">
+          <span class="speaker">Sarah (Tourist)</span>
+          <p class="bubble-text">Ah, ok. So I go down Pine Street, cross Broadway, avoid the dead end, walk past the School, and turn right at the fork onto Maple Avenue. It is just a mile <strong>as the crow flies</strong>, right?</p>
+        </div>
+        <div class="chat-bubble bubble-paolo">
+          <span class="speaker">Paolo (Local)</span>
+          <p class="bubble-text">Yes, exactly! It is opposite the School across Pine Street, but the entrance is on Maple Avenue. You can't miss it.</p>
+        </div>
+        <div class="chat-bubble bubble-sarah">
+          <span class="speaker">Sarah (Tourist)</span>
+          <p class="bubble-text">Perfect! Thank you so much for your help!</p>
+        </div>
+        <div class="chat-bubble bubble-paolo">
+          <span class="speaker">Paolo (Local)</span>
+          <p class="bubble-text">You're very welcome! Have a nice day!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ITALIAN TRANSFER PRACTICE PANEL -->
+    <h2 class="section-title">👄 4. Italian Speaker Pronunciation & Grammar Focus</h2>
+    <section class="transfer-panel">
+      <div class="transfer-title">🇮🇹 ➔ 🇬🇧 Overcoming Common Transfer Mistakes</div>
+      <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5;">When Italian speakers give directions, standard grammar and vowel sounds often get mixed. Practice these corrections below during your class call:</p>
+      
+      <div class="transfer-grid">
+        <div class="transfer-card">
+          <h4>1. Prepositions: Stop saying "on the left"</h4>
+          <ul>
+            <li>❌ <em>"Turn on the left"</em> ➔ <strong>"Turn left"</strong></li>
+            <li>❌ <em>"Go to the right"</em> ➔ <strong>"Turn right"</strong></li>
+            <li>❌ <em>"Walk in Broadway"</em> ➔ <strong>"Walk on Broadway"</strong></li>
+            <li>💡 <em>Note: In English, "left" and "right" act as adverbs here. No prepositions are needed.</em></li>
+          </ul>
+        </div>
+
+        <div class="transfer-card">
+          <h4>2. Opposite vs. In Front Of</h4>
+          <ul>
+            <li>❌ <em>"The library is in front of the supermarket."</em> (meaning across the street)</li>
+            <li>➔ <strong>"The library is opposite the supermarket."</strong></li>
+            <li>💡 <em>Note: In English, "in front of" means right next to it, facing the same direction. If a street separates them, use "opposite".</em></li>
+          </ul>
+        </div>
+
+        <div class="transfer-card">
+          <h4>3. Silent "H" Aspiration Practice</h4>
+          <ul>
+            <li>❌ <em>"You are 'ere."</em> ➔ <strong>"You are here."</strong> (Pronounce the breathing /h/)</li>
+            <li>❌ <em>"Go to the 'ospital."</em> ➔ <strong>"Go to the hospital."</strong></li>
+            <li>❌ <em>"It's be-yind the cinema."</em> ➔ <strong>"It's behind the cinema."</strong></li>
+            <li>💡 <em>Practice blow: Place your hand in front of your mouth and feel the puff of air on "here", "hospital", and "behind".</em></li>
+          </ul>
+        </div>
+
+        <div class="transfer-card">
+          <h4>4. Vowel Epenthesis (The "uh" sound)</h4>
+          <ul>
+            <li>❌ <em>"Turn left-uh and go past-uh the street-uh."</em></li>
+            <li>➔ <strong>"Turn left and go past the street."</strong></li>
+            <li>💡 <em>Practice: End the consonants cleanly. Stop the vocal cord vibration immediately after releasing the /t/ in left, right, and past.</em></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORD BANK FOR FILL IN BLANKS -->
+    <section class="bank">
+      <h3>Vocabulary Word Bank</h3>
+      <div class="chips">
+        <span class="chip">left</span>
+        <span class="chip">right</span>
+        <span class="chip">between</span>
+        <span class="chip">opposite</span>
+        <span class="chip">ahead</span>
+        <span class="chip">off the beaten track</span>
+        <span class="chip">in the middle of nowhere</span>
+        <span class="chip">a stone's throw</span>
+        <span class="chip">as the crow flies</span>
+        <span class="chip">dead end</span>
+        <span class="chip">fork in the road</span>
+      </div>
+    </section>
+
+    <!-- STUDENT EXERCISES -->
+    <h2 class="section-title">📝 5. Student Exercises</h2>
+    <section id="result" class="result"></section>
+
+    <div class="quiz-container">
+      <!-- EXERCISE A: TRUE OR FALSE -->
+      <article class="card" id="ex-a-card">
+        <h2>Exercise A: True or False? (Based on Map)</h2>
+        
+        <div class="tf-question" id="tf-q-0">
+          <p>1. The Cafe is next to the Post Office.</p>
+          <div class="tf-options">
+            <label><input type="radio" name="tf0" value="true"> True</label>
+            <label><input type="radio" name="tf0" value="false"> False</label>
+          </div>
+          <div class="feedback-ans" id="tf-ans-0">Correct: True (They sit side-by-side in Block B)</div>
+        </div>
+
+        <div class="tf-question" id="tf-q-1">
+          <p>2. The Hospital is opposite the School across Pine Street.</p>
+          <div class="tf-options">
+            <label><input type="radio" name="tf1" value="true"> True</label>
+            <label><input type="radio" name="tf1" value="false"> False</label>
+          </div>
+          <div class="feedback-ans" id="tf-ans-1">Correct: True (They are separated by Pine Street in the bottom row)</div>
+        </div>
+
+        <div class="tf-question" id="tf-q-2">
+          <p>3. The Museum is next to the Supermarket.</p>
+          <div class="tf-options">
+            <label><input type="radio" name="tf2" value="true"> True</label>
+            <label><input type="radio" name="tf2" value="false"> False</label>
+          </div>
+          <div class="feedback-ans" id="tf-ans-2">Correct: False (They are separated by Pine Street)</div>
+        </div>
+
+        <div class="tf-question" id="tf-q-3">
+          <p>4. The Bus Station is next to the Hospital.</p>
+          <div class="tf-options">
+            <label><input type="radio" name="tf3" value="true"> True</label>
+            <label><input type="radio" name="tf3" value="false"> False</label>
+          </div>
+          <div class="feedback-ans" id="tf-ans-3">Correct: False (They are separated by Park Road)</div>
+        </div>
+
+        <div class="tf-question" id="tf-q-4">
+          <p>5. The Gym is on the corner of Broadway and High Street.</p>
+          <div class="tf-options">
+            <label><input type="radio" name="tf4" value="true"> True</label>
+            <label><input type="radio" name="tf4" value="false"> False</label>
+          </div>
+          <div class="feedback-ans" id="tf-ans-4">Correct: True (It is on the corner of the intersection of Broadway and High Street)</div>
+        </div>
+      </article>
+
+      <!-- EXERCISE B: FILL IN THE BLANKS -->
+      <article class="card" id="ex-b-card">
+        <h2>Exercise B: Tracing Routes (Fill in the Blanks)</h2>
+        
+        <div class="fib-question" id="fib-q-0">
+          <p>1. To get to the Cafe, walk North on Pine Street, then turn <strong style="color:var(--primary)">______</strong> onto Main Street. The Cafe will be on your right.</p>
+          <input type="text" id="fib-input-0" placeholder="Type answer here..." autocomplete="off">
+          <span class="hint">Hint: Walk north and turn towards the west side.</span>
+          <div class="feedback-ans" id="fib-ans-0">Correct: left</div>
+        </div>
+
+        <div class="fib-question" id="fib-q-1">
+          <p>2. To get to the Gym, walk East on Broadway, and turn <strong style="color:var(--primary)">______</strong> onto High Street. The Gym will be on your left.</p>
+          <input type="text" id="fib-input-1" placeholder="Type answer here..." autocomplete="off">
+          <span class="hint">Hint: Walk east and turn towards the south side.</span>
+          <div class="feedback-ans" id="fib-ans-1">Correct: right</div>
+        </div>
+
+        <div class="fib-question" id="fib-q-2">
+          <p>3. The Museum is situated <strong style="color:var(--primary)">______</strong> the Supermarket and the Train Station.</p>
+          <input type="text" id="fib-input-2" placeholder="Type answer here..." autocomplete="off">
+          <span class="hint">Hint: In the middle of these two structures.</span>
+          <div class="feedback-ans" id="fib-ans-2">Correct: between</div>
+        </div>
+
+        <div class="fib-question" id="fib-q-3">
+          <p>4. The Post Office is <strong style="color:var(--primary)">______</strong> the Library across Pine Street.</p>
+          <input type="text" id="fib-input-3" placeholder="Type answer here..." autocomplete="off">
+          <span class="hint">Hint: Facing each other on opposite sides of Pine Street.</span>
+          <div class="feedback-ans" id="fib-ans-3">Correct: opposite</div>
+        </div>
+
+        <div class="fib-question" id="fib-q-4">
+          <p>5. To go to the Bus Station from 'You Are Here', go straight <strong style="color:var(--primary)">______</strong> on Broadway. The Bus Station is at the end of the street.</p>
+          <input type="text" id="fib-input-4" placeholder="Type answer here..." autocomplete="off">
+          <span class="hint">Hint: Move forward along the street (ahead / along / west).</span>
+          <div class="feedback-ans" id="fib-ans-4">Correct: ahead / along / west</div>
+        </div>
+      </article>
+
+      <!-- EXERCISE C: MULTIPLE CHOICE & SPEAKING PROMPT -->
+      <article class="card" id="ex-c-card">
+        <h2>Exercise C: Concept Check & Written Prompt</h2>
+        
+        <div class="mc-question" id="mc-q-0">
+          <p>1. Which of these is a common preposition error for Italian speakers?</p>
+          <div class="mc-options">
+            <label><input type="radio" name="mc0" value="a"> A) "Turn left"</label>
+            <label><input type="radio" name="mc0" value="b"> B) "Turn on the left"</label>
+            <label><input type="radio" name="mc0" value="c"> C) "Turn to the left"</label>
+          </div>
+          <div class="feedback-ans" id="mc-ans-0">Correct: B</div>
+        </div>
+
+        <div class="mc-question" id="mc-q-1">
+          <p>2. If a building is on the other side of the street facing you, it is:</p>
+          <div class="mc-options">
+            <label><input type="radio" name="mc1" value="a"> A) opposite</label>
+            <label><input type="radio" name="mc1" value="b"> B) in front of</label>
+            <label><input type="radio" name="mc1" value="c"> C) behind</label>
+          </div>
+          <div class="feedback-ans" id="mc-ans-1">Correct: A</div>
+        </div>
+
+        <div class="mc-question" id="mc-q-2">
+          <p>3. If a house is located in a very remote, isolated area far from any town, we say it is:</p>
+          <div class="mc-options">
+            <label><input type="radio" name="mc2" value="a"> A) in the middle of a traffic jam</label>
+            <label><input type="radio" name="mc2" value="b"> B) off the beaten track</label>
+            <label><input type="radio" name="mc2" value="c"> C) on the corner of Main Street</label>
+          </div>
+          <div class="feedback-ans" id="mc-ans-2">Correct: B (It means isolated/remote)</div>
+        </div>
+
+        <div style="margin-top: 24px; border-top: 1px dashed rgba(255,255,255,0.08); padding-top: 16px;">
+          <p style="font-size: 15px; line-height: 1.6; margin-bottom: 12px; color: var(--accent); font-weight: 700;">
+            ✍️ Writing Prompt: A tourist at the Bus Station asks you: "Excuse me, how do I get to the Library?" Look at the map and write out detailed directions in 2-3 sentences. Focus on correct prepositions and dry consonant releases (avoid left-uh, right-uh).
+          </p>
+          <textarea id="speaking-response" placeholder="Write your response here..." rows="4"></textarea>
+        </div>
+      </article>
+
+      <!-- EXERCISE D: UNSCRAMBLE THE SENTENCE -->
+      <article class="card" id="ex-d-card">
+        <h2>Exercise D: Unscramble the Sentence</h2>
+        <p style="font-size: 15px; color: var(--text-muted); margin-bottom: 12px;">
+          Click the words below in the correct order to build a sentence using the target idiom:
+        </p>
+        
+        <div style="background: rgba(0,0,0,0.25); border: 1.5px dashed rgba(122, 155, 181, 0.25); border-radius: 14px; padding: 14px; min-height: 52px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px;" id="scramble-answer-container">
+          <span style="color: rgba(248, 241, 220, 0.4); font-style: italic; font-size: 13.5px;" id="scramble-placeholder">Click words below to write your answer...</span>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;" id="scramble-words-pool">
+          <!-- Scrambled word chips go here -->
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button type="button" class="reset" style="padding: 8px 14px; font-size: 12px; border-radius: 8px; margin: 0;" onclick="clearScramble()">Clear sentence</button>
+        </div>
+        <div class="feedback-ans" id="scramble-ans" style="margin-top: 12px;">Correct sentence: The cafe is just a stone's throw away</div>
+      </article>
+    </div>
+
+    <!-- HOMEWORK ASSIGNMENTS -->
+    <h2 class="section-title">🏠 6. Homework Assignments</h2>
+    <section class="card" style="margin-bottom: 24px; background: linear-gradient(145deg, var(--panel-light), var(--panel)); border-color: rgba(122, 181, 213, 0.25);">
+      <p style="font-size: 15px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;">
+        To solidify today's lesson, please complete the following homework assignments before our next Preply class:
+      </p>
+      <ul style="padding-left: 20px; color: var(--text); font-size: 14.5px; line-height: 1.8; display: grid; gap: 12px;">
+        <li>
+          <strong>🎙️ Speech Recorder Task:</strong> Go back to the <a href="./index.html" style="color: var(--primary); font-weight: bold; text-decoration: underline;">Paolo's Hub Dashboard</a> and open the **Recorder** tab. Record yourself explaining the directions from the **Bus Station** to the **Cinema**. Listen to the audio and ensure:
+          <br>
+          <span style="color: var(--accent); font-size: 13.5px; padding-left: 10px; display: inline-block;">&bull; The "h" in <em>hospital</em> (which you walk past) is clearly aspirated.</span>
+          <br>
+          <span style="color: var(--accent); font-size: 13.5px; padding-left: 10px; display: inline-block;">&bull; Final consonants are dry and crisp (no "left-uh" or "right-uh").</span>
+        </li>
+        <li>
+          <strong>✍️ Hometown Mapping:</strong> Write a brief paragraph describing how to get from your home in Italy to the nearest local supermarket or post office. Try to use at least two idioms learned in today's lesson (e.g. <em>a stone's throw</em>, <em>off the beaten track</em>, or <em>dead end</em>).
+        </li>
+        <li>
+          <strong>💬 Vocabulary Expansion Practice:</strong> Review the 12 spatial cards until you can say the meanings and Italian translations instantly. During our next call, we will do a fast-paced roleplay simulation where you act as a tour guide coordinating a trip to a remote villa in the hills.
+        </li>
+      </ul>
+    </section>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+      <button class="submit" type="button" onclick="checkAnswers()">Check my answers</button>
+      <button class="reset" type="button" onclick="resetQuiz()">Try again</button>
+      <button class="pdf-btn" type="button" onclick="downloadPDF()" id="pdf-btn" style="display:none;">Download PDF</button>
+    </div>
+  </main>
+
+  <footer>Made for Paolo's English practice &bull; Preply Hub</footer>
+
+  <script>
+    // ----------------------------------------------------
+    // MAP INTERACTION LOGIC
+    // ----------------------------------------------------
+    const routesData = {
+      cafe: {
+        path: "M 400,220 L 400,80 L 185,80 L 185,50",
+        desc: "To get to the Cafe: Walk North on Pine Street towards Main Street. Turn left onto Main Street. Walk past the Post Office, and the Cafe will be on your right.",
+        angle: 0
+      },
+      post_office: {
+        path: "M 400,220 L 400,80 L 310,80 L 310,50",
+        desc: "To get to the Post Office: Walk North on Pine Street towards Main Street. Turn left onto Main Street. The Post Office is immediately on your right, next to the Cafe.",
+        angle: 0
+      },
+      library: {
+        path: "M 400,220 L 400,80 L 487,80 L 487,50",
+        desc: "To get to the Library: Walk North on Pine Street towards Main Street. Turn right onto Main Street. The Library will be immediately on your left, opposite the Museum.",
+        angle: 0
+      },
+      cinema: {
+        path: "M 400,220 L 400,80 L 612,80 L 612,50",
+        desc: "To get to the Cinema: Walk North on Pine Street towards Main Street. Turn right onto Main Street. Go past the Library, and the Cinema will be on your left, at the corner of High Street.",
+        angle: 0
+      },
+      supermarket: {
+        path: "M 400,220 L 250,220 L 250,190",
+        desc: "To get to the Supermarket: Walk West on Broadway. Walk past the Museum on Pine Street. The Supermarket is on your right, next to the Park.",
+        angle: 270
+      },
+      museum: {
+        path: "M 400,220 L 550,220 L 550,190",
+        desc: "To get to the Museum: Walk East on Broadway. The Museum is on your left, opposite the School across Broadway.",
+        angle: 90
+      },
+      train_station: {
+        path: "M 400,220 L 760,220 L 760,190",
+        desc: "To get to the Train Station: Walk East on Broadway. Cross High Street. The Train Station is straight ahead, at the end of Broadway on the left.",
+        angle: 90
+      },
+      park: {
+        path: "M 400,220 L 40,220 L 40,190",
+        desc: "To get to the Park: Walk West on Broadway. Go past the Supermarket. The Park is on the right, at the corner of Park Road.",
+        angle: 270
+      },
+      bus_station: {
+        path: "M 400,220 L 40,220 L 40,250",
+        desc: "To get to the Bus Station: Walk West on Broadway. Turn left onto Park Road. The Bus Station will be immediately on your right.",
+        angle: 270
+      },
+      hospital: {
+        path: "M 400,220 L 400,300 L 250,300 L 250,330",
+        desc: "To get to the Hospital: Walk South on Pine Street. Cross Broadway. Turn right onto Maple Avenue. Walk past the School, and the Hospital is on your right.",
+        angle: 180
+      },
+      school: {
+        path: "M 400,220 L 400,300 L 550,300 L 550,330",
+        desc: "To get to the School: Walk South on Pine Street. Cross Broadway. Turn left onto Maple Avenue. The School will be on your left, next to the Gym.",
+        angle: 180
+      },
+      gym: {
+        path: "M 400,220 L 760,220 L 760,250",
+        desc: "To get to the Gym: Walk East on Broadway. Turn right onto High Street. The Gym will be on your left, at the corner of Maple Avenue.",
+        angle: 90
+      }
+    };
+
+    function drawSelectedRoute() {
+      const select = document.getElementById("route-selector");
+      const val = select.value;
+      if (!val) {
+        clearRoute();
+        return;
+      }
+      selectBuilding(val);
+    }
+
+    function selectBuilding(id) {
+      // Update dropdown selection
+      document.getElementById("route-selector").value = id;
+      
+      // Update building visual highlights
+      document.querySelectorAll(".building").forEach(el => el.classList.remove("active"));
+      const buildingEl = document.getElementById(`build-${id}`);
+      if (buildingEl) {
+        buildingEl.classList.add("active");
+      }
+
+      // Draw SVG Route path & rotate user direction arrow
+      const routeLine = document.getElementById("route-line");
+      const data = routesData[id];
+      if (data) {
+        routeLine.setAttribute("d", data.path);
+        routeLine.style.display = "block";
+        document.getElementById("directions-guide-text").innerText = data.desc;
+        
+        const arrow = document.getElementById("marker-arrow");
+        if (arrow) {
+          arrow.style.transform = `rotate(${data.angle}deg)`;
+        }
+      }
+    }
+
+    function clearRoute() {
+      document.querySelectorAll(".building").forEach(el => el.classList.remove("active"));
+      document.getElementById("route-line").style.display = "none";
+      document.getElementById("route-selector").value = "";
+      document.getElementById("directions-guide-text").innerText = "Select a destination building on the map or from the dropdown menu to see a route and step-by-step instructions.";
+      
+      const arrow = document.getElementById("marker-arrow");
+      if (arrow) {
+        arrow.style.transform = "rotate(0deg)";
+      }
+    }
+
+    // ----------------------------------------------------
+    // QUIZ LOGIC
+    // ----------------------------------------------------
+    const expectedTF = ["true", "true", "false", "false", "true"];
+    const expectedFIB = [
+      ["left"],
+      ["right"],
+      ["between"],
+      ["opposite", "across"],
+      ["ahead", "along", "west"]
+    ];
+    const expectedMC = ["b", "a", "b"];
+
+    function normalize(s) {
+      return (s || '').toLowerCase().replace(/[^a-z0-9\s/]/g,'').replace(/\s+/g,' ').trim();
+    }
+
+    function checkAnswers() {
+      let score = 0;
+      let totalGraded = expectedTF.length + expectedFIB.length + expectedMC.length + 1; // 5 + 5 + 3 + 1 = 14
+      
+      const tfResults = [];
+      const fibResults = [];
+      const mcResults = [];
+
+      // Check Exercise A: True/False
+      for (let i = 0; i < expectedTF.length; i++) {
+        const qDiv = document.getElementById(`tf-q-${i}`);
+        const ansDiv = document.getElementById(`tf-ans-${i}`);
+        const selected = document.querySelector(`input[name="tf${i}"]:checked`);
+        
+        qDiv.classList.remove('correct-alert', 'wrong-alert');
+        ansDiv.classList.add('show');
+        
+        const isCorrect = selected && selected.value === expectedTF[i];
+        if (isCorrect) {
+          score++;
+          qDiv.classList.add('correct-alert');
+        } else {
+          qDiv.classList.add('wrong-alert');
+        }
+        tfResults.push({
+          qNum: i + 1,
+          correct: isCorrect,
+          selected: selected ? (selected.value === "true" ? "True" : "False") : "(no answer)",
+          correctAnswer: expectedTF[i] === "true" ? "True" : "False"
+        });
+      }
+
+      // Check Exercise B: Fill in Blanks
+      for (let i = 0; i < expectedFIB.length; i++) {
+        const qDiv = document.getElementById(`fib-q-${i}`);
+        const ansDiv = document.getElementById(`fib-ans-${i}`);
+        const input = document.getElementById(`fib-input-${i}`);
+        
+        qDiv.classList.remove('correct-alert', 'wrong-alert');
+        ansDiv.classList.add('show');
+        
+        const userVal = normalize(input.value);
+        const isCorrect = expectedFIB[i].some(opt => normalize(opt) === userVal);
+        
+        if (isCorrect) {
+          score++;
+          qDiv.classList.add('correct-alert');
+        } else {
+          qDiv.classList.add('wrong-alert');
+        }
+        fibResults.push({
+          qNum: i + 1,
+          correct: isCorrect,
+          typed: input.value || "(no answer)",
+          correctAnswer: expectedFIB[i].join(" or ")
+        });
+      }
+
+      // Check Exercise C: Multiple Choice
+      for (let i = 0; i < expectedMC.length; i++) {
+        const qDiv = document.getElementById(`mc-q-${i}`);
+        const ansDiv = document.getElementById(`mc-ans-${i}`);
+        const selected = document.querySelector(`input[name="mc${i}"]:checked`);
+        
+        qDiv.classList.remove('correct-alert', 'wrong-alert');
+        ansDiv.classList.add('show');
+        
+        const isCorrect = selected && selected.value === expectedMC[i];
+        if (isCorrect) {
+          score++;
+          qDiv.classList.add('correct-alert');
+        } else {
+          qDiv.classList.add('wrong-alert');
+        }
+        mcResults.push({
+          qNum: i + 1,
+          correct: isCorrect,
+          selected: selected ? selected.value.toUpperCase() : "(no answer)",
+          correctAnswer: expectedMC[i].toUpperCase()
+        });
+      }
+
+      // Check Exercise D: Scrambled Sentence
+      const userSentence = selectedScrambledWords.map(s => s.word.toLowerCase()).join(" ");
+      const correctSentence = "the cafe is just a stone's throw away";
+      const isScrambleCorrect = userSentence === correctSentence;
+      
+      const scrambleCard = document.getElementById("ex-d-card");
+      const scrambleAns = document.getElementById("scramble-ans");
+      
+      scrambleCard.classList.remove('correct-alert', 'wrong-alert');
+      scrambleAns.classList.add('show');
+      
+      if (isScrambleCorrect) {
+        score++;
+        scrambleCard.classList.add('correct-alert');
+      } else {
+        scrambleCard.classList.add('wrong-alert');
+      }
+
+      const percent = Math.round((score / totalGraded) * 100);
+      const resultDiv = document.getElementById('result');
+      resultDiv.textContent = `Your score: ${score} / ${totalGraded} (${percent}%). ${score === totalGraded ? 'Fantastic navigation, Paolo!' : 'Review your directions and try again.'}`;
+      resultDiv.classList.add('show');
+      
+      document.getElementById('pdf-btn').style.display = 'inline-block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Save scores to window for PDF export
+      window.hwScore = score;
+      window.hwPercent = percent;
+      window.tfResults = tfResults;
+      window.fibResults = fibResults;
+      window.mcResults = mcResults;
+      window.scrambleCorrect = isScrambleCorrect;
+      window.scrambleUserSentence = selectedScrambledWords.map(s => s.word).join(" ") || "(no answer)";
+    }
+
+    function resetQuiz() {
+      // Clear forms
+      document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
+      document.querySelectorAll('input[type="text"]').forEach(el => el.value = '');
+      document.getElementById('speaking-response').value = '';
+      
+      // Hide answers and results
+      document.getElementById('result').classList.remove('show');
+      document.getElementById('pdf-btn').style.display = 'none';
+      document.querySelectorAll('.feedback-ans').forEach(el => el.classList.remove('show'));
+      document.querySelectorAll('.correct-alert, .wrong-alert').forEach(el => el.classList.remove('correct-alert', 'wrong-alert'));
+      clearRoute();
+      clearScramble();
+    }
+
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+      const margin = 50;
+      const maxWidth = 595 - margin * 2; // 495
+      let y = margin;
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(18);
+      doc.text("Paolo's Directions Homework Results", margin, y);
+      y += 24;
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(11);
+      doc.text(`Date: ${new Date().toLocaleDateString()}`, margin, y);
+      y += 16;
+      
+      doc.setFont('helvetica', 'bold');
+      doc.text(`Score: ${window.hwScore} / 14 (${window.hwPercent}%)`, margin, y);
+      y += 26;
+
+      // Exercise A
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.text("Exercise A: True or False (Based on Map)", margin, y);
+      y += 18;
+
+      window.tfResults.forEach(r => {
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(11);
+        doc.text(`Question ${r.qNum}: ${r.correct ? '[CORRECT]' : '[WRONG]'}`, margin, y);
+        y += 14;
+        doc.setFont('helvetica', 'normal');
+        doc.text(`Your Choice: ${r.selected}   |   Correct Answer: ${r.correctAnswer}`, margin, y);
+        y += 18;
+      });
+      y += 10;
+
+      // Exercise B
+      if (y > 720) { doc.addPage(); y = margin; }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.text("Exercise B: Tracing Routes (Fill in the Blanks)", margin, y);
+      y += 18;
+
+      window.fibResults.forEach(r => {
+        if (y > 740) { doc.addPage(); y = margin; }
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(11);
+        doc.text(`Sentence ${r.qNum}: ${r.correct ? '[CORRECT]' : '[WRONG]'}`, margin, y);
+        y += 14;
+        doc.setFont('helvetica', 'normal');
+        doc.text(`You typed: "${r.typed}"   |   Accepted answers: ${r.correctAnswer}`, margin, y);
+        y += 18;
+      });
+      y += 10;
+
+      // Exercise C
+      if (y > 720) { doc.addPage(); y = margin; }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.text("Exercise C: Concept Check & Written Prompt", margin, y);
+      y += 18;
+
+      window.mcResults.forEach(r => {
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(11);
+        doc.text(`Multiple Choice ${r.qNum}: ${r.correct ? '[CORRECT]' : '[WRONG]'}`, margin, y);
+        y += 14;
+        doc.setFont('helvetica', 'normal');
+        doc.text(`Your Selection: ${r.selected}   |   Correct Answer: ${r.correctAnswer}`, margin, y);
+        y += 18;
+      });
+      y += 10;
+
+      // Exercise D
+      if (y > 720) { doc.addPage(); y = margin; }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.text("Exercise D: Unscramble the Sentence", margin, y);
+      y += 18;
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.text(`Result: ${window.scrambleCorrect ? '[CORRECT]' : '[WRONG]'}`, margin, y);
+      y += 14;
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Your Sentence: "${window.scrambleUserSentence}"`, margin, y);
+      y += 14;
+      doc.text(`Correct Sentence: "The cafe is just a stone's throw away"`, margin, y);
+      y += 22;
+
+      // Written prompt response
+      if (y > 660) { doc.addPage(); y = margin; }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.text("Paolo's Written Directions Response:", margin, y);
+      y += 16;
+      doc.setFont('helvetica', 'normal');
+      
+      const userText = document.getElementById('speaking-response').value || '(no response typed)';
+      const splitLines = doc.splitTextToSize(userText, maxWidth);
+      doc.text(splitLines, margin, y);
+      y += splitLines.length * 14 + 10;
+
+      doc.save(`paolo-directions-homework-${new Date().toISOString().slice(0, 10)}.pdf`);
+    }
+
+    // ----------------------------------------------------
+    // SCRAMBLED SENTENCE LOGIC (EXERCISE D)
+    // ----------------------------------------------------
+    const scrambledWords = ["is", "stone's", "the", "throw", "away", "just", "cafe", "a"];
+    let selectedScrambledWords = [];
+
+    function initScramble() {
+      const pool = document.getElementById("scramble-words-pool");
+      if (!pool) return;
+      pool.innerHTML = "";
+      
+      // Shuffle words
+      const shuffled = [...scrambledWords].sort(() => Math.random() - 0.5);
+      
+      shuffled.forEach((word, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "chip";
+        btn.style.cursor = "pointer";
+        btn.style.border = "1px solid rgba(201, 162, 39, 0.3)";
+        btn.style.background = "rgba(201, 162, 39, 0.08)";
+        btn.style.color = "var(--primary)";
+        btn.style.padding = "6px 12px";
+        btn.style.fontSize = "13.5px";
+        btn.innerText = word;
+        btn.id = `scramble-btn-${idx}`;
+        btn.onclick = () => selectScrambleWord(word, `scramble-btn-${idx}`);
+        pool.appendChild(btn);
+      });
+      clearScramble();
+    }
+
+    function selectScrambleWord(word, btnId) {
+      const btn = document.getElementById(btnId);
+      if (!btn || btn.style.display === "none") return;
+      
+      btn.style.display = "none";
+      selectedScrambledWords.push({ word, btnId });
+      updateScrambleAnswer();
+    }
+
+    function updateScrambleAnswer() {
+      const container = document.getElementById("scramble-answer-container");
+      const placeholder = document.getElementById("scramble-placeholder");
+      if (!container) return;
+      
+      container.querySelectorAll(".answer-chip").forEach(el => el.remove());
+      
+      if (selectedScrambledWords.length === 0) {
+        placeholder.style.display = "inline";
+      } else {
+        placeholder.style.display = "none";
+        selectedScrambledWords.forEach((item, index) => {
+          const chip = document.createElement("span");
+          chip.className = "answer-chip";
+          chip.style.background = "rgba(122, 181, 213, 0.12)";
+          chip.style.border = "1px solid rgba(122, 181, 213, 0.3)";
+          chip.style.color = "var(--accent)";
+          chip.style.padding = "4px 10px";
+          chip.style.borderRadius = "8px";
+          chip.style.fontSize = "13.5px";
+          chip.style.fontWeight = "bold";
+          chip.style.cursor = "pointer";
+          chip.innerText = item.word;
+          chip.onclick = () => removeScrambleWord(index);
+          container.appendChild(chip);
+        });
+      }
+    }
+
+    function removeScrambleWord(index) {
+      const removed = selectedScrambledWords.splice(index, 1)[0];
+      const btn = document.getElementById(removed.btnId);
+      if (btn) btn.style.display = "inline-block";
+      updateScrambleAnswer();
+    }
+
+    function clearScramble() {
+      selectedScrambledWords = [];
+      document.querySelectorAll("#scramble-words-pool button").forEach(btn => btn.style.display = "inline-block");
+      updateScrambleAnswer();
+      const card = document.getElementById("ex-d-card");
+      if (card) {
+        card.classList.remove("correct-alert", "wrong-alert");
+      }
+      const ans = document.getElementById("scramble-ans");
+      if (ans) {
+        ans.classList.remove("show");
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      initScramble();
+    });
+  </script>
+</body>
+</html>

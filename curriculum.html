@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your English Conversation & Idioms Curriculum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #0d1b35;
+      color: #f8f1dc;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+    a { color: inherit; text-decoration: none; }
+    .page {
+      width: min(1000px, 100%);
+      margin: 0 auto;
+      padding: 28px 18px;
+    }
+    .header-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #c9a227;
+      font-weight: 900;
+      font-size: 15px;
+      background: rgba(201, 162, 39, 0.1);
+      border: 1px solid rgba(201, 162, 39, 0.3);
+      padding: 8px 16px;
+      border-radius: 12px;
+      transition: all 0.2s;
+    }
+    .back-btn:hover {
+      background: #c9a227;
+      color: #0d1b35;
+      transform: translateX(-3px);
+    }
+    h1 {
+      font-family: 'Fredoka One', cursive;
+      color: #c9a227;
+      font-size: clamp(28px, 5vw, 42px);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: #a9bed2;
+      font-size: clamp(15px, 1.8vw, 18px);
+      line-height: 1.5;
+      margin-bottom: 36px;
+      max-width: 720px;
+    }
+    .lesson-card {
+      background: linear-gradient(145deg, #142746, #1a2e50);
+      border: 1px solid rgba(201, 162, 39, 0.2);
+      border-radius: 24px;
+      padding: 30px;
+      margin-bottom: 24px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      transition: border-color 0.2s;
+    }
+    .lesson-card:hover {
+      border-color: rgba(201, 162, 39, 0.5);
+    }
+    .lesson-badge {
+      display: inline-block;
+      background: rgba(201, 162, 39, 0.15);
+      color: #c9a227;
+      font-family: 'Fredoka One', cursive;
+      font-size: 13px;
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .lesson-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 24px;
+      color: #f8f1dc;
+      margin-bottom: 10px;
+    }
+    .lesson-focus {
+      color: #cbd5e1;
+      font-size: 15px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+      padding-bottom: 14px;
+    }
+    .section-subtitle {
+      font-family: 'Fredoka One', cursive;
+      font-size: 15px;
+      color: #c9a227;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .idiom-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .idiom-item {
+      background: rgba(13, 27, 53, 0.4);
+      border: 1px solid rgba(122, 155, 181, 0.12);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .idiom-phrase {
+      font-family: 'Fredoka One', cursive;
+      font-size: 16px;
+      color: #7ab5d5;
+      margin-bottom: 4px;
+    }
+    .idiom-italian {
+      font-size: 12px;
+      color: #c9a227;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .idiom-meaning {
+      font-size: 13px;
+      color: #a9bed2;
+      line-height: 1.4;
+    }
+    .focus-tip {
+      background: rgba(122, 181, 213, 0.06);
+      border-left: 4px solid #7ab5d5;
+      padding: 12px 16px;
+      border-radius: 0 12px 12px 0;
+      font-size: 14px;
+      color: #b9c9d8;
+      line-height: 1.5;
+    }
+    .focus-tip strong {
+      color: #7ab5d5;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header-nav">
+      <a href="./index.html" class="back-btn">← Back to Hub</a>
+      <span style="color:#7a9bb5; font-size:14px; font-weight:700;">Student: Paolo</span>
+    </header>
+
+    <h1>9-Lesson English Conversation & Idioms</h1>
+    <p class="subtitle">A custom syllabus designed to target speaking fluency, vocabulary expansion, and structural corrections specifically tailored for an Italian speaker.</p>
+
+    <!-- LESSON 1 -->
+    <div class="lesson-card">
+      <span class="lesson-badge">Lesson 1</span>
+      <h2 class="lesson-title">Everyday Habits & Socializing</h2>
+      <p class="lesson-focus"><strong>Conversation Focus:</strong> Discussing daily routines, lifestyles, hobbies, and social interactions with ease and confidence.</p>
+      
+      <h3 class="section-subtitle">Target Idioms & Sayings</h3>
+      <div class="idiom-grid">
+        <div class="idiom-item">
+          <div class="idiom-phrase">Hit the ground running</div>
+          <div class="idiom-italian">🇮🇹 Partire a pieno ritmo / Iniziare con energia</div>
+          <div class="idiom-meaning">To start something quickly with energy and enthusiasm.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Keep at it</div>
+          <div class="idiom-italian">🇮🇹 Continua così / Non mollare</div>
+          <div class="idiom-meaning">To continue trying or working hard at something.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Go the extra mile</div>
+          <div class="idiom-italian">🇮🇹 Fare il passo in più</div>
+          <div class="idiom-meaning">To make more effort than expected or required.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Bite off more than you can chew</div>
+          <div class="idiom-italian">🇮🇹 Fare il passo più lungo della gamba</div>
+          <div class="idiom-meaning">To try to do something too difficult for you.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Easier said than done</div>
+          <div class="idiom-italian">🇮🇹 Più facile a dirsi che a farsi</div>
+          <div class="idiom-meaning">Something sounds simple but is much harder in practice.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">On the same page</div>
+          <div class="idiom-italian">🇮🇹 Essere sulla stessa lunghezza d'onda</div>
+          <div class="idiom-meaning">To have the same understanding about something.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Beat around the bush</div>
+          <div class="idiom-italian">🇮🇹 Menare il can per l'aia / Girare intorno</div>
+          <div class="idiom-meaning">To avoid the main topic; to be indirect.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Get straight to the point</div>
+          <div class="idiom-italian">🇮🇹 Andare dritti al punto</div>
+          <div class="idiom-meaning">To say clearly and directly what you mean.</div>
+        </div>
+      </div>
+
+      <div class="focus-tip">
+        <strong>👄 Speech Mechanics Target:</strong> Focus on pronouncing the breathy <strong>/h/</strong> sound in <em>habit</em>, <em>hobby</em>, <em>hit</em>, and <em>have</em>. Avoid adding a quiet vowel (epenthesis) to final consonants in <em>keep</em>, <em>point</em>, and <em>page</em>.
+      </div>
+    </div>
+
+    <!-- LESSON 2 -->
+    <div class="lesson-card">
+      <span class="lesson-badge">Lesson 2</span>
+      <h2 class="lesson-title">Planning Group Trips & Event Coordination</h2>
+      <p class="lesson-focus"><strong>Conversation Focus:</strong> Discussing schedules with friends, coordinating arrivals, and deciding on travel plans together.</p>
+      
+      <h3 class="section-subtitle">Target Idioms & Sayings</h3>
+      <div class="idiom-grid">
+        <div class="idiom-item">
+          <div class="idiom-phrase">Back to the drawing board</div>
+          <div class="idiom-italian">🇮🇹 Ricominciare da capo</div>
+          <div class="idiom-meaning">To start planning over because the previous plan failed.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Cut corners</div>
+          <div class="idiom-italian">🇮🇹 Prendere scorciatoie / Risparmiare sulla qualità</div>
+          <div class="idiom-meaning">To do something in the easiest, cheapest, or fastest way (often dropping quality).</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Learn the ropes</div>
+          <div class="idiom-italian">🇮🇹 Imparare come fare qualcosa</div>
+          <div class="idiom-meaning">To learn the basics of how a new hobby or activity is done.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">In the loop</div>
+          <div class="idiom-italian">🇮🇹 Tenere informato / Al corrente</div>
+          <div class="idiom-meaning">To be kept informed about travel updates or social plans.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">By the book</div>
+          <div class="idiom-italian">🇮🇹 Secondo le regole</div>
+          <div class="idiom-meaning">Doing something strictly according to rules or guidelines (like playing board games).</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Touch base</div>
+          <div class="idiom-italian">🇮🇹 Contattare brevemente / Sentirsi</div>
+          <div class="idiom-meaning">To make brief contact with a friend to catch up or coordinate.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Put on hold</div>
+          <div class="idiom-italian">🇮🇹 Mettere in pausa / Sospendere</div>
+          <div class="idiom-meaning">To delay or pause an activity or plan temporarily.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Call it a day</div>
+          <div class="idiom-italian">🇮🇹 Finire per oggi / Concludere un'attività</div>
+          <div class="idiom-meaning">To stop doing an activity for the rest of the day.</div>
+        </div>
+      </div>
+
+      <div class="focus-tip">
+        <strong>👄 Speech Mechanics Target:</strong> Contrast the final voiceless <strong>/s/</strong> and voiced <strong>/z/</strong> sounds. Practice linking the final consonants to vowels seamlessly: <em>"Call-it-a-day"</em>.
+      </div>
+    </div>
+
+    <!-- LESSON 3 -->
+    <div class="lesson-card">
+      <span class="lesson-badge">Lesson 3</span>
+      <h2 class="lesson-title">Making Plans & Reaching Agreement with Friends</h2>
+      <p class="lesson-focus"><strong>Conversation Focus:</strong> Deciding on weekend activities, splitting trip expenses, and planning group dinners.</p>
+      
+      <h3 class="section-subtitle">Target Idioms & Sayings</h3>
+      <div class="idiom-grid">
+        <div class="idiom-item">
+          <div class="idiom-phrase">See eye to eye</div>
+          <div class="idiom-italian">🇮🇹 Essere d'accordo</div>
+          <div class="idiom-meaning">To agree fully with someone.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Play devil's advocate</div>
+          <div class="idiom-italian">🇮🇹 Fare l'avvocato del diavolo</div>
+          <div class="idiom-meaning">To present an opposing view for the sake of argument.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">A penny for your thoughts</div>
+          <div class="idiom-italian">🇮🇹 A cosa stai pensando?</div>
+          <div class="idiom-meaning">A way of asking what someone is thinking about.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Elephant in the room</div>
+          <div class="idiom-italian">🇮🇹 Un problema evidente ignorato</div>
+          <div class="idiom-meaning">An obvious problem that people avoid talking about.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Take it with a grain of salt</div>
+          <div class="idiom-italian">🇮🇹 Prenderlo con le pinze</div>
+          <div class="idiom-meaning">To listen to information skeptically; not taking it literally.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Break the ice</div>
+          <div class="idiom-italian">🇮🇹 Rompere il ghiaccio</div>
+          <div class="idiom-meaning">To relieve tension or initiate social interaction.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Close, but no cigar</div>
+          <div class="idiom-italian">🇮🇹 Quasi, ma non del tutto</div>
+          <div class="idiom-meaning">Very near to success but not quite succeeding.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">No pain, no gain</div>
+          <div class="idiom-italian">🇮🇹 Nessun risultato senza sforzo</div>
+          <div class="idiom-meaning">You must work hard and suffer to make progress.</div>
+        </div>
+      </div>
+
+      <div class="focus-tip">
+        <strong>👄 Speech Mechanics Target:</strong> Focus on clear alveolar nasal <strong>/n/</strong> endings in <em>pain</em> and <em>gain</em> without appending extra vowel clicks.
+      </div>
+    </div>
+
+    <!-- LESSON 4 -->
+    <div class="lesson-card">
+      <span class="lesson-badge">Lesson 4</span>
+      <h2 class="lesson-title">Busy Schedules & Traveling</h2>
+      <p class="lesson-focus"><strong>Conversation Focus:</strong> Discussing busy weeks, coordinating timings, and making it to events in the nick of time.</p>
+      
+      <h3 class="section-subtitle">Target Idioms & Sayings</h3>
+      <div class="idiom-grid">
+        <div class="idiom-item">
+          <div class="idiom-phrase">Against the clock</div>
+          <div class="idiom-italian">🇮🇹 Corsa contro il tempo</div>
+          <div class="idiom-meaning">Working with a very strict limit of time.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Down to the wire</div>
+          <div class="idiom-italian">🇮🇹 All'ultimo minuto / All'ultimo secondo</div>
+          <div class="idiom-meaning">Up to the very last possible moment.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">In the nick of time</div>
+          <div class="idiom-italian">🇮🇹 Giusto in tempo</div>
+          <div class="idiom-meaning">Just at the last possible moment.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Burn the midnight oil</div>
+          <div class="idiom-italian">🇮🇹 Fare le ore piccole per lavorare/studiare</div>
+          <div class="idiom-meaning">To study or work late into the night.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Once in a blue moon</div>
+          <div class="idiom-italian">🇮🇹 Una volta ogni morte di papa</div>
+          <div class="idiom-meaning">Very rarely.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Out of hand</div>
+          <div class="idiom-italian">🇮🇹 Sfuggire di mano / Fuori controllo</div>
+          <div class="idiom-meaning">Out of control.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">On thin ice</div>
+          <div class="idiom-italian">🇮🇹 Essere in una situazione rischiosa</div>
+          <div class="idiom-meaning">To be in a risky position or situation.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Under the weather</div>
+          <div class="idiom-italian">🇮🇹 Non sentirsi bene / Giù di corda</div>
+          <div class="idiom-meaning">Slightly sick or unwell.</div>
+        </div>
+      </div>
+
+      <div class="focus-tip">
+        <strong>👄 Speech Mechanics Target:</strong> Slide smoothly into initial consonant clusters like <strong>/st/</strong> or <strong>/sp/</strong> (e.g. <em>stress</em>, <em>speak</em>) without inserting an initial "e" or "i" sound.
+      </div>
+    </div>
+
+    <!-- LESSON 5 -->
+    <div class="lesson-card">
+      <span class="lesson-badge">Lesson 5</span>
+      <h2 class="lesson-title">Decision Making & Choosing Activities</h2>
+      <p class="lesson-focus"><strong>Conversation Focus:</strong> Deciding on options, making choices with friends, and facing the consequences of small errors.</p>
+      
+      <h3 class="section-subtitle">Target Idioms & Sayings</h3>
+      <div class="idiom-grid">
+        <div class="idiom-item">
+          <div class="idiom-phrase">The ball is in your court</div>
+          <div class="idiom-italian">🇮🇹 La palla passa a te / Tocca a te decidere</div>
+          <div class="idiom-meaning">It is your responsibility to make the next decision or step.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Call the shots</div>
+          <div class="idiom-italian">🇮🇹 Dettare legge / Prendere le decisioni</div>
+          <div class="idiom-meaning">To make the decisions or be in charge.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Sit on the fence</div>
+          <div class="idiom-italian">🇮🇹 Essere indeciso / Non prendere posizione</div>
+          <div class="idiom-meaning">To avoid making a decision or choice.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Throw caution to the wind</div>
+          <div class="idiom-italian">🇮🇹 Gettare la prudenza al vento / Rischiare</div>
+          <div class="idiom-meaning">To take a huge risk or act without worry.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Up in the air</div>
+          <div class="idiom-italian">🇮🇹 Ancora incerto / In sospeso</div>
+          <div class="idiom-meaning">Unresolved or undecided.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Take a rain check</div>
+          <div class="idiom-italian">🇮🇹 Rimandare a un'altra volta</div>
+          <div class="idiom-meaning">Politely decline an invitation now, but suggest doing it later.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Miss the boat</div>
+          <div class="idiom-italian">🇮🇹 Perdere l'occasione</div>
+          <div class="idiom-meaning">To miss an opportunity.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Face the music</div>
+          <div class="idiom-italian">🇮🇹 Affrontare le conseguenze</div>
+          <div class="idiom-meaning">To accept criticism or consequences for actions.</div>
+        </div>
+      </div>
+
+      <div class="focus-tip">
+        <strong>👄 Speech Mechanics Target:</strong> Practice contrasting long vs. short English vowels. Ensure <em>sit</em> (/sɪt/) does not sound like <em>seat</em> (/siːt/) and <em>miss</em> (/mɪs/) does not sound like <em>mees</em>.
+      </div>
+    </div>
+
+    <!-- LESSON 6 -->
+    <div class="lesson-card">
+      <span class="lesson-badge">Lesson 6</span>
+      <h2 class="lesson-title">Sharing Stories & Solving Everyday Glitches</h2>
+      <p class="lesson-focus"><strong>Conversation Focus:</strong> Discussing past trips, describing funny mishaps, and resolving everyday household issues.</p>
+      
+      <h3 class="section-subtitle">Target Idioms & Sayings</h3>
+      <div class="idiom-grid">
+        <div class="idiom-item">
+          <div class="idiom-phrase">Cry over spilled milk</div>
+          <div class="idiom-italian">🇮🇹 Piangere sul latte versato</div>
+          <div class="idiom-meaning">To worry about past mistakes that cannot be changed.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Bark up the wrong tree</div>
+          <div class="idiom-italian">🇮🇹 Prendere una strada sbagliata / Rivolgersi a chi non c'entra</div>
+          <div class="idiom-meaning">To pursue a line of thought or action that is misguided.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Blow off steam</div>
+          <div class="idiom-italian">🇮🇹 Sfogarsi / Scaricare la tensione</div>
+          <div class="idiom-meaning">To do something to get rid of stress or anger.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Cross that bridge when we come to it</div>
+          <div class="idiom-italian">🇮🇹 Affrontare il problema quando si presenterà</div>
+          <div class="idiom-meaning">To deal with a problem when it happens, not before.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Spill the beans</div>
+          <div class="idiom-italian">🇮🇹 Sputare il rospo / Svelare il segreto</div>
+          <div class="idiom-meaning">To reveal secret information.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Piece of cake</div>
+          <div class="idiom-italian">🇮🇹 Un gioco da ragazzi</div>
+          <div class="idiom-meaning">Something very easy to do.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">A blessing in disguise</div>
+          <div class="idiom-italian">🇮🇹 Una fortuna sfacciata / Un male per un bene</div>
+          <div class="idiom-meaning">Something that seems bad at first but turns out well.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Best of both worlds</div>
+          <div class="idiom-italian">🇮🇹 Il meglio di due mondi</div>
+          <div class="idiom-meaning">Enjoying the advantages of two different situations at once.</div>
+        </div>
+      </div>
+
+      <div class="focus-tip">
+        <strong>👄 Speech Mechanics Target:</strong> Focus on the voiceless <strong>/θ/</strong> sound (e.g. <em>think</em>, <em>through</em>) rather than substituting it with <strong>/t/</strong> or <strong>/s/</strong>.
+      </div>
+    </div>
+
+    <!-- LESSON 7 -->
+    <div class="lesson-card">
+      <span class="lesson-badge">Lesson 7</span>
+      <h2 class="lesson-title">Making Friends & Social Gatherings</h2>
+      <p class="lesson-focus"><strong>Conversation Focus:</strong> Starting conversations with new neighbors, introducing friends, and talking about local spots.</p>
+      
+      <h3 class="section-subtitle">Target Idioms & Sayings</h3>
+      <div class="idiom-grid">
+        <div class="idiom-item">
+          <div class="idiom-phrase">Break a leg</div>
+          <div class="idiom-italian">🇮🇹 In bocca al lupo</div>
+          <div class="idiom-meaning">A superstitious way to wish someone good luck.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Costs an arm and a leg</div>
+          <div class="idiom-italian">🇮🇹 Costa un occhio della testa</div>
+          <div class="idiom-meaning">Very expensive.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">A dime a dozen</div>
+          <div class="idiom-italian">🇮🇹 Molto comune / Facile da trovare</div>
+          <div class="idiom-meaning">Very common and not of much value.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Through thick and thin</div>
+          <div class="idiom-italian">🇮🇹 Nella buona e nella cattiva sorte</div>
+          <div class="idiom-meaning">Through all difficulties and good times.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Add insult to injury</div>
+          <div class="idiom-italian">🇮🇹 Oltre al danno la beffa</div>
+          <div class="idiom-meaning">To make a bad situation even worse.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Hear it through the grapevine</div>
+          <div class="idiom-italian">🇮🇹 Venir a sapere per via indiretta</div>
+          <div class="idiom-meaning">To hear rumors or gossip from informal sources.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Live and learn</div>
+          <div class="idiom-italian">🇮🇹 Sbagliando si impara</div>
+          <div class="idiom-meaning">To learn from your errors or experiences.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">So far, so good</div>
+          <div class="idiom-italian">🇮🇹 Fino a qui tutto bene</div>
+          <div class="idiom-meaning">Things have gone well up to this point.</div>
+        </div>
+      </div>
+
+      <div class="focus-tip">
+        <strong>👄 Speech Mechanics Target:</strong> Focus on English syllable stress patterns in multi-syllable words and link final consonants in fast speech.
+      </div>
+    </div>
+
+    <!-- LESSON 8 -->
+    <div class="lesson-card">
+      <span class="lesson-badge">Lesson 8</span>
+      <h2 class="lesson-title">Storytelling & Telling Funny Tales</h2>
+      <p class="lesson-focus"><strong>Conversation Focus:</strong> Recounting stories to a group, sharing personal passions, and giving speeches at a celebration.</p>
+      
+      <h3 class="section-subtitle">Target Idioms & Sayings</h3>
+      <div class="idiom-grid">
+        <div class="idiom-item">
+          <div class="idiom-phrase">Get the ball rolling</div>
+          <div class="idiom-italian">🇮🇹 Dare inizio alle danze / Avviare</div>
+          <div class="idiom-meaning">To start a process or activity.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Draw the line</div>
+          <div class="idiom-italian">🇮🇹 Porre un limite</div>
+          <div class="idiom-meaning">To set a limit on what you will allow or do.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Keep your chin up</div>
+          <div class="idiom-italian">🇮🇹 Tieni duro / Non abbatterti</div>
+          <div class="idiom-meaning">To remain cheerful and hopeful in a difficult situation.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Think outside the box</div>
+          <div class="idiom-italian">🇮🇹 Pensare fuori dagli schemi</div>
+          <div class="idiom-meaning">To think creatively, using unconventional methods.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Pull yourself together</div>
+          <div class="idiom-italian">🇮🇹 Riprenditi / Datti un contegno</div>
+          <div class="idiom-meaning">To regain control of your emotions and act calmly.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Burn bridges</div>
+          <div class="idiom-italian">🇮🇹 Tagliare i ponti</div>
+          <div class="idiom-meaning">To destroy relationships or pathways back.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">Actions speak louder than words</div>
+          <div class="idiom-italian">🇮🇹 I fatti contano più delle parole</div>
+          <div class="idiom-meaning">What you do has a stronger impact than what you say.</div>
+        </div>
+        <div class="idiom-item">
+          <div class="idiom-phrase">A penny for your thoughts</div>
+          <div class="idiom-italian">🇮🇹 Cosa ti passa per la testa?</div>
+          <div class="idiom-meaning">Asking for someone's opinion or thoughts.</div>
+        </div>
+      </div>
+
+      <div class="focus-tip">
+        <strong>👄 Speech Mechanics Target:</strong> Sustain continuous breath flow and avoid dropping final consonants (e.g. <em>think</em>, <em>keep</em>, <em>pitch</em>).
+      </div>
+    </div>
+
+    <!-- LESSON 9 -->
+    <div class="lesson-card" style="border-color: rgba(201, 162, 39, 0.6); background: rgba(201, 162, 39, 0.04);">
+      <span class="lesson-badge" style="background: #c9a227; color: #0d1b35;">Lesson 9</span>
+      <h2 class="lesson-title" style="color: #c9a227;">Capstone Social Simulation</h2>
+      <p class="lesson-focus"><strong>Conversation Focus:</strong> Sharing a 3-minute story about a past trip or hobby, integrating target idioms naturally in a social conversation.</p>
+      
+      <div class="focus-tip" style="background: rgba(201, 162, 39, 0.1); border-left-color: #c9a227;">
+        <strong>👄 Capstone Speech Challenge:</strong> Paolo will share a 3-minute story about a memorable trip or a hobby. He must use at least 4 idioms from the curriculum naturally, demonstrating clear consonant releases, breathy /h/ sounds, proper preposition choices, and correct stress timing.
+      </div>
+      <div style="text-align: center; margin-top: 24px;">
+        <a href="./index.html" class="back-btn" style="background:#c9a227; color:#0d1b35;">Back to Dashboard</a>
+      </div>
+    </div>
+
+  </main>
+</body>
+</html>

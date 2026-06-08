@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect 4 – Everyday Social English</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d1b35;
+            --panel: #142746;
+            --panel-light: #1a2e50;
+            --primary: #c9a227;
+            --primary-hover: #e5b934;
+            --accent: #7ab5d5;
+            --text: #f8f1dc;
+            --text-muted: #a9bed2;
+            --correct: #2ecc71;
+            
+            --p1: #ef4444;
+            --p2: #c9a227;
+            --board: #1a325c;
+            --slot-empty: #0d1b35;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px 12px 48px;
+        }
+
+        header {
+            width: min(1000px, 100%);
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.15);
+            padding-bottom: 14px;
+        }
+
+        .back-btn {
+            border: 1.5px solid #2a4060;
+            color: var(--primary);
+            border-radius: 999px;
+            padding: 8px 18px;
+            font-weight: 900;
+            background: var(--panel);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .back-btn:hover {
+            background: rgba(201, 162, 39, 0.08);
+            border-color: var(--primary);
+        }
+
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 28px;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+        }
+
+        .status-bar {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.4rem;
+            padding: 12px 30px;
+            border-radius: 50px;
+            margin-bottom: 24px;
+            background: var(--panel);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+            transition: all 0.3s;
+            text-align: center;
+            width: fit-content;
+        }
+        .p1-turn { color: var(--p1); border: 3px solid var(--p1); }
+        .p2-turn { color: var(--p2); border: 3px solid var(--p2); }
+
+        .game-layout {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 30px;
+            width: min(1200px, 100%);
+            align-items: start;
+        }
+
+        .board-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--panel);
+            padding: 24px;
+            border-radius: 28px;
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .column-numbers {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            width: 100%;
+            max-width: 490px;
+            margin-bottom: 8px;
+        }
+
+        .col-num {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.3rem;
+            color: var(--text);
+            text-align: center;
+            background: var(--panel-light);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 4px 0;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.15s;
+        }
+        .col-num:hover {
+            background: var(--primary);
+            color: var(--bg);
+            transform: translateY(-2px);
+        }
+        .col-num.full {
+            color: #5a7090;
+            background: rgba(0,0,0,0.2);
+            cursor: not-allowed;
+            transform: none;
+            border-color: transparent;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            background: var(--board);
+            padding: 14px;
+            border-radius: 20px;
+            gap: 10px;
+            max-width: 490px;
+            width: 100%;
+            box-shadow: 0 10px 0 #0e203f, 0 12px 30px rgba(0,0,0,0.4);
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 10px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 12px;
+            transition: background 0.2s;
+        }
+        .column:hover { background: rgba(255,255,255,0.06); }
+
+        .slot {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--slot-empty);
+            border: 2px solid rgba(0,0,0,0.15);
+            box-shadow: inset 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .slot.red   { background: var(--p1) !important; box-shadow: 0 0 14px rgba(239,68,68,0.7), inset 0 -4px 6px rgba(0,0,0,0.3); }
+        .slot.yellow{ background: var(--p2) !important; box-shadow: 0 0 14px rgba(201,162,39,0.7), inset 0 -4px 6px rgba(0,0,0,0.3); }
+
+        /* Left side instructions panel */
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .how-to-play {
+            background: var(--panel);
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        }
+        .htp-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 14px;
+            border-bottom: 1px dashed rgba(201, 162, 39, 0.2);
+            padding-bottom: 8px;
+        }
+        .htp-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+        .htp-num {
+            background: var(--primary);
+            color: var(--bg);
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fredoka One', cursive;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        /* Overlay modal */
+        #overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 27, 53, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        #q-card {
+            background: var(--panel);
+            border: 2px solid var(--primary);
+            border-radius: 28px;
+            max-width: 960px;
+            width: 100%;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+            animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            overflow: hidden;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.85); opacity: 0; }
+            to   { transform: scale(1);   opacity: 1; }
+        }
+
+        .q-main {
+            padding: 30px;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .q-visuals {
+            padding: 30px;
+            background: rgba(10, 15, 30, 0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .player-badge {
+            font-family: 'Fredoka One', cursive;
+            font-size: 0.9rem;
+            padding: 6px 18px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 16px;
+            color: var(--bg);
+            width: fit-content;
+        }
+        .badge-red    { background: var(--p1); }
+        .badge-yellow { background: var(--p2); }
+
+        #q-text {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        #q-translation {
+            font-size: 1.05rem;
+            color: var(--accent);
+            margin-bottom: 18px;
+            min-height: 24px;
+            font-style: italic;
+        }
+
+        .translate-btn {
+            background: rgba(255,255,255,0.03);
+            border: 1.5px solid #2a4060;
+            color: var(--primary);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 20px;
+            align-self: flex-start;
+            transition: all 0.2s;
+        }
+        .translate-btn:hover { background: rgba(201, 162, 39, 0.08); border-color: var(--primary); }
+
+        #idiom-prompt {
+            margin-top: auto;
+            padding: 16px;
+            border-radius: 16px;
+            background: rgba(201, 162, 39, 0.08);
+            border: 1.5px dashed var(--primary);
+            text-align: left;
+        }
+        #idiom-prompt span.title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 0.8rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 4px;
+        }
+        #idiom-phrase {
+            font-size: 1.2rem;
+            color: var(--text);
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 900;
+        }
+        #idiom-hint {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .judge-section {
+            margin-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .judge-section p {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+        .judge-btns { display: flex; gap: 14px; justify-content: center; }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            font-weight: 900;
+            font-family: 'Nunito', sans-serif;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .btn:hover  { transform: translateY(-2px); }
+        .btn:active { transform: translateY(1px); }
+        .btn-yes { background: var(--correct); color: var(--bg); }
+        .btn-no  { background: #3c4f74; color: var(--text); }
+
+        /* Vocal tract and Speech Recorder integrations */
+        .vis-section-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--accent);
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+
+        .mini-vocal-tract {
+            width: 100%;
+            height: 140px;
+            background: var(--bg);
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 6px;
+        }
+
+        .articulator {
+            fill: none;
+            stroke: #2a4060;
+            stroke-width: 4;
+            stroke-linecap: round;
+        }
+        .articulator-fill {
+            fill: rgba(42, 64, 96, 0.15);
+            stroke: #2a4060;
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+        .mini-vocal-tract .active {
+            stroke: var(--primary) !important;
+            filter: drop-shadow(0 0 4px var(--primary));
+        }
+        .mini-vocal-tract .active.articulator-fill {
+            fill: rgba(201, 162, 39, 0.15);
+        }
+
+        .mini-recorder {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .mini-canvas-container {
+            width: 100%;
+            height: 70px;
+            background: #070a13;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        #mini-waveform {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .rec-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .rec-btn {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1.5px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
+            padding: 8px 14px;
+            font-size: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 800;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .rec-btn.recording {
+            background: #ef4444;
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+        .rec-btn.recording .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: white;
+        }
+        .rec-play {
+            background: var(--panel-light);
+            border: 1.5px solid #2a4060;
+            color: var(--primary);
+            padding: 8px 14px;
+            font-size: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 800;
+            transition: all 0.2s;
+        }
+        .rec-play:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .mini-rec-time {
+            font-family: monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+
+        /* Win Overlay */
+        #win-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 27, 53, 0.97);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        #win-card {
+            background: var(--panel);
+            border: 2px solid var(--primary);
+            padding: 44px 50px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            max-width: 500px;
+            width: 100%;
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #win-card h2 { font-family: 'Fredoka One', cursive; font-size: 2.8rem; margin-bottom: 8px; }
+        #win-card p  { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 24px; }
+        .btn-restart { background: var(--primary); color: var(--bg); padding: 14px 34px; font-size: 1.1rem; }
+
+        @keyframes pieceDrop {
+            from { transform: translateY(var(--drop-y)); }
+            to   { transform: translateY(0); }
+        }
+        .slot.dropping {
+            animation: pieceDrop 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        .board { overflow: hidden; }
+
+        @media (max-width: 900px) {
+            .game-layout {
+                grid-template-columns: 1fr;
+            }
+            #q-card {
+                grid-template-columns: 1fr;
+            }
+            .q-main {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div style="display:flex; align-items:center; gap:14px;">
+            <h1 style="font-family:'Fredoka One', cursive; color:var(--primary); font-size:24px;">💬 Connect 4 Game</h1>
+        </div>
+        <a class="back-btn" href="./index.html">← Back to Paolo's Hub</a>
+    </header>
+
+    <div id="status" class="status-bar p1-turn">🔴 Red Player's Turn</div>
+
+    <main class="game-layout">
+        
+        <aside class="side-panel">
+            <div class="how-to-play">
+                <div class="htp-title">📖 How to Play</div>
+                <div class="htp-step">
+                    <div class="htp-num">1</div>
+                    <div class="htp-text" data-en="Pick a column (1–7)" data-it="Scegli una colonna (1-7)">Pick a column (1–7)</div>
+                </div>
+                <div class="htp-step">
+                    <div class="htp-num">2</div>
+                    <div class="htp-text" data-en="Read the social prompt and answer out loud using the target idiom." data-it="Leggi lo stimolo sociale e rispondi a voce alta usando l'idioma corretto.">Read the social prompt and answer out loud using the target idiom.</div>
+                </div>
+                <div class="htp-step">
+                    <div class="htp-num">3</div>
+                    <div class="htp-text" data-en="Record your answer in the widget, listen back, and check articulation!" data-it="Registra la tua risposta nel widget, riascolta e controlla l'articolazione!">Record your answer, check articulation!</div>
+                </div>
+                <div class="htp-step">
+                    <div class="htp-num">4</div>
+                    <div class="htp-text" data-en="Your partner judges: if correct, your piece drops in. First to Connect 4 wins!" data-it="Il partner giudica: se corretto, la pedina cade giù. Il primo a collegarne 4 vince!">First to Connect 4 wins!</div>
+                </div>
+                <button onclick="htpToggleLang(this)" style="margin-top:14px;width:100%;padding:8px;border-radius:12px;border:1.5px solid var(--primary);background:transparent;font-family:'Fredoka One',cursive;font-size:0.8rem;color:var(--primary);cursor:pointer;transition:all 0.2s;">🇮🇹 Italiano</button>
+            </div>
+        </aside>
+
+        <section class="board-wrapper">
+            <div class="column-numbers" id="col-nums">
+                <div class="col-num" onclick="handleColumnClick(0)">1</div>
+                <div class="col-num" onclick="handleColumnClick(1)">2</div>
+                <div class="col-num" onclick="handleColumnClick(2)">3</div>
+                <div class="col-num" onclick="handleColumnClick(3)">4</div>
+                <div class="col-num" onclick="handleColumnClick(4)">5</div>
+                <div class="col-num" onclick="handleColumnClick(5)">6</div>
+                <div class="col-num" onclick="handleColumnClick(6)">7</div>
+            </div>
+            <div class="board" id="board"></div>
+        </section>
+
+    </main>
+
+    <!-- Question Overlay -->
+    <div id="overlay">
+        <div id="q-card">
+            
+            <!-- Left Side: Text Details -->
+            <div class="q-main">
+                <div id="player-badge" class="player-badge badge-red">🔴 Red's Question</div>
+                <div id="q-text">Question goes here...</div>
+                <div id="q-translation"></div>
+                <button class="translate-btn" id="translate-btn" onclick="toggleTranslation()">🇮🇹 Show Italian Translation</button>
+                
+                <div id="idiom-prompt">
+                    <span class="title">💡 Use this saying in your reply:</span>
+                    <strong id="idiom-phrase">Idiom Phrase</strong>
+                    <span id="idiom-hint">Idiom Hint</span>
+                </div>
+
+                <div class="judge-section">
+                    <p>Has the player answered correctly and articulated the idiom clearly?</p>
+                    <div class="judge-btns">
+                        <button class="btn btn-no" onclick="handleJudge(false)">❌ Try Again</button>
+                        <button class="btn btn-yes" onclick="handleJudge(true)">✅ Great Answer!</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Speech Lab Visualizations -->
+            <div class="q-visuals">
+                <div>
+                    <h4 class="vis-section-title">👄 Speak Placement Guide</h4>
+                    <svg viewBox="0 0 260 260" class="mini-vocal-tract" id="vocal-tract">
+                        <!-- Pharynx wall -->
+                        <path id="part-throat" class="articulator" data-part="throat" d="M 180,80 L 180,220" />
+                        
+                        <!-- Contour Face background -->
+                        <path d="M 40,20 C 40,50 30,70 30,80 Q 20,90 20,100 C 35,105 35,110 30,115 C 25,120 20,122 20,128 C 20,134 35,136 30,142 C 25,148 15,150 18,158 C 20,166 35,170 30,185 C 25,200 20,210 20,230" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="2" />
+                        
+                        <!-- Lips -->
+                        <path id="part-lips-upper" class="articulator" data-part="lips" d="M 60,95 C 70,95 78,97 82,105" />
+                        <path id="part-lips-lower" class="articulator" data-part="lips" d="M 58,142 C 68,142 76,139 79,130" />
+                        
+                        <!-- Teeth -->
+                        <path id="part-teeth" class="articulator" data-part="teeth" d="M 82,105 L 81,113 M 79,130 L 79,122" stroke-width="3" />
+                        
+                        <!-- Alveolar Ridge -->
+                        <path id="part-alveolar" class="articulator" data-part="alveolar" d="M 82,105 C 92,105 100,101 106,92" />
+                        
+                        <!-- Hard Palate -->
+                        <path id="part-palate" class="articulator" data-part="palate" d="M 106,92 C 115,80 135,80 150,92" />
+                        
+                        <!-- Soft Palate / Velum -->
+                        <path id="part-velum" class="articulator" data-part="velum" d="M 150,92 C 160,102 165,112 162,125" />
+                        
+                        <!-- Tongue Tip -->
+                        <path id="part-tongue-tip" class="articulator" data-part="tongue-tip" d="M 83,122 C 92,122 100,120 106,114" stroke-width="5" />
+                        
+                        <!-- Tongue Body -->
+                        <path id="part-tongue-body" class="articulator-fill" data-part="tongue-body" d="M 106,114 C 120,107 145,112 155,140 C 162,160 162,185 158,195 L 122,195 C 126,180 122,150 106,140 Z" />
+                        
+                        <!-- Larynx cords area -->
+                        <path class="articulator" data-part="throat" d="M 122,195 L 122,220" />
+                        <path class="articulator" data-part="throat" d="M 158,195 L 158,220" />
+                    </svg>
+                </div>
+
+                <div class="mini-recorder">
+                    <h4 class="vis-section-title">🎙️ Audio Recorder</h4>
+                    <div class="mini-canvas-container">
+                        <canvas id="mini-waveform"></canvas>
+                    </div>
+                    <div class="rec-controls">
+                        <button class="rec-btn" id="mini-rec-btn" onclick="toggleRecord()">
+                            <span class="dot"></span><span id="mini-rec-text">Record Answer</span>
+                        </button>
+                        <button class="rec-play" id="mini-play-btn" onclick="playRecord()" disabled>▶ Listen</button>
+                        <span class="mini-rec-time" id="mini-timer">00:00</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Win Overlay -->
+    <div id="win-overlay">
+        <div id="win-card">
+            <h2 id="win-title">🎉 Red Wins!</h2>
+            <p>Fantastic playing — well done!</p>
+            <button class="btn btn-restart" onclick="location.reload()">🔄 Play Again</button>
+        </div>
+    </div>
+
+    <script>
+        const ROWS = 6, COLS = 7;
+        const idioms = [
+            {phrase: "Bite off more than you can chew", hint: "You tried to do too much at once (e.g. overbooking classes or trips).", parts: ["lips", "tongue-body"]},
+            {phrase: "Hit the ground running", hint: "Start something quickly with high energy and speed.", parts: ["alveolar", "tongue-tip"]},
+            {phrase: "Go the extra mile", hint: "Put in extra effort than required (e.g. baking three desserts).", parts: ["lips", "throat"]},
+            {phrase: "Keep at it", hint: "Persist through difficulty (e.g. practicing guitar every day).", parts: ["velum", "tongue-body"]},
+            {phrase: "On the same page", hint: "Share the same understanding or agreement about details.", parts: ["palate", "teeth"]},
+            {phrase: "Beat around the bush", hint: "Avoid the main topic; speak indirectly.", parts: ["lips", "alveolar"]},
+            {phrase: "Get straight to the point", hint: "Say clearly and directly what you mean.", parts: ["alveolar", "tongue-tip"]},
+            {phrase: "Easier said than done", hint: "Sounds simple but is much harder in practice.", parts: ["teeth", "throat"]}
+        ];
+        
+        let currentPlayer = 1;
+        let boardState = Array(COLS).fill(null).map(() => Array(ROWS).fill(null));
+        let activeCol = null;
+        let translationVisible = false;
+        let currentTranslation = '';
+
+        // ─── 16 SOCIAL SITUATIONAL QUESTIONS ─────────────────────────────────────
+        const allQuestions = [
+            {
+                en: "Your friend signed up for a cooking class, a marathon, a book club, and a language course all in the same week. Now they are completely overwhelmed. What advice do you give them?",
+                it: "Il tuo amico si è iscritto a un corso di cucina, a una maratona, a un club del libro e a un corso di lingua tutti nella stessa settimana. Ora è completamente sopraffatto. Quale consiglio gli dai?",
+                idiomPhrase: "Bite off more than you can chew"
+            },
+            {
+                en: "You and your family are starting to renovate your garden this weekend. You want everyone to begin with high energy and speed. What do you tell them?",
+                it: "Tu e la tua famiglia state iniziando a rinnovare il giardino questo fine settimana. Vuoi che tutti inizino con grande energia e velocità. Cosa dici loro?",
+                idiomPhrase: "Hit the ground running"
+            },
+            {
+                en: "Your friend stayed up all night baking three different kinds of cookies for your housewarming party, even though you just asked for chips. How do you describe their effort?",
+                it: "Il tuo amico è rimasto sveglio tutta la notte a preparare tre diversi tipi di biscotti per la tua festa di inaugurazione della casa, anche se gli avevi chiesto solo delle patatine. Come descriveresti il suo sforzo?",
+                idiomPhrase: "Go the extra mile"
+            },
+            {
+                en: "Your friend is finding it very difficult to learn to play the acoustic guitar and wants to quit. What encouraging words do you tell them?",
+                it: "Il tuo amico trova molto difficile imparare a suonare la chitarra acustica e vuole smettere. Quali parole di incoraggiamento gli dici?",
+                idiomPhrase: "Keep at it"
+            },
+            {
+                en: "Before booking the vacation house, you want to confirm if all your friends agree on the budget and dates. What do you ask them?",
+                it: "Prima di prenotare la casa vacanze, vuoi confermare se tutti i tuoi amici sono d'accordo su budget e date. Cosa chiedi loro?",
+                idiomPhrase: "On the same page"
+            },
+            {
+                en: "You ask your friend who they are dating, but they start talking about the weather and their dog instead of answering. What do you tell them to stop doing?",
+                it: "Chiedi al tuo amico con chi si sta frequentando, ma lui inizia a parlare del tempo e del suo cane invece di rispondere. Cosa gli dici di smettere di fare?",
+                idiomPhrase: "Beat around the bush"
+            },
+            {
+                en: "Your friend calls you during your dinner to tell you a long story, but you only have one minute to talk. What do you ask them to do?",
+                it: "Il tuo amico ti chiama durante la cena per raccontarti una lunga storia, ma hai solo un minuto per parlare. Cosa gli chiedi di fare?",
+                idiomPhrase: "Get straight to the point"
+            },
+            {
+                en: "Your friend says: 'Just learn to speak fluent Japanese by next month, it's easy!' How do you reply to show it's hard in practice?",
+                it: "Il tuo amico dice: 'Impara semplicemente a parlare correntemente il giapponese entro il mese prossimo, è facile!' Come rispondi per dimostrare che è difficile in pratica?",
+                idiomPhrase: "Easier said than done"
+            },
+            {
+                en: "Your cousin agreed to host a dinner party, paint their house, and move furniture all in one Saturday. What warning advice do you give them?",
+                it: "Tuo cugino ha accettato di ospitare una cena, dipingere la sua casa e traslocare i mobili tutto in un sabato. Quale avvertimento gli dai?",
+                idiomPhrase: "Bite off more than you can chew"
+            },
+            {
+                en: "A friend joined your local running club. On their first day, they ran 10 miles and organized a group dinner for the evening. How do you describe their start?",
+                it: "Un amico si è iscritto al tuo club di corsa locale. Il primo giorno ha corso 16 chilometri e ha organizzato una cena di gruppo per la sera. Come descriveresti il suo inizio?",
+                idiomPhrase: "Hit the ground running"
+            },
+            {
+                en: "When hosting a friend, you don't just give them a bed; you cook their favorite meals and take them on a tour of the city. What is this concept called?",
+                it: "Quando ospiti un amico, non gli offri solo un letto; cucini i suoi piatti preferiti e lo porti a fare un giro della città. Come si chiama questo concetto?",
+                idiomPhrase: "Go the extra mile"
+            },
+            {
+                en: "You are practicing baking bread every weekend. It's tough and the bread is often flat, but you know persistence is key. What advice do you give yourself?",
+                it: "Ti eserciti a fare il pane ogni fine settimana. È difficile e il pane spesso viene piatto, ma sai che la costanza è fondamentale. Qual è il tuo consiglio a te stesso?",
+                idiomPhrase: "Keep at it"
+            },
+            {
+                en: "Before we purchase the tickets for the music festival, we need to make sure we all agree on which bands to see and where to meet. What is this state of agreement called?",
+                it: "Prima di acquistare i biglietti per il festival musicale, dobbiamo assicurarci di essere tutti d'accordo su quali gruppi vedere e dove incontrarci. Come si chiama questo stato di accordo?",
+                idiomPhrase: "On the same page"
+            },
+            {
+                en: "A friend is talking very indirectly about a movie because they don't want to admit they accidentally spoiled the ending for you. What phrase describes this action?",
+                it: "Un amico parla in modo molto indiretto di un film perché non vuole ammettere di averti accidentalmente rovinato il finale. Quale frase descrive questa azione?",
+                idiomPhrase: "Beat around the bush"
+            },
+            {
+                en: "Instead of telling a long story about how they got lost, your friend immediately tells you they arrived safely. What did your friend do?",
+                it: "Invece di raccontare una lunga storia su come si è perso, il tuo amico ti dice subito che è arrivato sano e salvo. Cosa ha fatto il tuo amico?",
+                idiomPhrase: "Get straight to the point"
+            },
+            {
+                en: "Giving up drinking sweet coffee sounds very simple when you talk about it, but actually doing it every morning is hard. What phrase describes this?",
+                it: "Rinunciare a bere caffè zuccherato sembra molto semplice quando se ne parla, ma farlo davvero ogni mattina è difficile. Quale frase descrive questo?",
+                idiomPhrase: "Easier said than done"
+            }
+        ];
+
+        let deck = [...allQuestions];
+        function getNextQuestion() {
+            if (deck.length === 0) deck = [...allQuestions];
+            const i = Math.floor(Math.random() * deck.length);
+            return deck.splice(i, 1)[0];
+        }
+
+        // ─── AUDIO FEEDBACK ────────────────────────────────────────────────────────
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playFeedbackSound(type) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            if (type === 'correct') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(659, audioCtx.currentTime + 0.15);
+            } else {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+            }
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+        }
+
+        // ─── BOARD LOGIC ──────────────────────────────────────────────────────────
+        function initBoard() {
+            const board = document.getElementById('board');
+            board.innerHTML = '';
+            for (let c = 0; c < COLS; c++) {
+                const colDiv = document.createElement('div');
+                colDiv.className = 'column';
+                colDiv.onclick = () => handleColumnClick(c);
+                for (let r = 0; r < ROWS; r++) {
+                    const slot = document.createElement('div');
+                    slot.className = 'slot';
+                    slot.id = `slot-${c}-${r}`;
+                    colDiv.appendChild(slot);
+                }
+                board.appendChild(colDiv);
+            }
+        }
+
+        function updateColumnNumbers() {
+            const nums = document.querySelectorAll('.col-num');
+            nums.forEach((el, c) => {
+                if (boardState[c].indexOf(null) === -1) {
+                    el.classList.add('full');
+                } else {
+                    el.classList.remove('full');
+                }
+            });
+        }
+
+        function handleColumnClick(c) {
+            if (boardState[c].indexOf(null) === -1) return; // full
+            activeCol = c;
+            translationVisible = false;
+            const q = getNextQuestion();
+            currentTranslation = q.it;
+            document.getElementById('q-text').innerText = q.en;
+            document.getElementById('q-translation').innerText = '';
+            document.getElementById('translate-btn').innerText = '🇮🇹 Show Italian Translation';
+            
+            const badge = document.getElementById('player-badge');
+            badge.innerText = currentPlayer === 1 ? '🔴 Red\'s Question' : '🟡 Yellow\'s Question';
+            badge.className = 'player-badge ' + (currentPlayer === 1 ? 'badge-red' : 'badge-yellow');
+            
+            const idiom = idioms.find(i => i.phrase.toLowerCase() === q.idiomPhrase.toLowerCase()) || idioms[0];
+            document.getElementById('idiom-phrase').innerText = idiom.phrase;
+            document.getElementById('idiom-hint').innerText = idiom.hint;
+
+            // Highlight articulator parts in mini vocal tract
+            highlightVocalParts(idiom.parts);
+
+            // Clean previous recording
+            stopRecordingSession();
+            document.getElementById('mini-play-btn').disabled = true;
+            document.getElementById('mini-timer').innerText = "00:00";
+            drawStaticWaveform();
+
+            document.getElementById('overlay').style.display = 'flex';
+        }
+
+        function highlightVocalParts(partsArray) {
+            document.querySelectorAll("#vocal-tract .articulator, #vocal-tract .articulator-fill").forEach(el => {
+                const part = el.getAttribute("data-part");
+                if (partsArray && partsArray.includes(part)) {
+                    el.classList.add("active");
+                } else {
+                    el.classList.remove("active");
+                }
+            });
+        }
+
+        function toggleTranslation() {
+            translationVisible = !translationVisible;
+            document.getElementById('q-translation').innerText = translationVisible ? currentTranslation : '';
+            document.getElementById('translate-btn').innerText = translationVisible ? '🙈 Hide Translation' : '🇮🇹 Show Italian Translation';
+        }
+
+        function handleJudge(isCorrect) {
+            stopRecordingSession();
+            document.getElementById('overlay').style.display = 'none';
+            if (!isCorrect) {
+                playFeedbackSound('wrong');
+                return;
+            }
+            playFeedbackSound('correct');
+            const r = boardState[activeCol].indexOf(null);
+            boardState[activeCol][r] = currentPlayer;
+            const slot = document.getElementById(`slot-${activeCol}-${r}`);
+            const slotH = 62;
+            slot.style.setProperty('--drop-y', `-${(ROWS - r) * slotH}px`);
+            slot.className = `slot ${currentPlayer === 1 ? 'red' : 'yellow'} dropping`;
+            slot.addEventListener('animationend', () => slot.classList.remove('dropping'), { once: true });
+            updateColumnNumbers();
+
+            if (checkWin(activeCol, r)) {
+                setTimeout(() => showWin(currentPlayer), 300);
+                return;
+            }
+
+            currentPlayer = currentPlayer === 1 ? 2 : 1;
+            updateStatus();
+        }
+
+        function updateStatus() {
+            const s = document.getElementById('status');
+            s.innerText = currentPlayer === 1 ? '🔴 Red Player\'s Turn' : '🟡 Yellow Player\'s Turn';
+            s.className = `status-bar ${currentPlayer === 1 ? 'p1-turn' : 'p2-turn'}`;
+        }
+
+        function showWin(player) {
+            const title = document.getElementById('win-title');
+            title.innerText = player === 1 ? '🎉 Red Wins!' : '🎉 Yellow Wins!';
+            title.style.color = player === 1 ? 'var(--p1)' : 'var(--p2)';
+            document.getElementById('win-overlay').style.display = 'flex';
+        }
+
+        function checkWin(c, r) {
+            const p = boardState[c][r];
+            const dirs = [[0,1],[1,0],[1,1],[1,-1]];
+            for (let [dc, dr] of dirs) {
+                let count = 1;
+                for (let i = 1; i < 4; i++) { if (boardState[c+dc*i]?.[r+dr*i] === p) count++; else break; }
+                for (let i = 1; i < 4; i++) { if (boardState[c-dc*i]?.[r-dr*i] === p) count++; else break; }
+                if (count >= 4) return true;
+            }
+            return false;
+        }
+
+        function htpToggleLang(btn) {
+            const texts = btn.closest('.how-to-play').querySelectorAll('.htp-text');
+            const toIt = btn.textContent.includes('Italiano');
+            texts.forEach(el => el.textContent = el.dataset[toIt ? 'it' : 'en']);
+            btn.textContent = toIt ? '🇬🇧 English' : '🇮🇹 Italiano';
+        }
+
+        // ─── MICROPHONE AUDIO RECORDING LOGIC ──────────────────────────────────────────
+        let isRecording = false;
+        let isPlaying = false;
+        let audioChunks = [];
+        let mediaRecorder = null;
+        let audioBlob = null;
+        let audioUrl = null;
+        let recordingSeconds = 0;
+        let recorderTimer = null;
+        let animationFrameId = null;
+        let audioContext = null;
+        let analyser = null;
+        let source = null;
+        let dataArray = null;
+        let bufferLength = 0;
+
+        const audioPlayer = new Audio();
+        const canvas = document.getElementById("mini-waveform");
+        const ctx = canvas.getContext("2d");
+
+        function drawStaticWaveform() {
+            ctx.fillStyle = "#070a13";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+            ctx.lineWidth = 1;
+            
+            // Grid lines
+            ctx.beginPath();
+            for (let i = 0; i < canvas.width; i += 20) {
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+            }
+            ctx.stroke();
+            
+            // Midline
+            ctx.strokeStyle = "rgba(201, 162, 39, 0.2)";
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height / 2);
+            ctx.lineTo(canvas.width, canvas.height / 2);
+            ctx.stroke();
+        }
+
+        async function toggleRecord() {
+            const recBtn = document.getElementById("mini-rec-btn");
+            const recText = document.getElementById("mini-rec-text");
+            
+            if (!isRecording) {
+                isRecording = true;
+                recBtn.classList.add("recording");
+                recText.innerText = "Stop";
+                document.getElementById("mini-play-btn").disabled = true;
+                recordingSeconds = 0;
+                document.getElementById("mini-timer").innerText = "00:00";
+                
+                recorderTimer = setInterval(() => {
+                    recordingSeconds++;
+                    const mins = String(Math.floor(recordingSeconds / 60)).padStart(2, "0");
+                    const secs = String(recordingSeconds % 60).padStart(2, "0");
+                    document.getElementById("mini-timer").innerText = `${mins}:${secs}`;
+                }, 1000);
+
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    analyser = audioContext.createAnalyser();
+                    source = audioContext.createMediaStreamSource(stream);
+                    source.connect(analyser);
+                    
+                    analyser.fftSize = 256;
+                    bufferLength = analyser.frequencyBinCount;
+                    dataArray = new Uint8Array(bufferLength);
+                    
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+                    
+                    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+                    mediaRecorder.onstop = () => {
+                        audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        audioUrl = URL.createObjectURL(audioBlob);
+                        audioPlayer.src = audioUrl;
+                        document.getElementById("mini-play-btn").disabled = false;
+                        cancelAnimationFrame(animationFrameId);
+                        drawStaticWaveform();
+                    };
+                    
+                    mediaRecorder.start();
+                    visualizeRealTime();
+                } catch (err) {
+                    console.warn("Microphone blocked/unavailable. Running simulated waveforms.", err);
+                    visualizeSimulation();
+                }
+            } else {
+                stopRecordingSession();
+            }
+        }
+
+        function stopRecordingSession() {
+            if (!isRecording) return;
+            isRecording = false;
+            
+            const recBtn = document.getElementById("mini-rec-btn");
+            const recText = document.getElementById("mini-rec-text");
+            recBtn.classList.remove("recording");
+            recText.innerText = "Record Answer";
+            
+            clearInterval(recorderTimer);
+            
+            if (mediaRecorder && mediaRecorder.state !== "inactive") {
+                mediaRecorder.stop();
+                mediaRecorder.stream.getTracks().forEach(track => track.stop());
+            } else {
+                // Simulation stop
+                cancelAnimationFrame(animationFrameId);
+                document.getElementById("mini-play-btn").disabled = false;
+                drawStaticWaveform();
+            }
+        }
+
+        function visualizeRealTime() {
+            if (!isRecording) return;
+            animationFrameId = requestAnimationFrame(visualizeRealTime);
+            
+            analyser.getByteTimeDomainData(dataArray);
+            
+            ctx.fillStyle = "#070a13";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = "#ef4444";
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            
+            const sliceWidth = canvas.width / bufferLength;
+            let x = 0;
+            
+            for (let i = 0; i < bufferLength; i++) {
+                const v = dataArray[i] / 128.0;
+                const y = v * canvas.height / 2;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+                x += sliceWidth;
+            }
+            ctx.lineTo(canvas.width, canvas.height / 2);
+            ctx.stroke();
+        }
+
+        let simTime = 0;
+        function visualizeSimulation() {
+            if (!isRecording && !isPlaying) return;
+            animationFrameId = requestAnimationFrame(visualizeSimulation);
+            
+            ctx.fillStyle = "#070a13";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = isRecording ? "#ef4444" : "#c9a227";
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            
+            simTime += 0.2;
+            const points = 80;
+            const sliceWidth = canvas.width / points;
+            let x = 0;
+            
+            for (let i = 0; i <= points; i++) {
+                let factor = Math.sin(i * 0.15 + simTime) * Math.cos(i * 0.08 - simTime);
+                if (isRecording) {
+                    factor += (Math.random() - 0.5) * 0.25;
+                } else {
+                    factor *= Math.sin(simTime * 0.5);
+                }
+                const y = (canvas.height / 2) + factor * (canvas.height * 0.35);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+                x += sliceWidth;
+            }
+            ctx.stroke();
+        }
+
+        function playRecord() {
+            if (audioUrl) {
+                audioPlayer.play();
+                isPlaying = true;
+                document.getElementById("mini-play-btn").disabled = true;
+                
+                audioPlayer.onended = () => {
+                    isPlaying = false;
+                    document.getElementById("mini-play-btn").disabled = false;
+                    cancelAnimationFrame(animationFrameId);
+                    drawStaticWaveform();
+                };
+                
+                visualizeSimulation();
+            } else {
+                isPlaying = true;
+                document.getElementById("mini-play-btn").disabled = true;
+                let count = 0;
+                visualizeSimulation();
+                
+                const simInterval = setInterval(() => {
+                    count++;
+                    if (count >= 20) {
+                        clearInterval(simInterval);
+                        isPlaying = false;
+                        document.getElementById("mini-play-btn").disabled = false;
+                        cancelAnimationFrame(animationFrameId);
+                        drawStaticWaveform();
+                    }
+                }, 100);
+            }
+        }
+
+        // Initialize elements
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+            drawStaticWaveform();
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        
+        // Setup initial board
+        initBoard();
+        resizeCanvas();
+    </script>
+</body>
+</html>
