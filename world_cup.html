@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paolo's World Cup Predictions & Time Prepositions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0d1b35;
+      --panel: #142746;
+      --panel-light: #1a2e50;
+      --primary: #c9a227;
+      --primary-hover: #e5b934;
+      --accent: #7ab5d5;
+      --text: #f8f1dc;
+      --text-muted: #a9bed2;
+      --correct: #2ecc71;
+      --wrong: #ff6b6b;
+      --correct-bg: rgba(46, 204, 113, 0.1);
+      --wrong-bg: rgba(255, 107, 107, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 22px 14px;
+    }
+    a { color: inherit; text-decoration: none; }
+    
+    .wrap {
+      width: min(920px, 100%);
+      margin: 0 auto;
+    }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    .back {
+      border: 1.5px solid #2a4060;
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 10px 15px;
+      font-weight: 900;
+      background: var(--panel);
+      transition: all 0.2s;
+    }
+    .back:hover {
+      background: var(--panel-light);
+      border-color: var(--primary);
+    }
+
+    .hero {
+      background: linear-gradient(145deg, var(--panel), var(--panel-light));
+      border: 1px solid rgba(201, 162, 39, 0.28);
+      border-radius: 28px;
+      padding: 30px;
+      margin-bottom: 24px;
+      box-shadow: 0 22px 60px rgba(0,0,0,.25);
+    }
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      font-size: clamp(30px, 6vw, 52px);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-size: 17px;
+    }
+
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      font-size: 24px;
+      margin: 32px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* GRAMMAR PANEL */
+    .grammar-panel {
+      background: var(--panel);
+      border: 1px solid rgba(122, 155, 181, 0.18);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .grammar-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 15px;
+    }
+    .grammar-table th, .grammar-table td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .grammar-table th {
+      color: var(--primary);
+      font-family: 'Fredoka One', cursive;
+      font-weight: normal;
+    }
+    .grammar-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .alert-box {
+      background: rgba(239, 107, 107, 0.05);
+      border-left: 4px solid var(--wrong);
+      padding: 16px;
+      border-radius: 0 16px 16px 0;
+      margin-top: 16px;
+    }
+    .alert-box h4 {
+      color: var(--wrong);
+      font-family: 'Fredoka One', cursive;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+    .alert-box ul {
+      padding-left: 20px;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* FIXTURES CARDS */
+    .fixtures-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .fixture-card {
+      background: var(--panel);
+      border: 1px solid rgba(122, 155, 181, 0.18);
+      border-radius: 20px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+    .fixture-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .fixture-day-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 99px;
+    }
+    .badge-friday { background: rgba(122, 181, 213, 0.15); color: var(--accent); }
+    .badge-saturday { background: rgba(201, 162, 39, 0.15); color: var(--primary); }
+    .badge-sunday { background: rgba(46, 204, 113, 0.15); color: var(--correct); }
+    
+    .fixture-teams {
+      font-family: 'Fredoka One', cursive;
+      font-size: 18px;
+      color: var(--text);
+    }
+    .fixture-details {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .fixture-details strong {
+      color: var(--primary);
+    }
+
+    /* PREDICTIONS GAME Grid */
+    .predictor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .group-card {
+      background: var(--panel-light);
+      border: 1px solid rgba(201, 162, 39, 0.15);
+      border-radius: 20px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .group-card.completed {
+      border-color: var(--correct);
+    }
+    .group-title {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      font-size: 16px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 6px;
+    }
+    .group-teams-list {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 4px;
+    }
+    .select-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: -4px;
+    }
+    .predictor-select {
+      background: rgba(13, 27, 53, 0.6);
+      border: 1px solid rgba(122, 155, 181, 0.2);
+      border-radius: 8px;
+      color: var(--text);
+      padding: 6px 8px;
+      font-size: 13px;
+      font-family: 'Nunito', sans-serif;
+      outline: none;
+      cursor: pointer;
+    }
+    .predictor-select:focus {
+      border-color: var(--primary);
+    }
+
+    /* EXERCISES */
+    .quiz-container {
+      display: grid;
+      gap: 20px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(122, 155, 181, 0.18);
+      border-radius: 24px;
+      padding: 22px;
+    }
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 16px;
+      color: var(--primary);
+      border-bottom: 1px dashed rgba(255,255,255,0.08);
+      padding-bottom: 8px;
+    }
+
+    .tf-question, .fib-question, .mc-question {
+      margin-bottom: 20px;
+    }
+    .tf-question:last-child, .fib-question:last-child, .mc-question:last-child {
+      margin-bottom: 0;
+    }
+    .tf-question p, .fib-question p, .mc-question p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .tf-options {
+      display: flex;
+      gap: 16px;
+    }
+    .tf-options label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .tf-options input {
+      accent-color: var(--primary);
+    }
+
+    input[type=text], textarea, select {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(122, 155, 181, 0.22);
+      border-radius: 12px;
+      padding: 12px;
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+    input[type=text]:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: rgba(255,255,255,0.06);
+    }
+    .hint {
+      display: block;
+      color: #7a9bb5;
+      font-size: 13px;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .mc-options {
+      display: grid;
+      gap: 8px;
+    }
+    .mc-options label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(122, 155, 181, 0.12);
+      border-radius: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    .mc-options label:hover {
+      border-color: var(--primary);
+    }
+    .mc-options input {
+      accent-color: var(--primary);
+    }
+
+    /* FEEDBACK & RESULTS */
+    .correct-alert { border-color: var(--correct) !important; background: var(--correct-bg); }
+    .wrong-alert { border-color: var(--wrong) !important; background: var(--wrong-bg); }
+    .feedback-ans {
+      display: none;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+    .feedback-ans.show { display: block; }
+
+    .result {
+      display: none;
+      background: #fff4d0;
+      color: #0d1b35;
+      border-radius: 22px;
+      padding: 22px;
+      margin-bottom: 22px;
+      font-weight: 900;
+      line-height: 1.6;
+    }
+    .result.show { display: block; }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 28px 0;
+    }
+    button {
+      border: none;
+      border-radius: 16px;
+      padding: 14px 22px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+    }
+    button:hover {
+      transform: translateY(-2px);
+    }
+    .submit { background: var(--primary); color: var(--bg); }
+    .submit:hover { background: var(--primary-hover); }
+    .reset { background: var(--panel-light); color: var(--primary); border: 1.5px solid #2a4060; }
+    .reset:hover { background: rgba(201,162,39,0.08); }
+    .pdf-btn { background: #3ddc84; color: #0d1b35; }
+    .pdf-btn:hover { background: #32c473; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top">
+      <a class="back" href="./index.html">← Back to Paolo's Hub</a>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">World Cup Special · Grammar & Predictions</div>
+      <h1>World Cup 2026 Predictions</h1>
+      <p>Master <strong>prepositions of time</strong> while scheduling and predicting outcomes for the 2026 FIFA World Cup. Complete the schedule readings, practice quizzes, and the Group Phase Prediction Game. Don't forget to click "Download PDF" and send your results to your tutor!</p>
+    </section>
+
+    <!-- STEP 1: GRAMMAR REVIEW -->
+    <h2 class="section-title">1. Grammar Guide: Prepositions of Time</h2>
+    <section class="grammar-panel">
+      <table class="grammar-table">
+        <thead>
+          <tr>
+            <th>Preposition</th>
+            <th>Rule / When to Use</th>
+            <th>Football Examples</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>AT</strong></td>
+            <td>Clock times, specific precise moments, holiday periods</td>
+            <td>• The match starts <strong>at</strong> 3:00 PM.<br>• We scored a goal <strong>at</strong> kick-off.</td>
+          </tr>
+          <tr>
+            <td><strong>ON</strong></td>
+            <td>Days of the week, calendar dates, parts of specific days</td>
+            <td>• Italy lost their play-off <strong>on</strong> March 31st.<br>• Brazil plays Morocco <strong>on</strong> Saturday afternoon.</td>
+          </tr>
+          <tr>
+            <td><strong>IN</strong></td>
+            <td>Months, years, seasons, decades, long durations</td>
+            <td>• The World Cup runs <strong>in</strong> June and July.<br>• He was a star player <strong>in</strong> the 1990s.</td>
+          </tr>
+          <tr>
+            <td><strong>DURING</strong></td>
+            <td>Within the duration of an event</td>
+            <td>• Nobody scored <strong>during</strong> the first half.</td>
+          </tr>
+          <tr>
+            <td><strong>BEFORE / AFTER</strong></td>
+            <td>Prior to / subsequent to an event</td>
+            <td>• Warm up <strong>before</strong> the game.<br>• Shake hands <strong>after</strong> the final whistle.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="alert-box">
+        <h4>🇮🇹 Italian Speaker Alert! (Evita questi errori!)</h4>
+        <ul>
+          <li>❌ <strong>Don't say:</strong> <em>"The match is in Sunday morning."</em> ➡️ <strong>Say:</strong> "The match is **on** Sunday morning."</li>
+          <li>❌ <strong>Don't say:</strong> <em>"The final is in July 19th."</em> ➡️ <strong>Say:</strong> "The final is **on** July 19th."</li>
+          <li>❌ <strong>Don't say:</strong> <em>"I will watch it at the evening."</em> ➡️ <strong>Say:</strong> "I will watch it **in** the evening."</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- STEP 2: FIXTURES -->
+    <h2 class="section-title">2. World Cup Opening Fixtures (June 12–14, 2026)</h2>
+    <section class="fixtures-grid">
+      <div class="fixture-card">
+        <span class="fixture-day-badge badge-friday">Friday, June 12</span>
+        <div class="fixture-teams">Canada vs. Bosnia</div>
+        <p class="fixture-details">Group B • Toronto<br>Kick-off starts <strong>at</strong> 3:00 PM <strong>on</strong> June 12th.</p>
+      </div>
+
+      <div class="fixture-card">
+        <span class="fixture-day-badge badge-friday">Friday, June 12</span>
+        <div class="fixture-teams">USA vs. Paraguay</div>
+        <p class="fixture-details">Group D • Los Angeles<br>Begins <strong>at</strong> 6:00 PM <strong>on</strong> Friday evening.</p>
+      </div>
+
+      <div class="fixture-card">
+        <span class="fixture-day-badge badge-saturday">Saturday, June 13</span>
+        <div class="fixture-teams">Brazil vs. Morocco</div>
+        <p class="fixture-details">Group C • New Jersey<br>Scheduled <strong>at</strong> 4:00 PM <strong>on</strong> Saturday afternoon.</p>
+      </div>
+
+      <div class="fixture-card">
+        <span class="fixture-day-badge badge-saturday">Saturday, June 13</span>
+        <div class="fixture-teams">Qatar vs. Switzerland</div>
+        <p class="fixture-details">Group B • Santa Clara<br>Starts <strong>at</strong> 1:00 PM <strong>during</strong> the afternoon.</p>
+      </div>
+
+      <div class="fixture-card">
+        <span class="fixture-day-badge badge-sunday">Sunday, June 14</span>
+        <div class="fixture-teams">Netherlands vs. Japan</div>
+        <p class="fixture-details">Group F • Dallas<br>Kicks off <strong>at</strong> 3:00 PM <strong>on</strong> Sunday, June 14th.</p>
+      </div>
+
+      <div class="fixture-card">
+        <span class="fixture-day-badge badge-sunday">Sunday, June 14</span>
+        <div class="fixture-teams">Germany vs. Curaçao</div>
+        <p class="fixture-details">Group E • Houston<br>Plays <strong>at</strong> 12:00 PM <strong>on</strong> Sunday morning.</p>
+      </div>
+    </section>
+
+    <!-- STEP 3: EXERCISES -->
+    <h2 class="section-title">3. Student Exercises</h2>
+    <section id="result" class="result"></section>
+
+    <div class="quiz-container">
+      <!-- EXERCISE A: TRUE OR FALSE -->
+      <article class="card" id="ex-a-card">
+        <h2>Exercise A: True or False?</h2>
+        
+        <div class="tf-question" id="tf-q-0">
+          <p>1. Canada plays Bosnia and Herzegovina on Friday, June 12th at 3:00 PM.</p>
+          <div class="tf-options">
+            <label><input type="radio" name="tf0" value="true"> True</label>
+            <label><input type="radio" name="tf0" value="false"> False</label>
+          </div>
+          <div class="feedback-ans" id="tf-ans-0">Correct: True (Matches our Friday Group B schedule)</div>
+        </div>
+
+        <div class="tf-question" id="tf-q-1">
+          <p>2. Italy is scheduled to play their first match on Sunday morning.</p>
+          <div class="tf-options">
+            <label><input type="radio" name="tf1" value="true"> True</label>
+            <label><input type="radio" name="tf1" value="false"> False</label>
+          </div>
+          <div class="feedback-ans" id="tf-ans-1">Correct: False (Italy did not qualify for the 2026 World Cup)</div>
+        </div>
+
+        <div class="tf-question" id="tf-q-2">
+          <p>3. Switzerland plays Qatar on Saturday, June 13th.</p>
+          <div class="tf-options">
+            <label><input type="radio" name="tf2" value="true"> True</label>
+            <label><input type="radio" name="tf2" value="false"> False</label>
+          </div>
+          <div class="feedback-ans" id="tf-ans-2">Correct: True (They play in Group B on Saturday afternoon)</div>
+        </div>
+
+        <div class="tf-question" id="tf-q-3">
+          <p>4. The World Cup final will take place during the month of August.</p>
+          <div class="tf-options">
+            <label><input type="radio" name="tf3" value="true"> True</label>
+            <label><input type="radio" name="tf3" value="false"> False</label>
+          </div>
+          <div class="feedback-ans" id="tf-ans-3">Correct: False (The final is on July 19th)</div>
+        </div>
+
+        <div class="tf-question" id="tf-q-4">
+          <p>5. The Netherlands vs. Japan match starts at 3:00 PM on Sunday.</p>
+          <div class="tf-options">
+            <label><input type="radio" name="tf4" value="true"> True</label>
+            <label><input type="radio" name="tf4" value="false"> False</label>
+          </div>
+          <div class="feedback-ans" id="tf-ans-4">Correct: True (Group F, Dallas, kicks off at 3:00 PM on June 14th)</div>
+        </div>
+      </article>
+
+      <!-- EXERCISE B: FILL IN THE BLANKS -->
+      <article class="card" id="ex-b-card">
+        <h2>Exercise B: Fill in the Blanks</h2>
+        <p style="color: var(--accent); font-size: 14px; margin-bottom: 16px; font-style: italic;">
+          Choose the correct preposition: <strong>at, on, in, during, before, after</strong>.
+        </p>
+
+        <div class="fib-question" id="fib-q-0">
+          <p>1. The USA will play Paraguay <strong style="color:var(--primary)">______</strong> June 12th.</p>
+          <input type="text" id="fib-input-0" placeholder="Type preposition here..." autocomplete="off">
+          <div class="feedback-ans" id="fib-ans-0">Correct: on</div>
+        </div>
+
+        <div class="fib-question" id="fib-q-1">
+          <p>2. Brazil vs. Morocco kicks off <strong style="color:var(--primary)">______</strong> 4:00 PM on Saturday.</p>
+          <input type="text" id="fib-input-1" placeholder="Type preposition here..." autocomplete="off">
+          <div class="feedback-ans" id="fib-ans-1">Correct: at</div>
+        </div>
+
+        <div class="fib-question" id="fib-q-2">
+          <p>3. The entire World Cup tournament will be held <strong style="color:var(--primary)">______</strong> 2026.</p>
+          <input type="text" id="fib-input-2" placeholder="Type preposition here..." autocomplete="off">
+          <div class="feedback-ans" id="fib-ans-2">Correct: in</div>
+        </div>
+
+        <div class="fib-question" id="fib-q-3">
+          <p>4. The players stood silently <strong style="color:var(--primary)">______</strong> the national anthems before kick-off.</p>
+          <input type="text" id="fib-input-3" placeholder="Type preposition here..." autocomplete="off">
+          <div class="feedback-ans" id="fib-ans-3">Correct: during</div>
+        </div>
+
+        <div class="fib-question" id="fib-q-4">
+          <p>5. Fans should arrive at the stadium <strong style="color:var(--primary)">______</strong> the match starts to find their seats.</p>
+          <input type="text" id="fib-input-4" placeholder="Type preposition here..." autocomplete="off">
+          <div class="feedback-ans" id="fib-ans-4">Correct: before</div>
+        </div>
+
+        <div class="fib-question" id="fib-q-5">
+          <p>6. We celebrated with drinks <strong style="color:var(--primary)">______</strong> our team won the match.</p>
+          <input type="text" id="fib-input-5" placeholder="Type preposition here..." autocomplete="off">
+          <div class="feedback-ans" id="fib-ans-5">Correct: after</div>
+        </div>
+      </article>
+
+      <!-- EXERCISE C: MULTIPLE CHOICE -->
+      <article class="card" id="ex-c-card">
+        <h2>Exercise C: Multiple Choice</h2>
+        
+        <div class="mc-question" id="mc-q-0">
+          <p>1. Which preposition is correct for a specific day of the week, like Sunday?</p>
+          <div class="mc-options">
+            <label><input type="radio" name="mc0" value="a"> A) in</label>
+            <label><input type="radio" name="mc0" value="b"> B) at</label>
+            <label><input type="radio" name="mc0" value="c"> C) on</label>
+          </div>
+          <div class="feedback-ans" id="mc-ans-0">Correct: C (on Sunday)</div>
+        </div>
+
+        <div class="mc-question" id="mc-q-1">
+          <p>2. Which preposition is correct for a specific year, like 2026?</p>
+          <div class="mc-options">
+            <label><input type="radio" name="mc1" value="a"> A) in</label>
+            <label><input type="radio" name="mc1" value="b"> B) on</label>
+            <label><input type="radio" name="mc1" value="c"> C) at</label>
+          </div>
+          <div class="feedback-ans" id="mc-ans-1">Correct: A (in 2026)</div>
+        </div>
+      </article>
+
+      <!-- EXERCISE D: PREDICTIONS GAME -->
+      <article class="card" id="ex-d-card">
+        <h2>🏆 Game: Road to the Round of 32 Predictor</h2>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px; line-height: 1.6;">
+          Select the teams you believe will finish **1st Place** and **2nd Place** in each group. 
+          Then, write **5 prediction sentences** using prepositions of time below to qualify for the prize!
+        </p>
+
+        <!-- Predictor Grid -->
+        <div class="predictor-grid" id="predictor-grid">
+          <!-- Group cards will be generated here by JS -->
+        </div>
+
+        <!-- Written Sentences -->
+        <div style="margin-top: 24px; border-top: 1px dashed rgba(255,255,255,0.08); padding-top: 16px;">
+          <p style="font-size: 16px; line-height: 1.6; margin-bottom: 12px; color: var(--accent); font-weight: 700;">
+            ✍️ Writing Task: Write 5 prediction sentences about the matches or qualifiers using prepositions of time.
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div>
+              <span style="font-size: 12px; font-weight: bold; color: var(--primary);">Sentence 1:</span>
+              <input type="text" id="predict-sent-1" placeholder="e.g. I predict Brazil will win Group C on June 25th." value="">
+            </div>
+            <div>
+              <span style="font-size: 12px; font-weight: bold; color: var(--primary);">Sentence 2:</span>
+              <input type="text" id="predict-sent-2" placeholder="e.g. England will qualify for the knockouts before their final match." value="">
+            </div>
+            <div>
+              <span style="font-size: 12px; font-weight: bold; color: var(--primary);">Sentence 3:</span>
+              <input type="text" id="predict-sent-3" placeholder="Write your sentence here..." value="">
+            </div>
+            <div>
+              <span style="font-size: 12px; font-weight: bold; color: var(--primary);">Sentence 4:</span>
+              <input type="text" id="predict-sent-4" placeholder="Write your sentence here..." value="">
+            </div>
+            <div>
+              <span style="font-size: 12px; font-weight: bold; color: var(--primary);">Sentence 5:</span>
+              <input type="text" id="predict-sent-5" placeholder="Write your sentence here..." value="">
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+      <button class="submit" type="button" onclick="checkAnswers()">Check my answers</button>
+      <button class="reset" type="button" onclick="resetQuiz()">Try again</button>
+      <button class="pdf-btn" type="button" onclick="downloadPDF()" id="pdf-btn" style="display:none;">Download PDF</button>
+    </div>
+  </main>
+
+  <script>
+    // Group Compositions
+    const groupsData = {
+      A: { title: "Group A", teams: ["Mexico", "South Africa", "South Korea", "Czechia"] },
+      B: { title: "Group B", teams: ["Canada", "Bosnia", "Qatar", "Switzerland"] },
+      C: { title: "Group C", teams: ["Brazil", "Morocco", "Haiti", "Scotland"] },
+      D: { title: "Group D", teams: ["USA", "Paraguay", "Australia", "Turkey"] },
+      E: { title: "Group E", teams: ["Germany", "Curaçao", "Ivory Coast", "Ecuador"] },
+      F: { title: "Group F", teams: ["Netherlands", "Japan", "Sweden", "Tunisia"] },
+      G: { title: "Group G", teams: ["Belgium", "Egypt", "Iran", "New Zealand"] },
+      H: { title: "Group H", teams: ["Spain", "Cape Verde", "Saudi Arabia", "Uruguay"] },
+      I: { title: "Group I", teams: ["France", "Senegal", "Iraq", "Norway"] },
+      J: { title: "Group J", teams: ["Argentina", "Algeria", "Austria", "Jordan"] },
+      K: { title: "Group K", teams: ["Portugal", "DR Congo", "Uzbekistan", "Colombia"] },
+      L: { title: "Group L", teams: ["England", "Croatia", "Ghana", "Panama"] }
+    };
+
+    // Render Predictor Grid
+    function renderPredictor() {
+      const grid = document.getElementById("predictor-grid");
+      grid.innerHTML = "";
+      Object.keys(groupsData).forEach(key => {
+        const group = groupsData[key];
+        const card = document.createElement("div");
+        card.className = "group-card";
+        card.id = `group-card-${key}`;
+        
+        let teamOptions = `<option value="">-- Select --</option>`;
+        group.teams.forEach(t => {
+          teamOptions += `<option value="${t}">${t}</option>`;
+        });
+
+        card.innerHTML = `
+          <div class="group-title">${group.title}</div>
+          <div class="group-teams-list">${group.teams.join(", ")}</div>
+          
+          <div class="select-label">🥇 1st Place</div>
+          <select class="predictor-select" id="group-${key}-1st" onchange="validateSelection('${key}')">
+            ${teamOptions}
+          </select>
+          
+          <div class="select-label">🥈 2nd Place</div>
+          <select class="predictor-select" id="group-${key}-2nd" onchange="validateSelection('${key}')">
+            ${teamOptions}
+          </select>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function validateSelection(key) {
+      const select1 = document.getElementById(`group-${key}-1st`);
+      const select2 = document.getElementById(`group-${key}-2nd`);
+      const card = document.getElementById(`group-card-${key}`);
+      
+      // Prevent choosing the same team for both 1st and 2nd
+      if (select1.value && select2.value && select1.value === select2.value) {
+        alert("You cannot choose the same team for both 1st and 2nd place!");
+        select2.value = "";
+      }
+
+      if (select1.value && select2.value) {
+        card.classList.add("completed");
+      } else {
+        card.classList.remove("completed");
+      }
+    }
+
+    // Initialize Predictor
+    renderPredictor();
+
+    const expectedTF = ["true", "false", "true", "false", "true"];
+    const expectedFIB = [["on"], ["at"], ["in"], ["during"], ["before"], ["after"]];
+    const expectedMC = ["c", "a"];
+
+    function normalize(s) {
+      return (s || '').toLowerCase().replace(/[^a-z0-9\s/]/g,'').replace(/\s+/g,' ').trim();
+    }
+
+    function checkAnswers() {
+      let score = 0;
+      let totalGraded = expectedTF.length + expectedFIB.length + expectedMC.length; // 5 + 6 + 2 = 13
+      
+      const tfResults = [];
+      const fibResults = [];
+      const mcResults = [];
+
+      // Check Exercise A: True/False
+      for (let i = 0; i < expectedTF.length; i++) {
+        const qDiv = document.getElementById(`tf-q-${i}`);
+        const ansDiv = document.getElementById(`tf-ans-${i}`);
+        const selected = document.querySelector(`input[name="tf${i}"]:checked`);
+        
+        qDiv.classList.remove('correct-alert', 'wrong-alert');
+        ansDiv.classList.add('show');
+        
+        const isCorrect = selected && selected.value === expectedTF[i];
+        if (isCorrect) {
+          score++;
+          qDiv.classList.add('correct-alert');
+        } else {
+          qDiv.classList.add('wrong-alert');
+        }
+        tfResults.push({
+          qNum: i + 1,
+          correct: isCorrect,
+          selected: selected ? (selected.value === "true" ? "True" : "False") : "(no answer)",
+          correctAnswer: expectedTF[i] === "true" ? "True" : "False"
+        });
+      }
+
+      // Check Exercise B: Fill in Blanks
+      for (let i = 0; i < expectedFIB.length; i++) {
+        const qDiv = document.getElementById(`fib-q-${i}`);
+        const ansDiv = document.getElementById(`fib-ans-${i}`);
+        const input = document.getElementById(`fib-input-${i}`);
+        
+        qDiv.classList.remove('correct-alert', 'wrong-alert');
+        ansDiv.classList.add('show');
+        
+        const userVal = normalize(input.value);
+        const isCorrect = expectedFIB[i].some(opt => normalize(opt) === userVal);
+        
+        if (isCorrect) {
+          score++;
+          qDiv.classList.add('correct-alert');
+        } else {
+          qDiv.classList.add('wrong-alert');
+        }
+        fibResults.push({
+          qNum: i + 1,
+          correct: isCorrect,
+          typed: input.value || "(no answer)",
+          correctAnswer: expectedFIB[i].join(" or ")
+        });
+      }
+
+      // Check Exercise C: Multiple Choice
+      for (let i = 0; i < expectedMC.length; i++) {
+        const qDiv = document.getElementById(`mc-q-${i}`);
+        const ansDiv = document.getElementById(`mc-ans-${i}`);
+        const selected = document.querySelector(`input[name="mc${i}"]:checked`);
+        
+        qDiv.classList.remove('correct-alert', 'wrong-alert');
+        ansDiv.classList.add('show');
+        
+        const isCorrect = selected && selected.value === expectedMC[i];
+        if (isCorrect) {
+          score++;
+          qDiv.classList.add('correct-alert');
+        } else {
+          qDiv.classList.add('wrong-alert');
+        }
+        mcResults.push({
+          qNum: i + 1,
+          correct: isCorrect,
+          selected: selected ? selected.value.toUpperCase() : "(no answer)",
+          correctAnswer: expectedMC[i].toUpperCase()
+        });
+      }
+
+      const percent = Math.round((score / totalGraded) * 100);
+      const resultDiv = document.getElementById('result');
+      resultDiv.textContent = `Your score: ${score} / ${totalGraded} (${percent}%). ${score === totalGraded ? 'Fantastico! Excellent grammar accuracy.' : 'Review your incorrect prepositions and try again.'}`;
+      resultDiv.classList.add('show');
+      
+      document.getElementById('pdf-btn').style.display = 'inline-block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Save results to window
+      window.hwScore = score;
+      window.hwPercent = percent;
+      window.tfResults = tfResults;
+      window.fibResults = fibResults;
+      window.mcResults = mcResults;
+    }
+
+    function resetQuiz() {
+      // Clear exercises
+      document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
+      document.querySelectorAll('input[type="text"]').forEach(el => el.value = '');
+      
+      // Clear predictor
+      document.querySelectorAll('.predictor-select').forEach(el => el.value = '');
+      document.querySelectorAll('.group-card').forEach(el => el.classList.remove('completed'));
+
+      // Hide results
+      document.getElementById('result').classList.remove('show');
+      document.getElementById('pdf-btn').style.display = 'none';
+      document.querySelectorAll('.feedback-ans').forEach(el => el.classList.remove('show'));
+      document.querySelectorAll('.correct-alert, .wrong-alert').forEach(el => el.classList.remove('correct-alert', 'wrong-alert'));
+    }
+
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+      const margin = 50;
+      const maxWidth = 595 - margin * 2; // 495
+      let y = margin;
+
+      // Header
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(18);
+      doc.text("Paolo's World Cup Homework Results", margin, y);
+      y += 24;
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(11);
+      doc.text(`Date: ${new Date().toLocaleDateString()}`, margin, y);
+      y += 16;
+      
+      doc.setFont('helvetica', 'bold');
+      doc.text(`Prepositions Score: ${window.hwScore} / 13 (${window.hwPercent}%)`, margin, y);
+      y += 26;
+
+      // Exercise A
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.text("Exercise A: True or False", margin, y);
+      y += 18;
+
+      window.tfResults.forEach(r => {
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.text(`Question ${r.qNum}: ${r.correct ? '[CORRECT]' : '[WRONG]'}`, margin, y);
+        y += 14;
+        doc.setFont('helvetica', 'normal');
+        doc.text(`Your Choice: ${r.selected}   |   Correct Answer: ${r.correctAnswer}`, margin, y);
+        y += 18;
+      });
+      y += 10;
+
+      // Exercise B
+      if (y > 720) { doc.addPage(); y = margin; }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.text("Exercise B: Fill in the Blanks", margin, y);
+      y += 18;
+
+      window.fibResults.forEach(r => {
+        if (y > 740) { doc.addPage(); y = margin; }
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.text(`Sentence ${r.qNum}: ${r.correct ? '[CORRECT]' : '[WRONG]'}`, margin, y);
+        y += 14;
+        doc.setFont('helvetica', 'normal');
+        doc.text(`You typed: "${r.typed}"   |   Accepted answers: ${r.correctAnswer}`, margin, y);
+        y += 18;
+      });
+      y += 10;
+
+      // Exercise C
+      if (y > 720) { doc.addPage(); y = margin; }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.text("Exercise C: Multiple Choice", margin, y);
+      y += 18;
+
+      window.mcResults.forEach(r => {
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.text(`Multiple Choice ${r.qNum}: ${r.correct ? '[CORRECT]' : '[WRONG]'}`, margin, y);
+        y += 14;
+        doc.setFont('helvetica', 'normal');
+        doc.text(`Your Selection: ${r.selected}   |   Correct: ${r.correctAnswer}`, margin, y);
+        y += 18;
+      });
+      
+      // Page Break for Game Predictions
+      doc.addPage();
+      y = margin;
+      
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(14);
+      doc.text("🏆 World Cup Group Predictions (Game)", margin, y);
+      y += 20;
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10);
+      
+      // Read predictions
+      Object.keys(groupsData).forEach((key, idx) => {
+        const select1Val = document.getElementById(`group-${key}-1st`).value || "(no selection)";
+        const select2Val = document.getElementById(`group-${key}-2nd`).value || "(no selection)";
+        
+        doc.setFont('helvetica', 'bold');
+        doc.text(`Group ${key}:`, margin, y);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`1st: ${select1Val}  |  2nd: ${select2Val}`, margin + 65, y);
+        y += 16;
+        
+        if (y > 750 && idx < Object.keys(groupsData).length - 1) {
+          doc.addPage();
+          y = margin;
+        }
+      });
+      y += 15;
+
+      // Written Prediction Sentences
+      if (y > 620) { doc.addPage(); y = margin; }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.text("✍️ Prepositions of Time Prediction Sentences:", margin, y);
+      y += 20;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+
+      for (let i = 1; i <= 5; i++) {
+        const sentenceVal = document.getElementById(`predict-sent-${i}`).value || "(no sentence typed)";
+        doc.setFont('helvetica', 'bold');
+        doc.text(`${i}.`, margin, y);
+        doc.setFont('helvetica', 'normal');
+        const splitText = doc.splitTextToSize(sentenceVal, maxWidth - 20);
+        doc.text(splitText, margin + 18, y);
+        y += splitText.length * 14 + 10;
+        
+        if (y > 750 && i < 5) {
+          doc.addPage();
+          y = margin;
+        }
+      }
+
+      doc.save(`paolo-world-cup-homework-${new Date().toISOString().slice(0, 10)}.pdf`);
+    }
+  </script>
+</body>
+</html>
