@@ -1,0 +1,1834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>May's IELTS Band 7 Trial Lesson & Diagnostic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0d1b35;
+      --panel: #142746;
+      --panel-light: #1a2e50;
+      --primary: #c9a227;
+      --primary-hover: #e5b934;
+      --accent: #7ab5d5;
+      --accent-hover: #9bd2f0;
+      --text: #f8f1dc;
+      --text-muted: #a9bed2;
+      --correct: #2ecc71;
+      --warning: #f39c12;
+      --error: #e74c3c;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    header {
+      background: linear-gradient(180deg, rgba(20, 39, 70, 0.8) 0%, rgba(13, 27, 53, 0) 100%);
+      padding: 24px 18px 12px;
+      border-bottom: 1px solid rgba(201, 162, 39, 0.15);
+    }
+    .header-wrap {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-badge {
+      font-family: 'Fredoka One', cursive;
+      font-size: 24px;
+      color: var(--bg);
+      background: var(--primary);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(201, 162, 39, 0.35);
+    }
+    .logo-text h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 22px;
+      color: var(--primary);
+      line-height: 1.1;
+    }
+    .logo-text p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .back-hub {
+      border: 1.5px solid #2a4060;
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-weight: 900;
+      background: var(--panel);
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+    .back-hub:hover {
+      background: rgba(201, 162, 39, 0.08);
+      border-color: var(--primary);
+    }
+
+    .main-content {
+      flex: 1;
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      padding: 24px 18px 44px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .panel {
+      background: linear-gradient(145deg, var(--panel), var(--panel-light));
+      border: 1px solid rgba(201, 162, 39, 0.22);
+      border-radius: 28px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      padding: 30px;
+    }
+    .panel-title {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      font-size: 24px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* HERO SECTION */
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 24px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      background: rgba(122, 181, 213, 0.12);
+      border: 1px solid rgba(122, 181, 213, 0.22);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    .hero-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(34px, 4vw, 54px);
+      color: var(--primary);
+      line-height: 1.0;
+      margin-bottom: 14px;
+    }
+    .hero-text {
+      color: var(--text-muted);
+      font-size: 17px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: rgba(13, 27, 53, 0.52);
+      border: 1px solid rgba(122, 155, 181, 0.16);
+      border-radius: 22px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .stat-card strong {
+      display: block;
+      color: var(--primary);
+      font-family: 'Fredoka One', cursive;
+      font-size: 34px;
+      margin-bottom: 4px;
+    }
+    .stat-card span {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    /* TAB CONTROL */
+    .tab-nav {
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid rgba(122, 155, 181, 0.15);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .tab-nav-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-nav-btn:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .tab-nav-btn.active {
+      color: var(--bg);
+      background: var(--primary);
+    }
+
+    /* 4 PILLARS & DIAGNOSTIC SLIDERS */
+    .diag-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .slider-group {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .slider-item {
+      background: rgba(13, 27, 53, 0.3);
+      border: 1px solid rgba(122, 155, 181, 0.1);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .slider-label {
+      font-weight: 900;
+      color: var(--text);
+      font-size: 15px;
+    }
+    .slider-val {
+      color: var(--primary);
+      font-family: 'Fredoka One', cursive;
+      font-size: 18px;
+      background: rgba(201, 162, 39, 0.1);
+      padding: 2px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(201, 162, 39, 0.25);
+    }
+    .slider-input {
+      width: 100%;
+      height: 6px;
+      background: #2a4060;
+      border-radius: 3px;
+      outline: none;
+      -webkit-appearance: none;
+      margin: 10px 0;
+    }
+    .slider-input::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--primary);
+      transition: transform 0.1s;
+    }
+    .slider-input::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+    }
+    .slider-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-top: 6px;
+    }
+
+    .gauge-card {
+      background: rgba(13, 27, 53, 0.6);
+      border: 1px solid rgba(201, 162, 39, 0.3);
+      border-radius: 24px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+    .gauge-title {
+      font-family: 'Fredoka One', cursive;
+      color: var(--text);
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .gauge-circle-wrap {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin-bottom: 20px;
+    }
+    .gauge-svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+    .gauge-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.05);
+      stroke-width: 12;
+    }
+    .gauge-fill {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 12;
+      stroke-linecap: round;
+      stroke-dasharray: 502; /* 2 * PI * r (80) */
+      stroke-dashoffset: 502;
+      transition: stroke-dashoffset 0.4s ease;
+    }
+    .gauge-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Fredoka One', cursive;
+      font-size: 42px;
+      color: var(--primary);
+      text-shadow: 0 0 15px rgba(201, 162, 39, 0.35);
+    }
+    .badge-status {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-status.achieved {
+      background: rgba(46, 204, 113, 0.15);
+      color: var(--correct);
+      border: 1px solid rgba(46, 204, 113, 0.3);
+    }
+    .badge-status.not-achieved {
+      background: rgba(243, 156, 18, 0.15);
+      color: var(--warning);
+      border: 1px solid rgba(243, 156, 18, 0.3);
+    }
+
+    /* SPEAKING TRIAL & TIMER */
+    .speaking-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .cue-card {
+      background: rgba(13, 27, 53, 0.52);
+      border: 2px solid var(--primary);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .cue-card-header {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      font-size: 18px;
+      margin-bottom: 14px;
+      border-bottom: 1.5px dashed rgba(201, 162, 39, 0.3);
+      padding-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .cue-card-q {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      line-height: 1.4;
+      color: var(--text);
+    }
+    .cue-card-points {
+      padding-left: 20px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      font-size: 15px;
+    }
+
+    .timer-widget {
+      background: rgba(13, 27, 53, 0.4);
+      border: 1px solid rgba(122, 155, 181, 0.15);
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .timer-select-wrap {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .timer-select-btn {
+      background: rgba(255,255,255,0.03);
+      border: 1.5px solid #2a4060;
+      color: var(--text-muted);
+      border-radius: 12px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    .timer-select-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(122, 181, 213, 0.08);
+    }
+    .timer-display {
+      font-family: monospace;
+      font-size: 64px;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 16px;
+      letter-spacing: 2px;
+    }
+    .timer-controls {
+      display: flex;
+      gap: 12px;
+    }
+    .btn {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 20px;
+      font-weight: 900;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      transition: all 0.2s;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    .btn-start {
+      background: var(--primary);
+      color: var(--bg);
+    }
+    .btn-start:hover {
+      background: var(--primary-hover);
+    }
+    .btn-pause {
+      background: rgba(255,255,255,0.03);
+      border: 1.5px solid #2a4060;
+      color: var(--text);
+    }
+    .btn-reset {
+      background: rgba(231, 76, 60, 0.1);
+      border: 1.5px solid rgba(231, 76, 60, 0.3);
+      color: #f87171;
+    }
+    .btn-reset:hover {
+      background: rgba(231, 76, 60, 0.25);
+    }
+
+    /* VOCABULARY BOOSTER */
+    .vocab-booster {
+      margin-top: 24px;
+    }
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .vocab-card {
+      background: rgba(13, 27, 53, 0.4);
+      border: 1px solid rgba(122, 155, 181, 0.15);
+      border-radius: 18px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .vocab-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .vocab-card-header {
+      font-size: 13px;
+      text-transform: uppercase;
+      font-weight: 900;
+      color: var(--error);
+      margin-bottom: 6px;
+    }
+    .vocab-card-word {
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .vocab-card-reveal {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .vocab-card-content {
+      display: none;
+      animation: fadeIn 0.3s forwards;
+    }
+    .vocab-card.revealed .vocab-card-reveal {
+      display: none;
+    }
+    .vocab-card.revealed .vocab-card-content {
+      display: block;
+    }
+    .vocab-card-boosted-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 900;
+      color: var(--correct);
+      margin-bottom: 2px;
+    }
+    .vocab-card-boosted {
+      font-family: 'Fredoka One', cursive;
+      font-size: 18px;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .vocab-card-example {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      font-style: italic;
+    }
+
+    /* WRITING COMPARISON */
+    .writing-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .writing-header {
+      background: rgba(13, 27, 53, 0.4);
+      border: 1px solid rgba(122, 155, 181, 0.12);
+      border-radius: 18px;
+      padding: 16px 20px;
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+    .writing-header strong {
+      color: var(--primary);
+    }
+    .writing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .essay-card {
+      background: rgba(13, 27, 53, 0.4);
+      border: 1.5px solid rgba(122, 155, 181, 0.15);
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .essay-card.band6 {
+      border-color: rgba(243, 156, 18, 0.3);
+    }
+    .essay-card.band7 {
+      border-color: rgba(46, 204, 113, 0.3);
+      background: linear-gradient(180deg, rgba(20, 39, 70, 0.4) 0%, rgba(46, 204, 113, 0.03) 100%);
+    }
+    .essay-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 16px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .essay-title span {
+      padding: 2px 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: 'Fredoka One', cursive;
+    }
+    .essay-card.band6 .essay-title span {
+      background: rgba(243, 156, 18, 0.15);
+      color: var(--warning);
+    }
+    .essay-card.band7 .essay-title span {
+      background: rgba(46, 204, 113, 0.15);
+      color: var(--correct);
+    }
+    .essay-text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text);
+      flex: 1;
+    }
+    .essay-text mark {
+      background: transparent;
+      border-bottom: 2px dotted var(--accent);
+      color: inherit;
+      cursor: pointer;
+      position: relative;
+      font-weight: 700;
+    }
+    .essay-text mark:hover {
+      color: var(--accent);
+      border-bottom-style: solid;
+    }
+    .essay-text mark::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--panel-light);
+      border: 1px solid var(--accent);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.4;
+      white-space: normal;
+      width: 220px;
+      z-index: 10;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+      font-weight: normal;
+    }
+    .essay-text mark:hover::after {
+      opacity: 1;
+      visibility: visible;
+      bottom: 135%;
+    }
+    .essay-analysis {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .essay-analysis strong {
+      color: var(--text);
+    }
+
+    /* 12-WEEK ROADMAP */
+    .roadmap-timeline {
+      position: relative;
+      margin: 20px 0;
+      padding: 10px 0;
+    }
+    .roadmap-track {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-50%);
+      z-index: 1;
+      border-radius: 3px;
+    }
+    .roadmap-steps {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      z-index: 3;
+    }
+    .roadmap-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+    .roadmap-dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--text-muted);
+      transition: all 0.3s;
+    }
+    .roadmap-step.active .roadmap-dot {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--bg);
+      box-shadow: 0 0 14px var(--primary);
+      transform: scale(1.15);
+    }
+    .roadmap-step-label {
+      margin-top: 8px;
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .roadmap-step.active .roadmap-step-label {
+      color: var(--primary);
+    }
+    .roadmap-details-box {
+      margin-top: 24px;
+      background: rgba(13, 27, 53, 0.4);
+      border: 1px solid rgba(201, 162, 39, 0.2);
+      border-radius: 20px;
+      padding: 22px;
+      animation: fadeIn 0.3s ease-out;
+    }
+    .roadmap-details-title {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .roadmap-details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .roadmap-details-col ul {
+      padding-left: 20px;
+      color: var(--text-muted);
+    }
+    .roadmap-details-col strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    /* EXPECTATIONS PANEL */
+    .expect-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .expect-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(122, 155, 181, 0.15);
+      border-radius: 20px;
+      padding: 22px;
+    }
+    .expect-card h3 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .expect-card ul {
+      padding-left: 20px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .expect-card li {
+      margin-bottom: 8px;
+    }
+    .expect-card strong {
+      color: var(--text);
+    }
+
+    /* REPORT PANEL & REPORT WRITER */
+    .report-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+    }
+    .report-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .form-group input, .form-group textarea {
+      background: rgba(0,0,0,0.25);
+      border: 1.5px solid rgba(122,155,181,0.2);
+      border-radius: 12px;
+      padding: 12px;
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--primary);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    .btn-download {
+      background: var(--primary);
+      color: var(--bg);
+      width: 100%;
+      justify-content: center;
+      font-size: 16px;
+      padding: 16px;
+      margin-top: 10px;
+      box-shadow: 0 4px 14px rgba(201, 162, 39, 0.25);
+    }
+    .btn-download:hover {
+      background: var(--primary-hover);
+    }
+    .report-pitch-card {
+      background: rgba(201, 162, 39, 0.05);
+      border: 1px solid rgba(201, 162, 39, 0.25);
+      border-radius: 22px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .pitch-text h4 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .pitch-text p {
+      color: var(--text-muted);
+      font-size: 14.5px;
+      line-height: 1.6;
+    }
+    .pitch-highlight {
+      font-weight: 700;
+      color: var(--text);
+      background: rgba(122, 181, 213, 0.1);
+      border-left: 3.5px solid var(--accent);
+      padding: 10px 14px;
+      border-radius: 0 10px 10px 0;
+      font-size: 13.5px;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 28px 0;
+      font-size: 14px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: 44px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      .hero-layout, .diag-layout, .speaking-layout, .writing-grid, .roadmap-details-grid, .expect-grid, .report-layout {
+        grid-template-columns: 1fr;
+      }
+      .roadmap-steps {
+        overflow-x: auto;
+        padding-bottom: 10px;
+        gap: 20px;
+      }
+      .roadmap-step {
+        flex-shrink: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-wrap">
+      <div class="logo-container">
+        <div class="logo-badge">I</div>
+        <div class="logo-text">
+          <h1>May's IELTS Prep Portal</h1>
+          <p>Target: Band 7.0 Academic Exam Success</p>
+        </div>
+      </div>
+      <a class="back-hub" href="./index.html">← Back to Student Hub</a>
+    </div>
+  </header>
+
+  <main class="main-content">
+    
+    <!-- 1. HERO BANNER -->
+    <section class="panel">
+      <div class="hero-layout">
+        <div>
+          <div class="eyebrow">Preply Trial Diagnostic Dashboard</div>
+          <h2 class="hero-title">Welcome, May!</h2>
+          <p class="hero-text">
+            Scoring an IELTS Band 7 means moving from simple competence to **precise, flexible, and accurate** English communication. 
+            This portal is your personal dashboard for today's trial lesson. We will diagnose your speaking and writing, practice real exam tasks with live timers, review Band 7 vocabulary alternatives, and create a custom study roadmap.
+          </p>
+          <div class="badge-status achieved" style="font-size: 13px;">🎯 Target: Band 7.0</div>
+        </div>
+        <div style="display: flex; flex-direction: column; justify-content: center; gap: 14px;">
+          <div class="stat-card">
+            <strong>Band 7.0</strong>
+            <span>Active Speaking & Writing Target Score</span>
+          </div>
+          <div class="stat-card" style="border-color: rgba(122, 181, 213, 0.3);">
+            <strong>30 / 40</strong>
+            <span>Listening & Academic Reading Raw Score Needed</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. DIAGNOSTIC INTERACTIVE SLIDERS -->
+    <section class="panel">
+      <h3 class="panel-title">📊 Live Band 7 Diagnostic Simulator</h3>
+      <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 15px;">
+        Adjust the sliders below based on May's performance in our trial activities. The system calculates her estimated Speaking and Writing bands in real time. To reach an overall Band 7, she needs to consistently hit Band 7 standards in these pillars.
+      </p>
+
+      <div class="tab-nav">
+        <button class="tab-nav-btn active" id="tab-btn-speaking" onclick="switchDiagTab('speaking')">🎙️ Speaking Diagnostic</button>
+        <button class="tab-nav-btn" id="tab-btn-writing" onclick="switchDiagTab('writing')">✍️ Writing Diagnostic</button>
+      </div>
+
+      <!-- SPEAKING DIAGNOSTIC -->
+      <div id="diag-speaking" class="diag-layout" style="display: grid;">
+        <div class="slider-group">
+          <!-- Fluency & Coherence -->
+          <div class="slider-item">
+            <div class="slider-header">
+              <span class="slider-label">Fluency & Coherence</span>
+              <span class="slider-val" id="val-s-fc">6.0</span>
+            </div>
+            <input type="range" min="5" max="9" step="0.5" value="6" class="slider-input" id="slide-s-fc" oninput="updateScores()">
+            <div class="slider-desc">
+              <strong>Band 7 Expectation:</strong> Can speak at length without noticeable effort or loss of coherence. Uses a range of connective words (e.g. *consequently*, *nevertheless*) naturally.
+            </div>
+          </div>
+          <!-- Lexical Resource -->
+          <div class="slider-item">
+            <div class="slider-header">
+              <span class="slider-label">Lexical Resource (Vocabulary)</span>
+              <span class="slider-val" id="val-s-lr">6.0</span>
+            </div>
+            <input type="range" min="5" max="9" step="0.5" value="6" class="slider-input" id="slide-s-lr" oninput="updateScores()">
+            <div class="slider-desc">
+              <strong>Band 7 Expectation:</strong> Uses vocabulary flexibly to discuss diverse topics. Uses less common collocations and idiomatic expressions (e.g. *pivotal choice*, *deliberate on*).
+            </div>
+          </div>
+          <!-- Grammatical Range -->
+          <div class="slider-item">
+            <div class="slider-header">
+              <span class="slider-label">Grammatical Range & Accuracy</span>
+              <span class="slider-val" id="val-s-gra">6.0</span>
+            </div>
+            <input type="range" min="5" max="9" step="0.5" value="6" class="slider-input" id="slide-s-gra" oninput="updateScores()">
+            <div class="slider-desc">
+              <strong>Band 7 Expectation:</strong> Uses a range of complex structures (conditionals, relative clauses). Frequently produces error-free sentences, with minor errors having no impact.
+            </div>
+          </div>
+          <!-- Pronunciation -->
+          <div class="slider-item">
+            <div class="slider-header">
+              <span class="slider-label">Pronunciation</span>
+              <span class="slider-val" id="val-s-p">6.0</span>
+            </div>
+            <input type="range" min="5" max="9" step="0.5" value="6" class="slider-input" id="slide-s-p" oninput="updateScores()">
+            <div class="slider-desc">
+              <strong>Band 7 Expectation:</strong> Uses wide range of pronunciation features. Easy to understand throughout; L1 accent has very minimal effect on intelligibility.
+            </div>
+          </div>
+        </div>
+
+        <div class="gauge-card">
+          <div class="gauge-title">Estimated Speaking Band</div>
+          <div class="gauge-circle-wrap">
+            <svg class="gauge-svg">
+              <circle class="gauge-bg" cx="90" cy="90" r="80"></circle>
+              <circle class="gauge-fill" id="gauge-fill-speaking" cx="90" cy="90" r="80"></circle>
+            </svg>
+            <div class="gauge-text" id="gauge-val-speaking">6.0</div>
+          </div>
+          <span class="badge-status not-achieved" id="gauge-status-speaking">Target: Band 7.0</span>
+          <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 16px; line-height: 1.5;">
+            Calculated as the arithmetic mean of all four speaking criteria, rounded to the nearest half-band.
+          </p>
+        </div>
+      </div>
+
+      <!-- WRITING DIAGNOSTIC -->
+      <div id="diag-writing" class="diag-layout" style="display: none;">
+        <div class="slider-group">
+          <!-- Task Response -->
+          <div class="slider-item">
+            <div class="slider-header">
+              <span class="slider-label">Task Response (Task 2) / Achievement (Task 1)</span>
+              <span class="slider-val" id="val-w-tr">6.0</span>
+            </div>
+            <input type="range" min="5" max="9" step="0.5" value="6" class="slider-input" id="slide-w-tr" oninput="updateScores()">
+            <div class="slider-desc">
+              <strong>Band 7 Expectation:</strong> Fully addresses all parts of the prompt. Presents a clear position throughout and extends/supports main ideas with explanations and examples.
+            </div>
+          </div>
+          <!-- Coherence & Cohesion -->
+          <div class="slider-item">
+            <div class="slider-header">
+              <span class="slider-label">Coherence & Cohesion</span>
+              <span class="slider-val" id="val-w-cc">6.0</span>
+            </div>
+            <input type="range" min="5" max="9" step="0.5" value="6" class="slider-input" id="slide-w-cc" oninput="updateScores()">
+            <div class="slider-desc">
+              <strong>Band 7 Expectation:</strong> Logically organizes information and ideas with a clear progression. Uses cohesive linkers smoothly. Manages paragraphing effectively.
+            </div>
+          </div>
+          <!-- Lexical Resource -->
+          <div class="slider-item">
+            <div class="slider-header">
+              <span class="slider-label">Lexical Resource (Vocabulary)</span>
+              <span class="slider-val" id="val-w-lr">6.0</span>
+            </div>
+            <input type="range" min="5" max="9" step="0.5" value="6" class="slider-input" id="slide-w-lr" oninput="updateScores()">
+            <div class="slider-desc">
+              <strong>Band 7 Expectation:</strong> Uses a wide range of vocabulary to allow flexibility and precision. Uses less common vocabulary with awareness of collocations. Occasional errors allowed.
+            </div>
+          </div>
+          <!-- Grammatical Range -->
+          <div class="slider-item">
+            <div class="slider-header">
+              <span class="slider-label">Grammatical Range & Accuracy</span>
+              <span class="slider-val" id="val-w-gra">6.0</span>
+            </div>
+            <input type="range" min="5" max="9" step="0.5" value="6" class="slider-input" id="slide-w-gra" oninput="updateScores()">
+            <div class="slider-desc">
+              <strong>Band 7 Expectation:</strong> Uses a variety of complex structures. The majority of sentences are completely error-free. Good control of grammar and punctuation.
+            </div>
+          </div>
+        </div>
+
+        <div class="gauge-card">
+          <div class="gauge-title">Estimated Writing Band</div>
+          <div class="gauge-circle-wrap">
+            <svg class="gauge-svg">
+              <circle class="gauge-bg" cx="90" cy="90" r="80"></circle>
+              <circle class="gauge-fill" id="gauge-fill-writing" cx="90" cy="90" r="80"></circle>
+            </svg>
+            <div class="gauge-text" id="gauge-val-writing">6.0</div>
+          </div>
+          <span class="badge-status not-achieved" id="gauge-status-writing">Target: Band 7.0</span>
+          <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 16px; line-height: 1.5;">
+            Calculated as the arithmetic mean of all four writing criteria, rounded to the nearest half-band.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. INTERACTIVE SPEAKING TRIAL WORKSHOP -->
+    <section class="panel">
+      <h3 class="panel-title">🎙️ Speaking Part 2 Trial Workshop</h3>
+      <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 15px;">
+        In IELTS Speaking Part 2, you are given 1 minute to plan your talk and must speak continuously for 1 to 2 minutes. Let's practice now.
+      </p>
+
+      <div class="speaking-layout">
+        <!-- Cue Card -->
+        <div class="cue-card">
+          <div class="cue-card-header">Candidate Task Card</div>
+          <div class="cue-card-q">Describe a pivotal decision you made that significantly influenced your life.</div>
+          <p style="font-weight: 700; color: var(--text); margin-bottom: 8px;">You should say:</p>
+          <ul class="cue-card-points">
+            <li>What the decision was and when you made it</li>
+            <li>What other alternatives you considered</li>
+            <li>Why you decided to make that choice</li>
+            <li>And explain how you feel about the outcome of that decision today</li>
+          </ul>
+          <div style="background: rgba(122, 181, 213, 0.06); padding: 12px; border-radius: 12px; border-left: 3.5px solid var(--accent); font-size: 13.5px; color: var(--text-muted);">
+            <strong>💡 Lesson Tip:</strong> Use conditional grammar: *"If I hadn't decided to move, I wouldn't have met..."* to demonstrate Band 7 Grammatical Range.
+          </div>
+        </div>
+
+        <!-- Timer Widget -->
+        <div class="timer-widget">
+          <div class="timer-select-wrap">
+            <button class="timer-select-btn active" id="timer-btn-prep" onclick="selectTimer('prep')">1 Min Prep</button>
+            <button class="timer-select-btn" id="timer-btn-speak" onclick="selectTimer('speak')">2 Min Speaking</button>
+          </div>
+          <div class="timer-display" id="time-display">01:00</div>
+          <div class="timer-controls">
+            <button class="btn btn-start" id="timer-btn-toggle" onclick="toggleTimer()">▶ Start Timer</button>
+            <button class="btn btn-reset" onclick="resetTimer()">Reset</button>
+          </div>
+          <p id="timer-message" style="margin-top: 14px; font-weight: 700; font-size: 13.5px; color: var(--accent); height: 18px;"></p>
+        </div>
+      </div>
+
+      <!-- Vocabulary Booster -->
+      <div class="vocab-booster">
+        <h4 style="font-family: 'Fredoka One', cursive; font-size: 16px; margin-bottom: 12px; color: var(--accent);">
+          🚀 Band 7 Vocabulary Booster (Click to Reveal Alternatives)
+        </h4>
+        <div class="vocab-grid">
+          <div class="vocab-card" onclick="revealVocab(this)">
+            <div class="vocab-card-header">Band 6 Basic</div>
+            <div class="vocab-card-word">"Big decision"</div>
+            <div class="vocab-card-reveal">💡 Reveal Band 7+</div>
+            <div class="vocab-card-content">
+              <div class="vocab-card-boosted-label">Band 7+ Collocations</div>
+              <div class="vocab-card-boosted">Pivotal choice / Monumental decision</div>
+              <div class="vocab-card-example">"Deciding to shift career paths was a **pivotal choice**."</div>
+            </div>
+          </div>
+
+          <div class="vocab-card" onclick="revealVocab(this)">
+            <div class="vocab-card-header">Band 6 Basic</div>
+            <div class="vocab-card-word">"Think about it"</div>
+            <div class="vocab-card-reveal">💡 Reveal Band 7+</div>
+            <div class="vocab-card-content">
+              <div class="vocab-card-boosted-label">Band 7+ Collocations</div>
+              <div class="vocab-card-boosted">Deliberate on / Ponder my choices</div>
+              <div class="vocab-card-example">"I had to **deliberate on** this opportunity for several weeks."</div>
+            </div>
+          </div>
+
+          <div class="vocab-card" onclick="revealVocab(this)">
+            <div class="vocab-card-header">Band 6 Basic</div>
+            <div class="vocab-card-word">"Very hard / Difficult"</div>
+            <div class="vocab-card-reveal">💡 Reveal Band 7+</div>
+            <div class="vocab-card-content">
+              <div class="vocab-card-boosted-label">Band 7+ Collocations</div>
+              <div class="vocab-card-boosted">Formidable challenge / Incredibly demanding</div>
+              <div class="vocab-card-example">"Moving to a new city alone proved to be a **formidable challenge**."</div>
+            </div>
+          </div>
+
+          <div class="vocab-card" onclick="revealVocab(this)">
+            <div class="vocab-card-header">Band 6 Basic</div>
+            <div class="vocab-card-word">"Scared / Worried"</div>
+            <div class="vocab-card-reveal">💡 Reveal Band 7+</div>
+            <div class="vocab-card-content">
+              <div class="vocab-card-boosted-label">Band 7+ Collocations</div>
+              <div class="vocab-card-boosted">Apprehensive / Filled with trepidation</div>
+              <div class="vocab-card-example">"Initially, I was highly **apprehensive** about the outcome."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. INTERACTIVE WRITING COMPARISON -->
+    <section class="panel">
+      <h3 class="panel-title">✍️ Writing Task 2 Diagnostic Workshop</h3>
+      <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 15px;">
+        Compare these two candidate body paragraphs responding to the prompt: *"Do the benefits of remote work outweigh the drawbacks?"* 
+        **Hover or click on the highlighted terms** in the Band 7 essay to see the grammatical and lexical features that make it superior.
+      </p>
+
+      <div class="writing-layout">
+        <div class="writing-header">
+          <strong>IELTS Prompt:</strong> "In many countries, an increasing number of people are working from home. Do the advantages of this trend outweigh the disadvantages?"
+        </div>
+
+        <div class="writing-grid">
+          <!-- Band 6 Card -->
+          <div class="essay-card band6">
+            <h4 class="essay-title">Candidate Response <span>Band 6.0</span></h4>
+            <div class="essay-text">
+              On the one hand, working from home has some good benefits. First, employees do not have to travel to work every day. This saves a lot of time and money that people spend on trains and fuel. In addition, workers can have a flexible schedule. They can work when they want, so they can take care of their children and clean the house easily. Consequently, this makes staff feel happier and less stressed in their daily lives.
+            </div>
+            <div class="essay-analysis">
+              <strong>Tutor Analysis:</strong> 
+              Uses basic vocabulary (*"good benefits"*, *"saves a lot of time"*, *"take care of"*). Sentence structure is repetitive (mostly simple Subject-Verb-Object). Connectors are standard (*"First"*, *"In addition"*, *"Consequently"*).
+            </div>
+          </div>
+
+          <!-- Band 7 Card -->
+          <div class="essay-card band7">
+            <h4 class="essay-title">Candidate Response <span>Band 7.5</span></h4>
+            <div class="essay-text">
+              <mark data-tooltip="Band 7+ Lexical: Academic vocabulary replacing basic 'good benefits'.">Undeniably, telecommuting offers several profound advantages.</mark> 
+              Chief among these is the <mark data-tooltip="Band 7+ Collocation & Grammar: Replaces 'saves time and money on travel'. Nominalization creates a formal tone.">elimination of daily commutes,</mark> which significantly reduces transportation costs and recovers valuable hours. Furthermore, <mark data-tooltip="Band 7+ Grammar: Complex non-defining relative clause used to extend the sentence.">flexible working arrangements,</mark> which allow employees to coordinate tasks around family commitments, foster a healthier work-life balance. Consequently, this autonomy not only enhances job satisfaction but also <mark data-tooltip="Band 7+ Grammar: Correlative conjunction structure 'not only... but also' increases grammatical range.">mitigates work-related stress.</mark>
+            </div>
+            <div class="essay-analysis">
+              <strong>Tutor Analysis:</strong> 
+              Features high-level synonyms (*"telecommuting"*, *"mitigates"*). Contains complex grammar (non-defining relative clauses, passive voice, nominalization, correlative structures). Cohesion is varied and smooth.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 12-WEEK ROADMAP -->
+    <section class="panel">
+      <h3 class="panel-title">🗺️ May's 12-Week Band 7 IELTS Roadmap</h3>
+      <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 15px;">
+        Click on each milestone phase to review the syllabus topics, focus areas, and homework expectations.
+      </p>
+
+      <div class="roadmap-timeline">
+        <div class="roadmap-track"></div>
+        <div class="roadmap-steps">
+          <div class="roadmap-step active" id="step-0" onclick="selectRoadmapStep(0)">
+            <div class="roadmap-dot">1-3</div>
+            <span class="roadmap-step-label">Weeks 1-3</span>
+          </div>
+          <div class="roadmap-step" id="step-1" onclick="selectRoadmapStep(1)">
+            <div class="roadmap-dot">4-6</div>
+            <span class="roadmap-step-label">Weeks 4-6</span>
+          </div>
+          <div class="roadmap-step" id="step-2" onclick="selectRoadmapStep(2)">
+            <div class="roadmap-dot">7-9</div>
+            <span class="roadmap-step-label">Weeks 7-9</span>
+          </div>
+          <div class="roadmap-step" id="step-3" onclick="selectRoadmapStep(3)">
+            <div class="roadmap-dot">10-12</div>
+            <span class="roadmap-step-label">Weeks 10-12</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-details-box" id="roadmap-details">
+        <h4 class="roadmap-details-title" id="roadmap-title">Weeks 1-3: Foundations & Diagnostic Deep-Dive</h4>
+        <div class="roadmap-details-grid">
+          <div class="roadmap-details-col">
+            <strong>🎯 Focus Syllabus Topics:</strong>
+            <ul id="roadmap-topics">
+              <li>IELTS Speaking Part 1 strategy (Fluency & natural extension techniques)</li>
+              <li>Writing Task 1 (Academic Graphs, Charts & comparative vocabulary)</li>
+              <li>Grammar focus: Complex compound structures & relative clauses</li>
+              <li>Active listening drills & identifying trick distractors</li>
+            </ul>
+          </div>
+          <div class="roadmap-details-col">
+            <strong>📝 Student Expectations & Homework:</strong>
+            <ul id="roadmap-homework">
+              <li>Record 3 Speaking Part 1 topics weekly in the study portal</li>
+              <li>Complete 2 Writing Task 1 assignments</li>
+              <li>Review 30 Academic IELTS collocations (Flashcards)</li>
+              <li>Diagnostic test score review</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. STUDENT EXPECTATIONS -->
+    <section class="panel">
+      <h3 class="panel-title">🤝 Expectations of the Student</h3>
+      <div class="expect-grid">
+        <div class="expect-card">
+          <h3>👩‍🎓 May's Commitments</h3>
+          <ul>
+            <li><strong>Class Attendance:</strong> Commit to 2 hours of private tutoring per week.</li>
+            <li><strong>Self-Study:</strong> Complete 4-6 hours of independent study using portal resources weekly.</li>
+            <li><strong>Homework Submissions:</strong> Upload writing drafts 24 hours prior to class to allow for thorough markup.</li>
+            <li><strong>Audio Recording:</strong> Practice speaking drills weekly.</li>
+          </ul>
+        </div>
+        <div class="expect-card">
+          <h3>👨‍🏫 Tutor Support</h3>
+          <ul>
+            <li><strong>Personalized Feedback:</strong> Line-by-line essay corrections with grammar & lexical score analysis.</li>
+            <li><strong>Mock Tests:</strong> 2 complete mock examinations per month with band score reporting.</li>
+            <li><strong>Vocabulary Libraries:</strong> Custom collocation lists tailored to weak topics.</li>
+            <li><strong>24/7 Portal Access:</strong> Access to all interactive games, speech recorders, and exercises.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. TRIAL DIAGNOSTIC REPORT WRITER -->
+    <section class="panel">
+      <h3 class="panel-title">📄 Trial Assessment Report & Action Plan</h3>
+      <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 15px;">
+        Tutor Section: Complete May's details and diagnostic notes during the lesson. When you click the download button, a customized PDF report will generate containing her roadmap, expectations, and your specific trial feedback.
+      </p>
+
+      <div class="report-layout">
+        <div class="report-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="student-name">Student Name</label>
+              <input type="text" id="student-name" value="May">
+            </div>
+            <div class="form-group">
+              <label for="exam-date">Target Exam Date</label>
+              <input type="text" id="exam-date" value="September 2026">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="tutor-feedback">Tutor Diagnostic Feedback & Next Steps</label>
+            <textarea id="tutor-feedback" placeholder="Type your observations from the trial lesson here...">May has a strong base in daily English. However, to secure a Band 7 on the IELTS, she needs to eliminate generic vocabulary (e.g. 'good', 'bad', 'nice') and focus on precise academic collocations in both Writing and Speaking. Her speaking fluency is good, but her range of complex grammatical structures (such as conditional clauses) needs reinforcement. We will focus on these areas starting next week.</textarea>
+          </div>
+          <button class="btn btn-download" onclick="generateReportPDF()">📥 Download Custom Roadmap & Trial Report PDF</button>
+        </div>
+
+        <div class="report-pitch-card">
+          <div class="pitch-text">
+            <h4>Ready to achieve IELTS Band 7?</h4>
+            <p>
+              By combining live 1-on-1 tutoring sessions with our interactive training deck, you will build the grammatical flexibility and vocabulary range that examiners look for.
+            </p>
+          </div>
+          <div class="pitch-highlight">
+            ⭐ <strong>Trial Offer:</strong> Book a package of 10 lessons to get 10% off plus access to the Speech Mechanics Lab!
+          </div>
+          <p style="font-size: 12.5px; color: var(--text-muted); text-align: center; margin-top: 8px;">
+            Let's start your journey today!
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 IELTS Tutor Hub. All rights reserved. Custom-made for May's Preply Journey.</p>
+  </footer>
+
+  <script>
+    // Tab switching
+    function switchDiagTab(tab) {
+      document.getElementById('diag-speaking').style.display = tab === 'speaking' ? 'grid' : 'none';
+      document.getElementById('diag-writing').style.display = tab === 'writing' ? 'grid' : 'none';
+      
+      document.getElementById('tab-btn-speaking').classList.toggle('active', tab === 'speaking');
+      document.getElementById('tab-btn-writing').classList.toggle('active', tab === 'writing');
+    }
+
+    // Diagnostic sliders score update
+    function updateScores() {
+      // Speaking
+      const sFC = parseFloat(document.getElementById('slide-s-fc').value);
+      const sLR = parseFloat(document.getElementById('slide-s-lr').value);
+      const sGRA = parseFloat(document.getElementById('slide-s-gra').value);
+      const sP = parseFloat(document.getElementById('slide-s-p').value);
+      
+      document.getElementById('val-s-fc').innerText = sFC.toFixed(1);
+      document.getElementById('val-s-lr').innerText = sLR.toFixed(1);
+      document.getElementById('val-s-gra').innerText = sGRA.toFixed(1);
+      document.getElementById('val-s-p').innerText = sP.toFixed(1);
+      
+      const avgSpeaking = (sFC + sLR + sGRA + sP) / 4;
+      // Round to nearest 0.5
+      const finalSpeaking = Math.round(avgSpeaking * 2) / 2;
+      
+      document.getElementById('gauge-val-speaking').innerText = finalSpeaking.toFixed(1);
+      
+      // Update SVG gauge
+      // Stroke dash offset ranges from 502 (0%) to 0 (100%). We map band score 0-9 to 502-0.
+      const speakingPercent = finalSpeaking / 9;
+      const speakingOffset = 502 - (speakingPercent * 502);
+      document.getElementById('gauge-fill-speaking').style.strokeDashoffset = speakingOffset;
+
+      const speakingStatus = document.getElementById('gauge-status-speaking');
+      if (finalSpeaking >= 7.0) {
+        speakingStatus.innerText = "Achieved Band 7.0+";
+        speakingStatus.className = "badge-status achieved";
+      } else {
+        speakingStatus.innerText = "Below Band 7.0";
+        speakingStatus.className = "badge-status not-achieved";
+      }
+
+      // Writing
+      const wTR = parseFloat(document.getElementById('slide-w-tr').value);
+      const wCC = parseFloat(document.getElementById('slide-w-cc').value);
+      const wLR = parseFloat(document.getElementById('slide-w-lr').value);
+      const wGRA = parseFloat(document.getElementById('slide-w-gra').value);
+      
+      document.getElementById('val-w-tr').innerText = wTR.toFixed(1);
+      document.getElementById('val-w-cc').innerText = wCC.toFixed(1);
+      document.getElementById('val-w-lr').innerText = wLR.toFixed(1);
+      document.getElementById('val-w-gra').innerText = wGRA.toFixed(1);
+      
+      const avgWriting = (wTR + wCC + wLR + wGRA) / 4;
+      const finalWriting = Math.round(avgWriting * 2) / 2;
+      
+      document.getElementById('gauge-val-writing').innerText = finalWriting.toFixed(1);
+      
+      const writingPercent = finalWriting / 9;
+      const writingOffset = 502 - (writingPercent * 502);
+      document.getElementById('gauge-fill-writing').style.strokeDashoffset = writingOffset;
+
+      const writingStatus = document.getElementById('gauge-status-writing');
+      if (finalWriting >= 7.0) {
+        writingStatus.innerText = "Achieved Band 7.0+";
+        writingStatus.className = "badge-status achieved";
+      } else {
+        writingStatus.innerText = "Below Band 7.0";
+        writingStatus.className = "badge-status not-achieved";
+      }
+    }
+
+    // Timer logic
+    let timerInterval = null;
+    let timerSeconds = 60; // default 1 min
+    let currentTimerType = 'prep'; // prep or speak
+    let timerRunning = false;
+
+    function selectTimer(type) {
+      if (timerRunning) toggleTimer(); // stop if running
+      currentTimerType = type;
+      timerSeconds = type === 'prep' ? 60 : 120;
+      
+      document.getElementById('timer-btn-prep').classList.toggle('active', type === 'prep');
+      document.getElementById('timer-btn-speak').classList.toggle('active', type === 'speak');
+      
+      document.getElementById('timer-message').innerText = "";
+      updateTimerDisplay();
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timerSeconds / 60);
+      const secs = timerSeconds % 60;
+      document.getElementById('time-display').innerText = 
+        String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+    }
+
+    function toggleTimer() {
+      const btn = document.getElementById('timer-btn-toggle');
+      const msg = document.getElementById('timer-message');
+      
+      if (timerRunning) {
+        // Pause
+        clearInterval(timerInterval);
+        btn.innerText = "▶ Start Timer";
+        btn.className = "btn btn-start";
+        timerRunning = false;
+      } else {
+        // Start
+        btn.innerText = "⏸ Pause Timer";
+        btn.className = "btn btn-pause";
+        timerRunning = true;
+        msg.innerText = currentTimerType === 'prep' ? "💡 Plan your speaking bullet points..." : "🗣️ Speak continuously!";
+        
+        timerInterval = setInterval(() => {
+          if (timerSeconds > 0) {
+            timerSeconds--;
+            updateTimerDisplay();
+            // Alert in last 5 seconds of speaking or at half way
+            if (timerSeconds === 0) {
+              clearInterval(timerInterval);
+              timerRunning = false;
+              btn.innerText = "▶ Start Timer";
+              btn.className = "btn btn-start";
+              msg.innerText = "⏱️ Time is up!";
+              // Play alarm beep sound using browser Web Audio API
+              playAlarmBeeps();
+            }
+          }
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      if (timerRunning) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+      }
+      document.getElementById('timer-btn-toggle').innerText = "▶ Start Timer";
+      document.getElementById('timer-btn-toggle').className = "btn btn-start";
+      document.getElementById('timer-message').innerText = "";
+      timerSeconds = currentTimerType === 'prep' ? 60 : 120;
+      updateTimerDisplay();
+    }
+
+    // Web Audio API Beeps
+    function playBeep(freq, type, duration) {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        oscillator.type = type || 'sine';
+        oscillator.frequency.value = freq || 440;
+        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+        oscillator.start(audioCtx.currentTime);
+        oscillator.stop(audioCtx.currentTime + duration);
+      } catch (e) {
+        console.warn("AudioContext block or failed: ", e);
+      }
+    }
+
+    function playAlarmBeeps() {
+      playBeep(880, 'sine', 0.15);
+      setTimeout(() => playBeep(880, 'sine', 0.15), 200);
+      setTimeout(() => playBeep(880, 'sine', 0.4), 400);
+    }
+
+    // Vocabulary reveal logic
+    function revealVocab(card) {
+      card.classList.add('revealed');
+      playBeep(523.25, 'sine', 0.08); // quiet check sound (C5)
+    }
+
+    // Roadmap timeline logic
+    const roadmapSyllabus = [
+      {
+        title: "Weeks 1-3: Foundations & Diagnostic Deep-Dive",
+        topics: [
+          "IELTS Speaking Part 1 strategy (Fluency & natural extension techniques)",
+          "Writing Task 1 (Academic Graphs, Charts & comparative vocabulary)",
+          "Grammar focus: Complex compound structures & relative clauses",
+          "Active listening drills & identifying trick distractors"
+        ],
+        homework: [
+          "Record 3 Speaking Part 1 topics weekly in the study portal",
+          "Complete 2 Writing Task 1 assignments",
+          "Review 30 Academic IELTS collocations (Flashcards)",
+          "Diagnostic test score review"
+        ]
+      },
+      {
+        title: "Weeks 4-6: Speaking Part 2 & Essay Core Structures",
+        topics: [
+          "Speaking Part 2 (Storytelling structures, cue card annotation in 60s)",
+          "Writing Task 2 (Opinion essays: single-sided vs balanced positions)",
+          "Grammar focus: Conditional clauses (first, second, and third conditionals)",
+          "Reading skills: Skimming, scanning, and True/False/Not Given tasks"
+        ],
+        homework: [
+          "Submit 2 full opinion essays for feedback and grading",
+          "Record 3 Part 2 speaking cards under standard exam timing",
+          "Complete 4 full Reading passages with score analysis",
+          "Weekly vocabulary quiz on topic-specific lexical sets"
+        ]
+      },
+      {
+        title: "Weeks 7-9: Speaking Part 3 & Complex Argumentation",
+        topics: [
+          "Speaking Part 3 (Handling abstract questions, hedging, justifying views)",
+          "Writing Task 2 (Discussion & Problem/Solution structures)",
+          "Advanced cohesion: Nominals, referencing, and lexical linking",
+          "Academic Reading: Matching headings and Summary completion"
+        ],
+        homework: [
+          "Write 3 discussion/problem-solution essay drafts",
+          "Record responses to 15 Part 3 speaking questions",
+          "Complete 3 full mock Listening papers",
+          "Collocation database integration & review"
+        ]
+      },
+      {
+        title: "Weeks 10-12: Full Mock Exams & Fine-Tuning",
+        topics: [
+          "Full Speaking Mock Interviews with detailed score sheets",
+          "Full Writing Mock Exams under real 60-minute time limits",
+          "Time management strategies & common error mitigation",
+          "Reading/Listening final strategies & weak point review"
+        ],
+        homework: [
+          "Complete 2 full practice papers (Speaking, Writing, Reading, Listening)",
+          "Detailed self-correction of spelling errors and punctuation",
+          "Final vocabulary review (Band 7-8 synonym booster)",
+          "Confidence building & mock exam reviews"
+        ]
+      }
+    ];
+
+    function selectRoadmapStep(index) {
+      document.querySelectorAll('.roadmap-step').forEach((step, i) => {
+        step.classList.toggle('active', i === index);
+      });
+
+      const data = roadmapSyllabus[index];
+      document.getElementById('roadmap-title').innerText = data.title;
+      
+      const topicsList = document.getElementById('roadmap-topics');
+      topicsList.innerHTML = '';
+      data.topics.forEach(t => {
+        const li = document.createElement('li');
+        li.innerText = t;
+        topicsList.appendChild(li);
+      });
+
+      const hwList = document.getElementById('roadmap-homework');
+      hwList.innerHTML = '';
+      data.homework.forEach(h => {
+        const li = document.createElement('li');
+        li.innerText = h;
+        hwList.appendChild(li);
+      });
+
+      playBeep(587.33, 'sine', 0.05); // quick sound (D5)
+    }
+
+    // Dynamic PDF generator using jsPDF
+    function generateReportPDF() {
+      const studentName = document.getElementById('student-name').value || 'May';
+      const examDate = document.getElementById('exam-date').value || 'TBD';
+      const feedback = document.getElementById('tutor-feedback').value || '(No feedback added)';
+      
+      // Get Diagnostic Scores
+      const sFC = parseFloat(document.getElementById('slide-s-fc').value);
+      const sLR = parseFloat(document.getElementById('slide-s-lr').value);
+      const sGRA = parseFloat(document.getElementById('slide-s-gra').value);
+      const sP = parseFloat(document.getElementById('slide-s-p').value);
+      const sAvg = (sFC + sLR + sGRA + sP) / 4;
+      const sFinal = Math.round(sAvg * 2) / 2;
+
+      const wTR = parseFloat(document.getElementById('slide-w-tr').value);
+      const wCC = parseFloat(document.getElementById('slide-w-cc').value);
+      const wLR = parseFloat(document.getElementById('slide-w-lr').value);
+      const wGRA = parseFloat(document.getElementById('slide-w-gra').value);
+      const wAvg = (wTR + wCC + wLR + wGRA) / 4;
+      const wFinal = Math.round(wAvg * 2) / 2;
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+      const margin = 50;
+      const width = 595 - margin * 2;
+      let y = margin;
+
+      // Color Definitions
+      const navy = [13, 27, 53];
+      const gold = [201, 162, 39];
+      const lightBlue = [122, 181, 213];
+      const darkText = [40, 40, 40];
+
+      // Document Title/Header
+      doc.setFillColor(...navy);
+      doc.rect(0, 0, 595, 110, 'F');
+      
+      doc.setTextColor(255, 255, 255);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(22);
+      doc.text("IELTS BAND 7 DIAGNOSTIC REPORT", margin, 50);
+
+      doc.setTextColor(...gold);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.text("STUDENT ACTION PLAN & MOCK STUDY ROADMAP", margin, 72);
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(200, 200, 200);
+      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, margin, 90);
+
+      y = 140;
+
+      // Student Info Box
+      doc.setFillColor(245, 247, 250);
+      doc.roundedRect(margin, y, width, 55, 8, 8, 'F');
+      
+      doc.setTextColor(...navy);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.text("Candidate Name:", margin + 15, y + 22);
+      doc.text("Target Score:", margin + 15, y + 38);
+      
+      doc.setFont('helvetica', 'normal');
+      doc.text(studentName, margin + 120, y + 22);
+      doc.text("Band 7.0 (Academic Exam)", margin + 120, y + 38);
+
+      doc.setFont('helvetica', 'bold');
+      doc.text("Target Exam Date:", margin + 280, y + 22);
+      doc.setFont('helvetica', 'normal');
+      doc.text(examDate, margin + 390, y + 22);
+      y += 80;
+
+      // Diagnostic Summary Table
+      doc.setTextColor(...navy);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(14);
+      doc.text("1. Diagnostic Assessment Summary", margin, y);
+      y += 18;
+
+      doc.setDrawColor(220, 220, 220);
+      doc.setFillColor(235, 240, 245);
+      doc.rect(margin, y, width, 22, 'FD');
+      
+      doc.setFontSize(10);
+      doc.setTextColor(...navy);
+      doc.text("Assessment Pillar", margin + 15, y + 15);
+      doc.text("Sub-Criteria Ratings (Scale 5 - 9)", margin + 180, y + 15);
+      doc.text("Est. Band", margin + 420, y + 15);
+      y += 22;
+
+      // Speaking Row
+      doc.setFillColor(255, 255, 255);
+      doc.rect(margin, y, width, 30, 'FD');
+      doc.setTextColor(...darkText);
+      doc.setFont('helvetica', 'bold');
+      doc.text("IELTS Speaking", margin + 15, y + 18);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.text(`Fluency: ${sFC.toFixed(1)} | Vocabulary: ${sLR.toFixed(1)} | Grammar: ${sGRA.toFixed(1)} | Pron: ${sP.toFixed(1)}`, margin + 180, y + 18);
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(...(sFinal >= 7.0 ? [46, 204, 113] : gold));
+      doc.text(`Band ${sFinal.toFixed(1)}`, margin + 420, y + 19);
+      y += 30;
+
+      // Writing Row
+      doc.setFillColor(255, 255, 255);
+      doc.rect(margin, y, width, 30, 'FD');
+      doc.setTextColor(...darkText);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10);
+      doc.text("IELTS Writing", margin + 15, y + 18);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.text(`Task: ${wTR.toFixed(1)} | Coherence: ${wCC.toFixed(1)} | Vocabulary: ${wLR.toFixed(1)} | Grammar: ${wGRA.toFixed(1)}`, margin + 180, y + 18);
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(...(wFinal >= 7.0 ? [46, 204, 113] : gold));
+      doc.text(`Band ${wFinal.toFixed(1)}`, margin + 420, y + 19);
+      y += 50;
+
+      // Tutor Feedback
+      doc.setTextColor(...navy);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(14);
+      doc.text("2. Tutor Observations & Strategic Next Steps", margin, y);
+      y += 18;
+
+      doc.setFillColor(255, 252, 245);
+      doc.setDrawColor(...gold);
+      doc.setLineWidth(1);
+      
+      const wrappedFeedback = doc.splitTextToSize(feedback, width - 30);
+      const boxHeight = wrappedFeedback.length * 15 + 24;
+      doc.roundedRect(margin, y, width, boxHeight, 6, 6, 'FD');
+      
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(...darkText);
+      doc.text(wrappedFeedback, margin + 15, y + 18);
+      y += boxHeight + 35;
+
+      // Expectations Header
+      doc.setTextColor(...navy);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(14);
+      doc.text("3. Core Student Expectations", margin, y);
+      y += 18;
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(...darkText);
+      const bulletPoints = [
+        "- Attend 2 hours of private tutoring sessions weekly.",
+        "- Commit to 4-6 hours of active self-study using training tools weekly.",
+        "- Submit Writing Tasks 24 hours prior to sessions for full markup.",
+        "- Actively practice speaking prompts and track vocabulary collocations."
+      ];
+      bulletPoints.forEach(bp => {
+        doc.text(bp, margin + 10, y);
+        y += 15;
+      });
+
+      // Add a page break for the roadmap
+      doc.addPage();
+      y = margin;
+
+      // Page 2 header banner
+      doc.setFillColor(...navy);
+      doc.rect(0, 0, 595, 60, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(14);
+      doc.text(`${studentName}'s Custom 12-Week IELTS 7.0 Syllabus`, margin, 36);
+
+      y = 90;
+
+      // Print all roadmap sections
+      roadmapSyllabus.forEach((phase, index) => {
+        doc.setTextColor(...navy);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(12);
+        doc.text(`Phase ${index + 1}: ${phase.title}`, margin, y);
+        y += 15;
+
+        // Draw bullet list of topics
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9.5);
+        doc.setTextColor(...darkText);
+        doc.text("Key Focus Areas:", margin + 15, y);
+        y += 13;
+        phase.topics.forEach(t => {
+          doc.text(`• ${t}`, margin + 25, y);
+          y += 13;
+        });
+
+        y += 5;
+        doc.text("Homework & Tasks:", margin + 15, y);
+        y += 13;
+        phase.homework.forEach(h => {
+          doc.text(`• ${h}`, margin + 25, y);
+          y += 13;
+        });
+
+        y += 22; // space between phases
+      });
+
+      // Footer notice
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(9);
+      doc.setTextColor(...gold);
+      doc.text("Note: This curriculum is flexible and will adjust depending on your weekly mock test performance.", margin, y + 10);
+
+      // Save PDF
+      doc.save(`${studentName.replace(/\s+/g, '_')}_IELTS_7_Roadmap_Report.pdf`);
+      playBeep(659.25, 'sine', 0.15); // happy high beep (E5)
+    }
+
+    // Initial scores update
+    updateScores();
+  </script>
+</body>
+</html>
