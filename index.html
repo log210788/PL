@@ -6,7 +6,15 @@
   <title>Paolo's Conversation & Idioms Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:ital,wght@0,400;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <!-- Libraries & Plugins: Lucide Icons, Chart.js, Canvas Confetti, Popper + Tippy.js, jsPDF -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     :root {
       --bg: #0d1b35;
@@ -650,6 +658,447 @@
       border-color: var(--primary);
     }
 
+    /* OCT 17 LESSON VOCAB HUB STYLES */
+    .oct17-banner {
+      background: linear-gradient(145deg, rgba(20, 39, 70, 0.96), rgba(28, 53, 94, 0.88));
+      border: 1.5px solid rgba(229, 185, 52, 0.45);
+      border-radius: 28px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.42);
+      position: relative;
+      overflow: hidden;
+    }
+    .oct17-top-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 28px;
+    }
+    .oct17-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      margin-bottom: 14px;
+    }
+    .topic-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0 22px;
+    }
+    .topic-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 13px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+    }
+    .analytics-box {
+      background: rgba(8, 17, 36, 0.55);
+      border: 1px solid rgba(122, 181, 213, 0.2);
+      border-radius: 22px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .chart-wrap {
+      position: relative;
+      height: 175px;
+    }
+    .mastery-meter {
+      background: rgba(13, 27, 53, 0.8);
+      border: 1px solid rgba(122, 181, 213, 0.18);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+    .mastery-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12.5px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .progress-bar-bg {
+      width: 100%;
+      height: 9px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #38bdf8, #10b981);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+    .story-card {
+      background: rgba(13, 27, 53, 0.72);
+      border: 1px solid rgba(122, 181, 213, 0.16);
+      border-radius: 18px;
+      padding: 16px;
+      transition: all 0.22s;
+    }
+    .story-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+    }
+    .story-step {
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .story-card h4 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 15.5px;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .story-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .hl-word {
+      color: var(--primary);
+      font-weight: 800;
+      border-bottom: 1px dashed var(--primary);
+      cursor: pointer;
+    }
+    .explorer-toolbar {
+      background: rgba(8, 17, 36, 0.55);
+      border: 1px solid rgba(201, 162, 39, 0.25);
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .search-and-voice {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .search-box {
+      flex: 1;
+      min-width: 240px;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 11px 16px 11px 38px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(122, 181, 213, 0.25);
+      background: rgba(13, 27, 53, 0.9);
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      font-size: 14px;
+      outline: none;
+    }
+    .search-box input:focus { border-color: var(--primary); }
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .filter-pill {
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-pill.active, .filter-pill:hover {
+      background: var(--primary);
+      color: var(--bg);
+      border-color: var(--primary);
+    }
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .vocab-card {
+      background: linear-gradient(150deg, rgba(16, 32, 60, 0.95), rgba(11, 23, 45, 0.98));
+      border: 1px solid rgba(122, 181, 213, 0.18);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      transition: all 0.22s;
+    }
+    .vocab-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(229, 185, 52, 0.55);
+    }
+    .vocab-card.mastered {
+      border-color: rgba(16, 185, 129, 0.65);
+      background: linear-gradient(150deg, rgba(16, 185, 129, 0.1), rgba(11, 23, 45, 0.98));
+    }
+    .vc-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .vc-cat {
+      font-size: 10.5px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.14);
+      color: #7dd3fc;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .vc-cat[data-cat="Architecture & Reflection"] { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border-color: rgba(168, 85, 247, 0.35); }
+    .vc-cat[data-cat="City & Traffic"] { background: rgba(56, 189, 248, 0.15); color: #7dd3fc; border-color: rgba(56, 189, 248, 0.35); }
+    .vc-cat[data-cat="Law & News"] { background: rgba(244, 63, 94, 0.15); color: #fda4af; border-color: rgba(244, 63, 94, 0.35); }
+    .vc-cat[data-cat="Health & Habits"] { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.35); }
+    .vc-cat[data-cat="Travel & Food"] { background: rgba(245, 158, 11, 0.15); color: #fcd34d; border-color: rgba(245, 158, 11, 0.35); }
+    .vc-actions { display: flex; gap: 6px; }
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .icon-btn:hover { background: var(--primary); color: var(--bg); }
+    .icon-btn.master-btn.active { background: #10b981; color: #fff; border-color: #10b981; }
+    .vc-term {
+      font-family: 'Fredoka One', cursive;
+      font-size: 20px;
+      color: var(--primary);
+      margin: 4px 0 2px;
+    }
+    .vc-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .vc-ipa {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      background: rgba(122, 181, 213, 0.12);
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+    .vc-pos { font-size: 12px; font-style: italic; color: var(--text-muted); }
+    .vc-meaning { font-size: 14px; color: var(--text); line-height: 1.45; }
+    .vc-italian {
+      background: rgba(201, 162, 39, 0.1);
+      border-left: 3px solid var(--primary);
+      padding: 7px 11px;
+      border-radius: 0 9px 9px 0;
+      font-size: 13px;
+      font-weight: 800;
+      color: #fde68a;
+    }
+    .vc-quote {
+      background: rgba(8, 17, 36, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      font-style: italic;
+      line-height: 1.45;
+    }
+    .vc-quote strong { color: var(--primary); font-style: normal; }
+
+    /* 3D FLASHCARD STAGE IN INDEX */
+    .flashcard-stage {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+    .fc-perspective {
+      perspective: 1200px;
+      height: 290px;
+      width: 100%;
+      cursor: pointer;
+    }
+    .fc-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .fc-inner.is-flipped { transform: rotateY(180deg); }
+    .fc-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 24px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.38);
+    }
+    .fc-front {
+      background: linear-gradient(145deg, #162c52, #0e1e3a);
+      border: 2px solid var(--primary);
+    }
+    .fc-back {
+      background: linear-gradient(145deg, #1e3a5f, #112240);
+      border: 2px solid var(--accent);
+      transform: rotateY(180deg);
+    }
+    .fc-word {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(24px, 3.5vw, 36px);
+      color: var(--primary);
+      margin: 10px 0 6px;
+    }
+
+    /* CLINIC & QUIZ IN INDEX */
+    .clinic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .clinic-card {
+      background: rgba(13, 27, 53, 0.78);
+      border: 1px solid rgba(122, 181, 213, 0.16);
+      border-radius: 20px;
+      padding: 20px;
+    }
+    .clinic-card h4 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 16.5px;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .wrong-line {
+      background: rgba(244, 63, 94, 0.1);
+      border-left: 3px solid #f43f5e;
+      padding: 7px 11px;
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+      color: #fecdd3;
+      margin-bottom: 6px;
+    }
+    .right-line {
+      background: rgba(16, 185, 129, 0.12);
+      border-left: 3px solid #10b981;
+      padding: 7px 11px;
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+      color: #a7f3d0;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .quiz-item {
+      background: rgba(8, 17, 36, 0.55);
+      border: 1px solid rgba(122, 181, 213, 0.16);
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+    }
+    .quiz-item.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.08); }
+    .quiz-item.wrong { border-color: #f43f5e; background: rgba(244, 63, 94, 0.08); }
+    .quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+    .quiz-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .quiz-opt {
+      padding: 7px 14px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .quiz-opt:hover { border-color: var(--primary); }
+    .quiz-opt.selected-correct { background: #10b981; border-color: #10b981; color: #fff; }
+    .quiz-opt.selected-wrong { background: #f43f5e; border-color: #f43f5e; color: #fff; }
+    .quiz-feedback { margin-top: 8px; font-size: 12.5px; font-weight: 700; display: none; }
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .prompt-card {
+      background: rgba(8, 17, 36, 0.55);
+      border: 1px solid rgba(122, 181, 213, 0.16);
+      border-radius: 18px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .prompt-card h4 { font-family: 'Fredoka One', cursive; color: var(--primary); font-size: 16px; }
+    .prompt-card textarea {
+      width: 100%;
+      min-height: 95px;
+      background: rgba(13, 27, 53, 0.9);
+      border: 1.5px solid rgba(122, 181, 213, 0.22);
+      border-radius: 12px;
+      padding: 10px;
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      font-size: 14px;
+      resize: vertical;
+      outline: none;
+    }
+    .prompt-card textarea:focus { border-color: var(--primary); }
+
     /* FOOTER */
     footer {
       text-align: center;
@@ -661,7 +1110,10 @@
     }
 
     @media (max-width: 900px) {
-      .hero-layout, .lab-layout, .vocal-tract-layout, .recorder-layout, .homework-panel {
+      .hero-layout, .oct17-top-grid, .flashcard-stage, .lab-layout, .vocal-tract-layout, .recorder-layout, .homework-panel {
+        grid-template-columns: 1fr;
+      }
+      .vocab-grid, .prompt-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -675,11 +1127,11 @@
         <div class="logo-badge">P</div>
         <div class="logo-text">
           <h1>Paolo's Conversation Lab</h1>
-          <p>Everyday English Fluency & Social Idioms</p>
+          <p>Everyday English Fluency &amp; Lesson Vocabulary Hub</p>
         </div>
       </div>
       <nav class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('roadmap')">🗺️ Roadmap</button>
+        <button class="tab-btn active" onclick="switchTab('roadmap')">✨ Oct 17 Vocab &amp; Hub</button>
         <button class="tab-btn" onclick="switchTab('lab')">🔬 Practice Lab</button>
         <button class="tab-btn" onclick="switchTab('vocal')">👄 Vocal Tract</button>
         <button class="tab-btn" onclick="switchTab('recorder')">🎙️ Recorder</button>
@@ -689,31 +1141,257 @@
 
   <main class="main-content">
 
-    <!-- 1. ROADMAP TAB -->
+    <!-- 1. FRONT PAGE: OCT 17 LESSON VOCABULARY NOTES & STUDY HUB -->
     <div id="tab-roadmap" class="tab-content active">
+
+      <!-- FEATURED TODAY'S LESSON VOCABULARY NOTES SHOWCASE -->
+      <section class="oct17-banner" id="oct17-vocab-hub">
+        <div class="oct17-top-grid">
+          <div>
+            <div class="oct17-badge">✨ New Lesson Notes • October 17, 2026</div>
+            <h2 class="hero-title" style="font-size:clamp(28px, 4vw, 44px);">Today's Lesson Vocabulary &amp; Study Notes</h2>
+            <p class="hero-text" style="margin-bottom:12px;">
+              Ciao Paolo! Here are all <strong>32 vocabulary expressions, idioms, phrasal verbs, and grammar upgrades</strong> from our lesson today — covering <em>Tadao Ando's Church of the Light</em> in Japan, Hanoi's motorbike-packed pavements, the Vietnamese flight attendant news story, vaping &amp; health, and your Sunday homemade Margherita pizza!
+            </p>
+            <div class="topic-tags">
+              <span class="topic-tag">⛪ Tadao Ando &amp; Self-Reflection</span>
+              <span class="topic-tag">🛵 Hanoi Shared Office &amp; Pavements</span>
+              <span class="topic-tag">⚖️ Smuggling &amp; Law News</span>
+              <span class="topic-tag">🚬 Vaping, Quids &amp; Inhibitions</span>
+              <span class="topic-tag">🍕 Tokyo Bullet Train &amp; "Less is More"</span>
+            </div>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#explorer">Explore All 32 Vocab Cards 👇</a>
+              <a class="btn btn-secondary" href="#flashcards" style="border-color:#38bdf8; color:#38bdf8;">3D Flip Flashcards 🃏</a>
+              <a class="btn btn-secondary" href="#practice" style="border-color:#10b981; color:#10b981;">Take Lesson Quiz ✍️</a>
+              <button class="btn btn-primary" style="background:linear-gradient(135deg,#10b981,#059669); color:#fff;" onclick="exportFullStudyPDF()">📄 Download Vocab &amp; Homework PDF</button>
+              <a class="btn btn-secondary" href="./lesson_oct17_vocab.html">Open Standalone View ↗</a>
+            </div>
+          </div>
+
+          <div class="analytics-box">
+            <div>
+              <h3 style="font-family:'Fredoka One', cursive; color:var(--primary); font-size:18px;">📊 Today's 32 Expressions</h3>
+              <p style="font-size:12px; color:var(--text-muted);">Breakdown by conversation topic</p>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="vocabChart"></canvas>
+            </div>
+            <div class="mastery-meter">
+              <div class="mastery-header">
+                <span>✅ Mastery Progress</span>
+                <span id="mastery-count-text" style="color:#10b981;">0 / 32 Mastered (0%)</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="mastery-bar-fill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5-CHAPTER INTERACTIVE STORY RECAP -->
+        <h3 class="panel-title" style="font-size:20px; margin-bottom:12px;">📖 Today's Conversation Journey (Hover or Click Highlighted Words!)</h3>
+        <div class="story-grid">
+          <div class="story-card">
+            <div class="story-step">01 • Hanoi City Center</div>
+            <h4>🛵 Shared Offices &amp; Pavements</h4>
+            <p>
+              Lewis moved near the university. Because traffic <span class="hl-word" data-tippy-content="🇮🇹 Ci mette un'eternità • Takes an extremely long time" onclick="speakWord('takes forever')">takes forever</span> and motorbikes drive on the <span class="hl-word" data-tippy-content="🇮🇹 Marciapiede (UK: pavement / US: sidewalk)" onclick="speakWord('pavement')">pavement</span>, he rents a shared office for $1 and goes home <span class="hl-word" data-tippy-content="🇮🇹 Alla fine / Finalmente (⚠️ False friend: NOT 'eventualmente'!)" onclick="speakWord('eventually')">eventually</span> at the end of the day.
+            </p>
+          </div>
+          <div class="story-card">
+            <div class="story-step">02 • Tadao Ando's Church</div>
+            <h4>⛪ Light &amp; Self-Reflection</h4>
+            <p>
+              In Tadao Ando's Japanese church, natural light is <span class="hl-word" data-tippy-content="🇮🇹 Ostruito / Bloccato • Blocked from passing through" onclick="speakWord('obstructed')">obstructed</span>, there is no altar or <span class="hl-word" data-tippy-content="🇮🇹 Pastore / Guida spirituale • /ˈʃepəd/ (silent h!)" onclick="speakWord('shepherd')">shepherd</span>, and only tiny <span class="hl-word" data-tippy-content="🇮🇹 Banchi di chiesa • /pjuːz/" onclick="speakWord('pews')">pews</span>. It <span class="hl-word" data-tippy-content="🇮🇹 Evocare / Suscitare ricordi" onclick="speakWord('invokes')">invokes</span> thoughts of <span class="hl-word" data-tippy-content="🇮🇹 Antenati" onclick="speakWord('ancestors')">ancestors</span>, while Paolo finds ocean waves <span class="hl-word" data-tippy-content="🇮🇹 Terapeutico / Rilassante" onclick="speakWord('therapeutic')">therapeutic</span> for <span class="hl-word" data-tippy-content="🇮🇹 Introspezione / Riflettere su se stessi" onclick="speakWord('self-reflection')">self-reflection</span>.
+            </p>
+          </div>
+          <div class="story-card">
+            <div class="story-step">03 • Law &amp; Society</div>
+            <h4>⚖️ Toothpaste Smuggling News</h4>
+            <p>
+              In a <span class="hl-word" data-tippy-content="🇮🇹 Suddiviso in zone" onclick="speakWord('zoned')">zoned</span> city where people live <span class="hl-word" data-tippy-content="🇮🇹 Vivere uno sopra l'altro" onclick="speakWord('on top of each other')">on top of each other</span>, four <span class="hl-word" data-tippy-content="🇮🇹 Assistenti di volo / Hostess" onclick="speakWord('air stewardesses')">air stewardesses</span> caught <span class="hl-word" data-tippy-content="🇮🇹 Contrabbandare" onclick="speakWord('smuggling')">smuggling</span> drugs in toothpaste were never <span class="hl-word" data-tippy-content="🇮🇹 Incriminato formalmente" onclick="speakWord('charged')">charged</span>, while an influencer got a 10-year <span class="hl-word" data-tippy-content="🇮🇹 Condanna detentiva" onclick="speakWord('prison sentence')">prison sentence</span>.
+            </p>
+          </div>
+          <div class="story-card">
+            <div class="story-step">04 • Health &amp; Socializing</div>
+            <h4>🚬 Vapes, Quids &amp; Inhibitions</h4>
+            <p>
+              Paolo's father gave him <span class="hl-word" data-tippy-content="🇮🇹 Un buon consiglio (Uncountable!)" onclick="speakWord('good advice')">good advice</span> against drugs. Smoking <span class="hl-word" data-tippy-content="🇮🇹 Un pacchetto al giorno" onclick="speakWord('a pack a day')">a pack a day</span> costs over 100 <span class="hl-word" data-tippy-content="🇮🇹 Sterline (slang UK)" onclick="speakWord('quid')">quid</span> a week, and bad habits <span class="hl-word" data-tippy-content="🇮🇹 Presentare il conto / Ripercuotersi sulla salute" onclick="speakWord('catch up with you')">catch up with you</span>. Alcohol <span class="hl-word" data-tippy-content="🇮🇹 Abbassare i freni inibitori" onclick="speakWord('lowers your inhibitions')">lowers your inhibitions</span>!
+            </p>
+          </div>
+          <div class="story-card">
+            <div class="story-step">05 • Tokyo to Italy</div>
+            <h4>🍕 Bullet Trains &amp; "Less is More"</h4>
+            <p>
+              From visiting <span class="hl-word" data-tippy-content="🇮🇹 Parenti acquisiti / Suoceri" onclick="speakWord('in-laws')">in-laws</span> in Tokyo via the <span class="hl-word" data-tippy-content="🇮🇹 Treno proiettile (Shinkansen)" onclick="speakWord('bullet train')">bullet train</span> to avoiding meat roasted <span class="hl-word" data-tippy-content="🇮🇹 Allo spiedo" onclick="speakWord('on the spit')">on the spit</span>, we finished with Paolo's Sunday homemade Margherita pizza — because <span class="hl-word" data-tippy-content="🇮🇹 Meno è meglio / La semplicità vince" onclick="speakWord('less is more')">less is more</span>!
+            </p>
+          </div>
+        </div>
+
+        <!-- INTERACTIVE 32-WORD VOCABULARY EXPLORER -->
+        <div id="explorer" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+          <h3 class="panel-title" style="margin-bottom:0; font-size:22px;">🗂️ Complete Lesson Vocabulary Bank (32 Expressions)</h3>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <label for="voice-accent" style="font-size:12.5px; color:var(--text-muted); font-weight:800;">🔊 Voice:</label>
+            <select id="voice-accent" style="background:var(--panel); color:var(--text); border:1px solid rgba(201,162,39,0.3); padding:6px 12px; border-radius:10px; font-family:inherit; font-weight:700;">
+              <option value="en-GB">🇬🇧 British (RP)</option>
+              <option value="en-US">🇺🇸 American</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="explorer-toolbar">
+          <div class="search-and-voice">
+            <div class="search-box">
+              <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%);">🔍</span>
+              <input type="text" id="vocab-search" placeholder="Search any English word, Italian meaning, or topic (e.g. obstructed, pews, eventualmente, pizza)..." oninput="renderVocabGrid()">
+            </div>
+            <button class="btn btn-secondary" style="padding:9px 16px; font-size:13px;" onclick="markAllMastered()">✓ Mark All Mastered</button>
+          </div>
+          <div class="filter-pills" id="category-pills">
+            <button class="filter-pill active" onclick="setCategory('ALL', this)">All Words (32)</button>
+            <button class="filter-pill" onclick="setCategory('Architecture & Reflection', this)">⛪ Architecture &amp; Reflection (9)</button>
+            <button class="filter-pill" onclick="setCategory('City & Traffic', this)">🛵 City &amp; Traffic (6)</button>
+            <button class="filter-pill" onclick="setCategory('Law & News', this)">⚖️ Law &amp; News (5)</button>
+            <button class="filter-pill" onclick="setCategory('Health & Habits', this)">🚬 Health &amp; Habits (6)</button>
+            <button class="filter-pill" onclick="setCategory('Travel & Food', this)">🍕 Travel &amp; Food (6)</button>
+          </div>
+        </div>
+
+        <div class="vocab-grid" id="vocab-grid"></div>
+
+        <!-- INTERACTIVE 3D FLASHCARD DECK -->
+        <div id="flashcards" style="margin-bottom:12px;">
+          <h3 class="panel-title" style="font-size:22px; margin-bottom:6px;">🃏 Interactive 3D Flashcards (Tap to Flip)</h3>
+          <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:14px;">Practice active recall with all 32 expressions from today's conversation.</p>
+        </div>
+        <div class="flashcard-stage">
+          <div>
+            <div class="fc-perspective" onclick="flipCurrentCard()">
+              <div class="fc-inner" id="fc-inner">
+                <div class="fc-face fc-front">
+                  <span class="vc-cat" id="fc-cat">Architecture &amp; Reflection</span>
+                  <div class="fc-word" id="fc-word">Obstructed</div>
+                  <div class="vc-ipa" id="fc-ipa">/əbˈstrʌktɪd/</div>
+                  <div style="margin-top:12px;">
+                    <button class="btn btn-secondary" style="padding:7px 14px; font-size:12.5px;" onclick="event.stopPropagation(); speakCurrentFlashcard();">🔊 Listen Pronunciation</button>
+                  </div>
+                  <div style="font-size:12px; color:var(--text-muted); margin-top:14px;">🔄 Tap card to reveal Italian &amp; lesson quote</div>
+                </div>
+                <div class="fc-face fc-back">
+                  <div style="font-size:12px; font-weight:900; color:var(--accent); text-transform:uppercase;" id="fc-pos">adjective</div>
+                  <div style="font-family:'Fredoka One', cursive; font-size:20px; color:var(--text); margin:6px 0;" id="fc-meaning"></div>
+                  <div class="vc-italian" style="margin:6px 0; border-radius:8px;" id="fc-italian"></div>
+                  <div class="vc-quote" style="margin-top:6px; max-width:95%;" id="fc-quote"></div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:center; align-items:center; gap:10px; margin-top:14px; flex-wrap:wrap;">
+              <button class="btn btn-secondary" style="padding:8px 16px;" onclick="changeFlashcard(-1)">⬅ Prev</button>
+              <span id="fc-counter" style="font-family:'Fredoka One', cursive; color:var(--primary); font-size:17px; min-width:70px; text-align:center;">1 / 32</span>
+              <button class="btn btn-secondary" style="padding:8px 16px;" onclick="changeFlashcard(1)">Next ➡</button>
+              <button class="btn btn-primary" style="padding:8px 16px;" onclick="markCurrentFlashcardMastered()">✅ Got It!</button>
+              <button class="btn btn-secondary" style="padding:8px 16px;" onclick="shuffleFlashcards()">🔀 Shuffle</button>
+            </div>
+          </div>
+
+          <div style="background:rgba(8,17,36,0.55); border:1px solid rgba(122,181,213,0.16); border-radius:20px; padding:20px;">
+            <h4 style="font-family:'Fredoka One', cursive; color:var(--primary); font-size:17px; margin-bottom:10px;">🎯 Pronunciation Targets</h4>
+            <ul style="padding-left:18px; color:var(--text-muted); font-size:13px; display:grid; gap:8px; line-height:1.5;">
+              <li><strong>Shepherd</strong> <code>/ˈʃepəd/</code> — Silent <strong>h</strong>! Means spiritual pastor ("sheep-herd").</li>
+              <li><strong>Pews</strong> <code>/pjuːz/</code> — Rhymes with <em>views</em> and <em>news</em>.</li>
+              <li><strong>Priest</strong> <code>/priːst/</code> — Long <code>/iː/</code> vowel (like <em>peace</em>), not <em>/aɪ/</em>.</li>
+              <li><strong>Therapeutic</strong> <code>/ˌθerəˈpjuːtɪk/</code> — Soft dental <code>/θ/</code> at the start, stress on <em>-peu-</em>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- GRAMMAR & FALSE FRIENDS CLINIC -->
+        <h3 class="panel-title" id="clinic" style="font-size:22px; margin-bottom:12px;">🩺 Paolo's Grammar, Pronunciation &amp; False Friends Clinic</h3>
+        <div class="clinic-grid">
+          <div class="clinic-card">
+            <h4>💬 1. "Talk to" vs. "Talk with" (Your Question!)</h4>
+            <div class="right-line">✅ "Tomorrow I'm going to uni to talk to a lot of people." (Default in everyday UK/US English)</div>
+            <div class="right-line">✅ "I enjoy talking with my friends over coffee." (Highlights mutual two-way exchange)</div>
+            <p style="font-size:13px; color:var(--text-muted);">Both are completely correct! You never need to worry about choosing between them, though <strong>talk to</strong> is slightly more common in British English.</p>
+          </div>
+          <div class="clinic-card">
+            <h4>⚠️ 2. False Friend Alert: "Eventually"</h4>
+            <div class="wrong-line">❌ Italian "eventualmente" = possibly / if necessary</div>
+            <div class="right-line">✅ English "eventually" = Alla fine / Finalmente (after a long delay)</div>
+            <p style="font-size:13px; color:var(--text-muted);">From today: <em>"The traffic takes forever, so I work at the office and go home <strong>eventually</strong> at the end of the day."</em></p>
+          </div>
+          <div class="clinic-card">
+            <h4>🧠 3. Natural Word Choice Upgrades</h4>
+            <div class="wrong-line">❌ "My father told me no drugs — a good tradition." / "Change the mental list."</div>
+            <div class="right-line">✅ "My father gave me good advice." / "Change their mentality."</div>
+            <p style="font-size:13px; color:var(--text-muted);">Remember: <strong>advice</strong> is uncountable (never <em>an advice</em>), and we buy <strong>a pack of 20 cigarettes</strong> (rather than <em>a box</em>).</p>
+          </div>
+        </div>
+
+        <!-- INTERACTIVE QUIZ & REFLECTION HOMEWORK -->
+        <div id="practice" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
+          <h3 class="panel-title" style="font-size:22px; margin-bottom:0;">✍️ Today's Lesson Quiz &amp; Reflection Homework</h3>
+          <span id="quiz-score-banner" style="font-family:'Fredoka One', cursive; font-size:18px; color:#10b981;">Quiz Score: 0 / 8</span>
+        </div>
+        <div id="quiz-container" style="margin-bottom:24px;"></div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:10px;">
+          <div>
+            <h4 style="font-family:'Fredoka One', cursive; color:var(--primary); font-size:18px;">📝 Personal Speaking &amp; Writing Prompts (Saved Automatically)</h4>
+            <p style="font-size:13px; color:var(--text-muted);">Write 2–4 sentences for each topic using today's vocabulary, then click <strong>Download Vocab &amp; Homework PDF</strong> to send to Lewis!</p>
+          </div>
+          <button class="btn btn-primary" style="background:linear-gradient(135deg,#10b981,#059669); color:#fff;" onclick="exportFullStudyPDF()">📥 Download Completed Homework &amp; Vocab PDF</button>
+        </div>
+
+        <div class="prompt-grid">
+          <div class="prompt-card">
+            <h4>🌊 1. Self-Reflection &amp; Therapeutic Spaces</h4>
+            <p style="font-size:12.5px; color:var(--text-muted);">Describe where you go for <strong>self-reflection</strong> (by the sea or on your motorbike). Why is it <strong>therapeutic</strong>, and what memories does it <strong>invoke</strong>?</p>
+            <textarea id="prompt-1" placeholder="When I need self-reflection, I go near the sea because listening to the waves is very therapeutic..." oninput="savePromptsLocal()"></textarea>
+          </div>
+          <div class="prompt-card">
+            <h4>🏙️ 2. City Life vs. Your Italian Town</h4>
+            <p style="font-size:12.5px; color:var(--text-muted);">Compare Hanoi's buildings (where people <strong>live on top of each other</strong> and traffic <strong>takes forever</strong>) with your town in Italy, and how you get home <strong>eventually</strong>.</p>
+            <textarea id="prompt-2" placeholder="In my town in Italy, we don't live on top of each other like in Hanoi or Milan..." oninput="savePromptsLocal()"></textarea>
+          </div>
+          <div class="prompt-card">
+            <h4>🚬 3. Health Habits &amp; Good Advice</h4>
+            <p style="font-size:12.5px; color:var(--text-muted);">Explain why smoking <strong>a pack a day</strong> or vaping can <strong>catch up with</strong> people as they are <strong>getting old</strong>, and share <strong>good advice</strong> from your father.</p>
+            <textarea id="prompt-3" placeholder="My father gave me good advice when I was young..." oninput="savePromptsLocal()"></textarea>
+          </div>
+          <div class="prompt-card">
+            <h4>🍕 4. Homemade Margherita Pizza ("Less is More")</h4>
+            <p style="font-size:12.5px; color:var(--text-muted);">Describe preparing <strong>homemade</strong> pizza with your wife and children this Sunday. Why do you believe <strong>"less is more"</strong>?</p>
+            <textarea id="prompt-4" placeholder="Tomorrow we will prepare homemade Margherita pizza with mozzarella and tomato. Less is more because..." oninput="savePromptsLocal()"></textarea>
+          </div>
+        </div>
+      </section>
+
       <section class="hero-layout">
         <div class="panel" style="margin-bottom:0;">
-          <div class="eyebrow">Preply Conversation Course</div>
-          <h2 class="hero-title">Welcome to your Study Hub, Paolo!</h2>
-          <p class="hero-text">Here is your interactive training deck. Use these tools to master social English conversation, practice everyday idioms, and perfect your speech mechanics to overcome native Italian speaker transfer habits. <b style="color:var(--primary)">Your homework is due this Wednesday!</b></p>
+          <div class="eyebrow">Preply Conversation Course • Archive &amp; Games</div>
+          <h2 class="hero-title" style="font-size:clamp(26px, 3.5vw, 42px);">All Lessons &amp; Interactive Games</h2>
+          <p class="hero-text">Explore all your previous interactive lessons, speech mechanics labs, and games below.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#homework">See Homework Tasks</a>
+            <a class="btn btn-primary" href="./lesson_oct17_vocab.html">Oct 17 Lesson Vocab Notes ✨</a>
+            <a class="btn btn-secondary" href="./moon_survival_homework.html" style="border-color: #a855f7; color: #c084fc;">Mission to the Moon 🚀</a>
             <a class="btn btn-secondary" href="./world_cup.html" style="border-color: var(--primary); color: var(--primary);">World Cup Predictions 🏆</a>
             <a class="btn btn-secondary" href="./directions.html">Directions Lesson 🗺️</a>
             <a class="btn btn-secondary" href="./habits.html">Play Connect 4 Game 🎮</a>
-            <a class="btn btn-secondary" href="./paul_idiom_flashcards_italian.html">Open Flashcards</a>
+            <a class="btn btn-secondary" href="./paul_idiom_flashcards_italian.html">Open Idiom Flashcards</a>
             <a class="btn btn-secondary" href="./may_ielts_trial.html" style="border-color: var(--accent); color: var(--accent);">May's IELTS 7 Trial 🎯</a>
-            <a class="btn btn-secondary" href="./moon_survival_homework.html" style="border-color: #a855f7; color: #c084fc;">Mission to the Moon 🚀</a>
           </div>
         </div>
         <div style="display:flex; flex-direction:column; justify-content:space-between;">
-          <div class="stat-card" style="border-color:rgba(201,162,39,.45); background:rgba(201,162,39,.08)">
-            <strong>Wednesday</strong>
-            <span>Homework deadline. Complete the tasks below, export PDFs, and upload to the Preply chat.</span>
+          <div class="stat-card" style="border-color:rgba(16,185,129,.45); background:rgba(16,185,129,.08)">
+            <strong style="color:#10b981;">Oct 17 Lesson</strong>
+            <span>32 new expressions added today! Review the flashcards, complete the 8-question quiz, and download your PDF.</span>
           </div>
           <div class="stat-card">
-            <strong>Lesson 2</strong>
-            <span>Active Lesson Topic: Casual Gatherings & Weekend Plans. Focusing on plural final /s/ vs /z/.</span>
+            <strong>1-on-1 Progress</strong>
+            <span>Focusing on natural British &amp; international idioms, false friends, and smooth pronunciation.</span>
           </div>
         </div>
       </section>
@@ -808,6 +1486,7 @@
           <div class="hw-card">
             <h3>Activities Checklist</h3>
             <ol>
+              <li><strong>NEW:</strong> Review today's <a href="./lesson_oct17_vocab.html" style="color:#10b981; font-weight:900;">October 17 Lesson Vocabulary Notes (32 Expressions)</a>, complete the 8-question quiz &amp; 4 reflection prompts &rarr; click <b>Download Vocab &amp; Homework PDF</b>.</li>
               <li>Review the <a href="./paul_idiom_flashcards_italian.html" style="color:var(--primary); font-weight:bold;">Idiom Flashcards</a> until you know all 8.</li>
               <li>Take the <a href="./idiom_test.html" style="color:var(--primary); font-weight:bold;">Idiom Test</a> &rarr; click <b>Download PDF</b>.</li>
               <li>Do the <a href="./idiom_fill_blanks.html" style="color:var(--primary); font-weight:bold;">Fill in the Blanks</a> &rarr; click <b>Download PDF</b>.</li>
@@ -1610,9 +2289,427 @@
     }
 
     // ----------------------------------------------------
+    // OCT 17, 2026 LESSON VOCABULARY & INTERACTIVE HUB
+    // ----------------------------------------------------
+    const lessonVocab = [
+      { id: 1, term: "Obstructed", ipa: "/əbˈstrʌktɪd/", pos: "adjective", cat: "Architecture & Reflection", meaning: "Blocked, covered, or prevented from passing through clearly.", it: "Ostruito / Bloccato / Schermato", quote: "“I think that the natural light is <strong>obstructed</strong> — obstructed means blocked — because behind the wall, the light represents God.”" },
+      { id: 2, term: "Pews", ipa: "/pjuːz/", pos: "noun (plural)", cat: "Architecture & Reflection", meaning: "Long wooden benches with backs arranged in rows for people to sit on in a church.", it: "Banchi di chiesa", quote: "“There are no normal benches — we call seats in a church <strong>pews</strong> — except for three very low Asian-style ones.”" },
+      { id: 3, term: "Sanctuary & Altar", ipa: "/ˈsæŋktʃuəri/ & /ˈɔːltə/", pos: "noun", cat: "Architecture & Reflection", meaning: "The sacred front area of a church (sanctuary) and the holy table at its center (altar).", it: "Santuario e Altare", quote: "“Why does it feel like a private place to pray? Because there is no <strong>sanctuary</strong> or <strong>altar</strong> at the front.”" },
+      { id: 4, term: "Priest & Shepherd", ipa: "/priːst/ & /ˈʃepəd/", pos: "noun", cat: "Architecture & Reflection", meaning: "An ordained Christian minister (priest); figuratively, a spiritual leader who guides the community (shepherd — silent 'h'!).", it: "Sacerdote / Prete & Pastore (guida spirituale)", quote: "“That's a great insight about the water basin — I thought it was just for the <strong>priest</strong>, the spiritual <strong>shepherd</strong>.”" },
+      { id: 5, term: "Blinding", ipa: "/ˈblaɪndɪŋ/", pos: "adjective", cat: "Architecture & Reflection", meaning: "Extremely bright, so intense that it makes it hard to see.", it: "Accecante / Abbagliante", quote: "“Inside the concrete room the light is gentle, even though behind the wall it is <strong>blinding</strong>.”" },
+      { id: 6, term: "To invoke (memories)", ipa: "/tu ɪnˈvəʊk/", pos: "verb", cat: "Architecture & Reflection", meaning: "To bring a feeling, image, or memory into your mind.", it: "Evocare / Suscitare (ricordi)", quote: "“When you look at this silent room, does it <strong>invoke</strong> any memories for you?”" },
+      { id: 7, term: "Self-reflection / To self-reflect", ipa: "/ˌself rɪˈflekʃn/", pos: "noun / verb", cat: "Architecture & Reflection", meaning: "Careful, quiet thought about your own life, character, actions, and past faults.", it: "Introspezione / Riflettere su se stessi", quote: "“When I need <strong>self-reflection</strong>, I go near the sea or take my motorbike to reflect on my life.”" },
+      { id: 8, term: "Ancestors", ipa: "/ˈænsestəz/", pos: "noun (plural)", cat: "Architecture & Reflection", meaning: "Members of your family who lived a long time ago, before your grandparents.", it: "Antenati / Avi", quote: "“If I were inside this church, I would probably think about my life, my faults, my father, and my <strong>ancestors</strong>.”" },
+      { id: 9, term: "Therapeutic", ipa: "/ˌθerəˈpjuːtɪk/", pos: "adjective", cat: "Architecture & Reflection", meaning: "Having a calming, healing, and restorative effect on your mind and stress levels.", it: "Terapeutico / Rigenerante / Rilassante", quote: "“Listening to the waves of the ocean in silence is very <strong>therapeutic</strong> — it helps you find yourself.”" },
+      { id: 10, term: "Takes forever", ipa: "/teɪks fərˈevə/", pos: "idiom", cat: "City & Traffic", meaning: "Takes an extremely long time (used when complaining about slow traffic or delays).", it: "Ci mette un'eternità / Non finisce più", quote: "“I live close to the university, but when I need to go places, the traffic <strong>takes forever</strong>.”" },
+      { id: 11, term: "Pavement (UK) / Sidewalk (US)", ipa: "/ˈpeɪvmənt/ • /ˈsaɪdwɔːk/", pos: "noun", cat: "City & Traffic", meaning: "The raised path for pedestrians along the side of a road.", it: "Marciapiede", quote: "“The traffic is so heavy that motorbikes don't stay on the road — they drive right on the <strong>pavement</strong>!”" },
+      { id: 12, term: "Eventually", ipa: "/ɪˈventʃuəli/", pos: "adverb (⚠️ False Friend)", cat: "City & Traffic", meaning: "In the end; finally, after a long day or series of events. (NOT 'possibly' like Italian 'eventualmente'!).", it: "Alla fine / Finalmente (NON 'eventualmente'!)", quote: "“It's easier to rent shared office space, walk to uni, work all day, and then go home <strong>eventually</strong> at the end of the day.”" },
+      { id: 13, term: "Around the corner", ipa: "/əˈraʊnd ðə ˈkɔːnə/", pos: "phrase", cat: "City & Traffic", meaning: "Very close by; just down the street.", it: "Dietro l'angolo / Vicinissimo", quote: "“This photo of the Hanoi skyline was taken two days ago from a quiet rooftop just <strong>around the corner</strong>.”" },
+      { id: 14, term: "Live on top of each other", ipa: "/lɪv ɒn tɒp əv iːtʃ ˈʌðə/", pos: "idiom", cat: "City & Traffic", meaning: "To live in very close quarters in densely packed buildings or cities.", it: "Vivere uno sopra l'altro / A stretto contatto", quote: "“With car showrooms, shops, and flats all in one building, here in Hanoi we all <strong>live on top of each other</strong>.”" },
+      { id: 15, term: "Zoned (Urban zoning)", ipa: "/zəʊnd/", pos: "adjective", cat: "City & Traffic", meaning: "Divided into designated areas for specific functions (e.g., a tourist zone, business zone, university zone).", it: "Suddiviso in zone (zonizzazione urbana)", quote: "“The city is <strong>zoned</strong> so all the tourists stay in one small area — seeing a foreigner in my district is an exception!”" },
+      { id: 16, term: "Air steward / Stewardess", ipa: "/ˈeə ˌstjuːəd/", pos: "noun", cat: "Law & News", meaning: "A flight attendant who looks after passengers on an airplane.", it: "Assistente di volo / Steward / Hostess", quote: "“Four Vietnamese <strong>air stewardesses</strong> were caught bringing illegal drugs into the country.”" },
+      { id: 17, term: "Smuggling (drugs)", ipa: "/ˈsmʌɡlɪŋ/", pos: "verb / noun", cat: "Law & News", meaning: "Taking goods or illegal substances into or out of a country secretly and against the law.", it: "Contrabbandare / Traffico illecito", quote: "“This was huge news: four flight attendants caught <strong>smuggling</strong> drugs hidden inside toothpaste tubes.”" },
+      { id: 18, term: "To be charged (with a crime)", ipa: "/tə bi tʃɑːdʒd/", pos: "verb (passive)", cat: "Law & News", meaning: "To be formally accused by the police or state of committing an illegal act.", it: "Essere incriminato / Accusato formalmente", quote: "“They brought all those drugs in, yet none of them have been <strong>charged</strong> and none of them went to jail.”" },
+      { id: 19, term: "Prison sentence", ipa: "/ˈprɪzn ˈsentəns/", pos: "noun", cat: "Law & News", meaning: "The official punishment ordered by a court stating how long someone must stay in prison.", it: "Condanna detentiva / Pena carcere", quote: "“The Spanish influencer got a much bigger <strong>sentence</strong> — ten years in prison — because she hosted a party.”" },
+      { id: 20, term: "A big deal", ipa: "/ə bɪɡ diːl/", pos: "idiom", cat: "Law & News", meaning: "Something very serious, important, or treated with strict consequences.", it: "Una cosa seria / Un grosso problema", quote: "“Drugs are a very <strong>big deal</strong> here, and in Italy it's important for teachers to explain prevention in schools.”" },
+      { id: 21, term: "Good advice", ipa: "/ɡʊd ədˈvaɪs/", pos: "noun (uncountable)", cat: "Health & Habits", meaning: "Helpful guidance or recommendations on what to do. (Uncountable: never say 'an advice'!).", it: "Un buon consiglio (non numerabile)", quote: "“When I was young, my father told me 'no drugs' — that was really <strong>good advice</strong>.”" },
+      { id: 22, term: "Neither do I", ipa: "/ˈnaɪðə du aɪ/", pos: "phrase", cat: "Health & Habits", meaning: "Used to agree with a negative statement someone just made ('I don't...' -> 'Neither do I').", it: "Neanch'io / Nemmeno io", quote: "“I don't like smoking for my health.” — “<strong>Neither do I</strong>! It's terrible for your health.”" },
+      { id: 23, term: "Getting old", ipa: "/ˈɡetɪŋ əʊld/", pos: "phrase", cat: "Health & Habits", meaning: "Becoming older; starting to feel the physical effects of aging ('get + adjective' shows change).", it: "Stare invecchiando / Invecchiare", quote: "“At 60, my parents aren't old at all, but my dad is slow and feels like he is <strong>getting old</strong>.”" },
+      { id: 24, term: "Catch up with (someone)", ipa: "/kætʃ ʌp wɪð/", pos: "phrasal verb", cat: "Health & Habits", meaning: "When unhealthy habits or past actions eventually start causing negative consequences for your health.", it: "Presentare il conto / Ripercuotersi sulla salute", quote: "“He smokes cigarettes, vapes, and drinks beer alone — if he isn't careful, it will <strong>catch up with</strong> him for sure.”" },
+      { id: 25, term: "A pack a day & Quid (UK)", ipa: "/ə pæk ə deɪ/ • /kwɪd/", pos: "noun phrase", cat: "Health & Habits", meaning: "'A pack' is a packet of 20 cigarettes; 'quid' is everyday British slang for £1 (pounds sterling).", it: "Un pacchetto al giorno & Sterline (slang UK)", quote: "“In the UK, a pack costs £13 to £20 — if you smoke <strong>a pack a day</strong>, that's over a hundred <strong>quid</strong> a week!”" },
+      { id: 26, term: "Lower your inhibitions", ipa: "/ˈləʊə jɔːr ˌɪnhɪˈbɪʃnz/", pos: "collocation", cat: "Health & Habits", meaning: "To reduce shyness or social nervousness so you feel more relaxed talking to people.", it: "Abbassare i freni inibitori / Sciogliersi", quote: "“Some people drink wine or beer in a pub because alcohol <strong>lowers your inhibitions</strong> — but we are naturally sociable!”" },
+      { id: 27, term: "In-laws & Brother-in-law", ipa: "/ˈɪn lɔːz/ • /ˈbrʌðər ɪn lɔː/", pos: "noun", cat: "Travel & Food", meaning: "Relatives by marriage (your spouse's parents/family = in-laws; your sister's husband = brother-in-law).", it: "Parenti acquisiti / Suoceri & Cognato", quote: "“My sister goes to Tokyo every year for a family holiday because her husband's family — her <strong>in-laws</strong> — live there.”" },
+      { id: 28, term: "Bullet train (Shinkansen)", ipa: "/ˈbʊlɪt treɪn/", pos: "noun", cat: "Travel & Food", meaning: "Japan's famous high-speed passenger train with an aerodynamic nose that travels at 300 km/h.", it: "Treno proiettile (Alta velocità giapponese)", quote: "“They live north of Tokyo, so we take the <strong>bullet train</strong> for 30 minutes — it's super fast!”" },
+      { id: 29, term: "Wage, Salary & Accommodation", ipa: "/weɪdʒ/ • /ˈsæləri/ • /əˌkɒməˈdeɪʃn/", pos: "nouns", cat: "Travel & Food", meaning: "Earnings from work (wage/salary) and places to stay or live such as hotels or apartments (accommodation).", it: "Paga, Stipendio & Alloggio / Sistemazione", quote: "“In Japan the food quality is unreal, but their <strong>wage</strong> is low and hotel <strong>accommodation</strong> is very expensive.”" },
+      { id: 30, term: "On the spit", ipa: "/ɒn ðə spɪt/", pos: "phrase", cat: "Travel & Food", meaning: "Meat skewered on a long rod and rotated over an open fire to roast.", it: "Allo spiedo", quote: "“At the restaurant, we saw what looked like a roast pig turning <strong>on the spit</strong> before my Vietnamese friend warned me!”" },
+      { id: 31, term: "Paramount (for survival)", ipa: "/ˈpærəmaʊnt/", pos: "adjective", cat: "Travel & Food", meaning: "More important than anything else; of supreme or vital importance.", it: "Di fondamentale importanza / Essenziale", quote: "“Many years ago when there was no food, eating whatever you could catch was <strong>paramount</strong> for survival.”" },
+      { id: 32, term: "Less is more", ipa: "/les ɪz mɔː/", pos: "proverb / idiom", cat: "Travel & Food", meaning: "Simplicity and restraint create a much better result than overcomplicating things.", it: "Meno è meglio / La semplicità vince", quote: "“Tomorrow we'll make homemade Margherita pizza with just mozzarella and tomato. It's simple and delicious — <strong>less is more</strong>!”" }
+    ];
+
+    const quizQuestions = [
+      { q: "1. In Tadao Ando's Church of the Light, the natural light is ________ by the concrete wall except for a cross-shaped opening.", options: ["obstructed", "smuggled", "zoned", "sociable"], answer: "obstructed", explain: "'Obstructed' means blocked or prevented from passing through." },
+      { q: "2. What do we call the long wooden benches where people sit inside a church?", options: ["pews", "spits", "quids", "in-laws"], answer: "pews", explain: "'Pews' (/pjuːz/) are church benches." },
+      { q: "3. ⚠️ False Friend Check: 'The traffic takes forever, so I work at the shared office and go home ________ at the end of the day.'", options: ["eventually", "possibly", "occasionally", "traditionally"], answer: "eventually", explain: "'Eventually' means 'alla fine / finalmente' (after a long time), NOT 'eventualmente'!" },
+      { q: "4. Listening to the ocean waves in silence is very ________ — it calms your mind and helps you self-reflect.", options: ["therapeutic", "blinding", "embarrassed", "paramount"], answer: "therapeutic", explain: "'Therapeutic' (/ˌθerəˈpjuːtɪk/) means healing, calming, and relaxing for the mind." },
+      { q: "5. Some people drink beer or wine at a party because alcohol ________ and makes them less shy.", options: ["lowers your inhibitions", "catches up with you", "lives on top of each other", "takes forever"], answer: "lowers your inhibitions", explain: "'To lower your inhibitions' means to reduce shyness or social nervousness." },
+      { q: "6. If someone smokes a pack a day and drinks heavily, those unhealthy habits will eventually ________ them.", options: ["catch up with", "talk with", "break the rule", "look after"], answer: "catch up with", explain: "When bad habits 'catch up with you', they start causing negative consequences for your health." },
+      { q: "7. Paolo says: 'I don't like smoking for my health.' How does Lewis naturally agree in English?", options: ["Neither do I!", "So do I!", "No me too!", "I don't too!"], answer: "Neither do I!", explain: "Use 'Neither do I' (Neanch'io) to agree with a negative statement." },
+      { q: "8. A simple homemade Margherita pizza with fresh mozzarella and tomato is the best because ________!", options: ["less is more", "it takes forever", "around the corner", "on the spit"], answer: "less is more", explain: "'Less is more' means simplicity produces the best result." }
+    ];
+
+    let currentCategory = "ALL";
+    let masteredIds = JSON.parse(localStorage.getItem("paolo_oct17_mastered") || "[]");
+    let fcDeck = [...lessonVocab];
+    let fcIndex = 0;
+    let quizAnswers = {};
+
+    function speakWord(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      const prefLang = document.getElementById("voice-accent")?.value || "en-GB";
+      const allVoices = window.speechSynthesis.getVoices();
+      const matched = allVoices.find(v => v.lang.includes(prefLang)) || allVoices.find(v => v.lang.startsWith("en"));
+      if (matched) utter.voice = matched;
+      utter.rate = 0.88;
+      window.speechSynthesis.speak(utter);
+    }
+
+    function setCategory(cat, btnEl) {
+      currentCategory = cat;
+      document.querySelectorAll("#category-pills .filter-pill").forEach(b => b.classList.remove("active"));
+      if (btnEl) btnEl.classList.add("active");
+      renderVocabGrid();
+    }
+
+    function renderVocabGrid() {
+      const grid = document.getElementById("vocab-grid");
+      if (!grid) return;
+      const query = (document.getElementById("vocab-search")?.value || "").toLowerCase().trim();
+      const filtered = lessonVocab.filter(item => {
+        const matchesCat = currentCategory === "ALL" || item.cat === currentCategory;
+        const matchesQuery = !query ||
+          item.term.toLowerCase().includes(query) ||
+          item.meaning.toLowerCase().includes(query) ||
+          item.it.toLowerCase().includes(query) ||
+          item.quote.toLowerCase().includes(query);
+        return matchesCat && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--text-muted);">No matching expressions found. Try selecting "All Words (32)".</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => {
+        const isMastered = masteredIds.includes(item.id);
+        const cleanTerm = item.term.replace(/'/g, "\\'");
+        return `
+          <article class="vocab-card ${isMastered ? 'mastered' : ''}">
+            <div>
+              <div class="vc-top">
+                <span class="vc-cat" data-cat="${item.cat}">${item.cat}</span>
+                <div class="vc-actions">
+                  <button class="icon-btn" title="Listen pronunciation" onclick="speakWord('${cleanTerm}')">🔊</button>
+                  <button class="icon-btn master-btn ${isMastered ? 'active' : ''}" title="Mark as Mastered" onclick="toggleMastered(${item.id})">✓</button>
+                </div>
+              </div>
+              <h4 class="vc-term">${item.term}</h4>
+              <div class="vc-meta">
+                <span class="vc-ipa">${item.ipa}</span>
+                <span class="vc-pos">${item.pos}</span>
+              </div>
+              <p class="vc-meaning">${item.meaning}</p>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:7px;">
+              <div class="vc-italian">🇮🇹 ${item.it}</div>
+              <div class="vc-quote">${item.quote}</div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function toggleMastered(id) {
+      if (masteredIds.includes(id)) {
+        masteredIds = masteredIds.filter(x => x !== id);
+      } else {
+        masteredIds.push(id);
+        if (typeof confetti === "function" && masteredIds.length % 8 === 0) {
+          confetti({ particleCount: 70, spread: 65, origin: { y: 0.7 } });
+        }
+      }
+      localStorage.setItem("paolo_oct17_mastered", JSON.stringify(masteredIds));
+      updateMasteryMeter();
+      renderVocabGrid();
+    }
+
+    function markAllMastered() {
+      masteredIds = lessonVocab.map(v => v.id);
+      localStorage.setItem("paolo_oct17_mastered", JSON.stringify(masteredIds));
+      updateMasteryMeter();
+      renderVocabGrid();
+      if (typeof confetti === "function") {
+        confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
+      }
+    }
+
+    function updateMasteryMeter() {
+      const total = lessonVocab.length;
+      const count = masteredIds.length;
+      const pct = Math.round((count / total) * 100);
+      const txtEl = document.getElementById("mastery-count-text");
+      const barEl = document.getElementById("mastery-bar-fill");
+      if (txtEl) txtEl.textContent = `${count} / ${total} Mastered (${pct}%)`;
+      if (barEl) barEl.style.width = `${pct}%`;
+    }
+
+    function renderFlashcard() {
+      const c = fcDeck[fcIndex];
+      const inner = document.getElementById("fc-inner");
+      if (!inner) return;
+      inner.classList.remove("is-flipped");
+      document.getElementById("fc-cat").textContent = c.cat;
+      document.getElementById("fc-cat").setAttribute("data-cat", c.cat);
+      document.getElementById("fc-word").textContent = c.term;
+      document.getElementById("fc-ipa").textContent = c.ipa;
+      document.getElementById("fc-pos").textContent = c.pos;
+      document.getElementById("fc-meaning").textContent = c.meaning;
+      document.getElementById("fc-italian").textContent = `🇮🇹 ${c.it}`;
+      document.getElementById("fc-quote").innerHTML = c.quote;
+      document.getElementById("fc-counter").textContent = `${fcIndex + 1} / ${fcDeck.length}`;
+    }
+
+    function flipCurrentCard() {
+      document.getElementById("fc-inner")?.classList.toggle("is-flipped");
+    }
+
+    function changeFlashcard(delta) {
+      fcIndex = (fcIndex + delta + fcDeck.length) % fcDeck.length;
+      renderFlashcard();
+    }
+
+    function speakCurrentFlashcard() {
+      speakWord(fcDeck[fcIndex].term);
+    }
+
+    function markCurrentFlashcardMastered() {
+      const id = fcDeck[fcIndex].id;
+      if (!masteredIds.includes(id)) {
+        masteredIds.push(id);
+        localStorage.setItem("paolo_oct17_mastered", JSON.stringify(masteredIds));
+        updateMasteryMeter();
+        renderVocabGrid();
+      }
+      if (typeof confetti === "function") {
+        confetti({ particleCount: 45, spread: 55, origin: { y: 0.7 } });
+      }
+      changeFlashcard(1);
+    }
+
+    function shuffleFlashcards() {
+      fcDeck = [...lessonVocab].sort(() => Math.random() - 0.5);
+      fcIndex = 0;
+      renderFlashcard();
+    }
+
+    function renderQuiz() {
+      const container = document.getElementById("quiz-container");
+      if (!container) return;
+      container.innerHTML = quizQuestions.map((item, idx) => `
+        <div class="quiz-item" id="qitem-${idx}">
+          <div class="quiz-q">${item.q}</div>
+          <div class="quiz-options">
+            ${item.options.map(opt => `
+              <button class="quiz-opt" onclick="selectQuizOption(${idx}, '${opt.replace(/'/g, "\\'")}', this)">${opt}</button>
+            `).join("")}
+          </div>
+          <div class="quiz-feedback" id="qfeed-${idx}"></div>
+        </div>
+      `).join("");
+    }
+
+    function selectQuizOption(qIdx, chosen, btnEl) {
+      const qObj = quizQuestions[qIdx];
+      const itemEl = document.getElementById(`qitem-${qIdx}`);
+      const feedEl = document.getElementById(`qfeed-${qIdx}`);
+      itemEl.querySelectorAll(".quiz-opt").forEach(b => b.classList.remove("selected-correct", "selected-wrong"));
+
+      const isCorrect = chosen === qObj.answer;
+      quizAnswers[qIdx] = { chosen, isCorrect };
+
+      itemEl.classList.remove("correct", "wrong");
+      itemEl.classList.add(isCorrect ? "correct" : "wrong");
+      btnEl.classList.add(isCorrect ? "selected-correct" : "selected-wrong");
+
+      feedEl.style.display = "block";
+      feedEl.style.color = isCorrect ? "#10b981" : "#fda4af";
+      feedEl.innerHTML = isCorrect
+        ? `✅ Correct! ${qObj.explain}`
+        : `❌ Not quite — the correct expression is <strong>"${qObj.answer}"</strong>. ${qObj.explain}`;
+
+      const correctCount = Object.values(quizAnswers).filter(a => a.isCorrect).length;
+      document.getElementById("quiz-score-banner").textContent = `Quiz Score: ${correctCount} / ${quizQuestions.length}`;
+      if (correctCount === quizQuestions.length && typeof confetti === "function") {
+        confetti({ particleCount: 120, spread: 90, origin: { y: 0.6 } });
+      }
+    }
+
+    function savePromptsLocal() {
+      const data = {
+        p1: document.getElementById("prompt-1")?.value || "",
+        p2: document.getElementById("prompt-2")?.value || "",
+        p3: document.getElementById("prompt-3")?.value || "",
+        p4: document.getElementById("prompt-4")?.value || ""
+      };
+      localStorage.setItem("paolo_oct17_prompts", JSON.stringify(data));
+    }
+
+    function loadPromptsLocal() {
+      try {
+        const saved = JSON.parse(localStorage.getItem("paolo_oct17_prompts") || "{}");
+        if (saved.p1 && document.getElementById("prompt-1")) document.getElementById("prompt-1").value = saved.p1;
+        if (saved.p2 && document.getElementById("prompt-2")) document.getElementById("prompt-2").value = saved.p2;
+        if (saved.p3 && document.getElementById("prompt-3")) document.getElementById("prompt-3").value = saved.p3;
+        if (saved.p4 && document.getElementById("prompt-4")) document.getElementById("prompt-4").value = saved.p4;
+      } catch (e) {}
+    }
+
+    function initVocabChart() {
+      const chartCanvas = document.getElementById("vocabChart");
+      if (!chartCanvas || typeof Chart === "undefined") return;
+      new Chart(chartCanvas, {
+        type: "doughnut",
+        data: {
+          labels: ["Architecture (9)", "City & Traffic (6)", "Law & News (5)", "Health & Habits (6)", "Travel & Food (6)"],
+          datasets: [{
+            data: [9, 6, 5, 6, 6],
+            backgroundColor: ["#a855f7", "#38bdf8", "#f43f5e", "#10b981", "#f59e0b"],
+            borderColor: "#0d1b35",
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: "62%",
+          plugins: {
+            legend: {
+              position: "right",
+              labels: {
+                color: "#f8f1dc",
+                font: { family: "Nunito", size: 11, weight: "700" },
+                boxWidth: 11,
+                padding: 8
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function exportFullStudyPDF() {
+      if (!window.jspdf || !window.jspdf.jsPDF) {
+        alert("PDF library is still loading. Please try again in a moment.");
+        return;
+      }
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: "pt", format: "a4" });
+      const pageW = doc.internal.pageSize.getWidth();
+      const pageH = doc.internal.pageSize.getHeight();
+      const margin = 40;
+      let y = 45;
+
+      function checkPage(needed = 60) {
+        if (y + needed > pageH - 40) {
+          doc.addPage();
+          y = 45;
+        }
+      }
+
+      doc.setFillColor(13, 27, 53);
+      doc.rect(0, 0, pageW, 88, "F");
+      doc.setTextColor(229, 185, 52);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(18);
+      doc.text("Paolo & Lewis • Lesson Vocabulary & Homework Notes", margin, 38);
+      doc.setTextColor(248, 241, 220);
+      doc.setFontSize(11);
+      doc.setFont("helvetica", "normal");
+      const correctCount = Object.values(quizAnswers).filter(a => a.isCorrect).length;
+      doc.text(`Lesson Date: October 17, 2026  |  Mastered: ${masteredIds.length}/32  |  Quiz Score: ${correctCount}/${quizQuestions.length}`, margin, 62);
+
+      y = 112;
+      doc.setTextColor(20, 39, 70);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(14);
+      doc.text("Part 1: Paolo's Personal Reflection Responses", margin, y);
+      y += 18;
+
+      const prompts = [
+        { title: "1. Self-Reflection & Therapeutic Spaces", val: document.getElementById("prompt-1")?.value || "(Not answered yet)" },
+        { title: "2. City Life vs. Your Italian Town", val: document.getElementById("prompt-2")?.value || "(Not answered yet)" },
+        { title: "3. Health Habits & Good Advice", val: document.getElementById("prompt-3")?.value || "(Not answered yet)" },
+        { title: "4. Homemade Margherita Pizza ('Less is More')", val: document.getElementById("prompt-4")?.value || "(Not answered yet)" }
+      ];
+
+      prompts.forEach(p => {
+        checkPage(70);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(11);
+        doc.setTextColor(180, 130, 10);
+        doc.text(p.title, margin, y);
+        y += 14;
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        doc.setTextColor(40, 40, 40);
+        const lines = doc.splitTextToSize(p.val, pageW - margin * 2);
+        doc.text(lines, margin, y);
+        y += lines.length * 13 + 10;
+      });
+
+      checkPage(90);
+      y += 6;
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(14);
+      doc.setTextColor(20, 39, 70);
+      doc.text("Part 2: Key Grammar & False Friends Summary", margin, y);
+      y += 16;
+      const clinicNotes = [
+        "• Talk to vs. Talk with: Both are correct! 'Talk to' is standard in everyday UK English; 'talk with' emphasizes a mutual conversation.",
+        "• False Friend 'Eventually': Means 'alla fine / finalmente' (after a long time), NOT 'eventualmente' (possibly/if needed).",
+        "• Uncountable 'Advice': Say 'good advice' or 'a piece of advice' (never 'an advice' or 'good tradition' for advice).",
+        "• Pronunciation: Pews /pju:z/ (church benches), Priest /pri:st/, Shepherd /'shep-erd/ (silent 'h')."
+      ];
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.setTextColor(40, 40, 40);
+      clinicNotes.forEach(line => {
+        const wrapped = doc.splitTextToSize(line, pageW - margin * 2);
+        doc.text(wrapped, margin, y);
+        y += wrapped.length * 13 + 4;
+      });
+
+      checkPage(70);
+      y += 10;
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(14);
+      doc.setTextColor(20, 39, 70);
+      doc.text("Part 3: Complete 32-Expression Lesson Vocabulary Bank", margin, y);
+      y += 18;
+
+      lessonVocab.forEach((v, idx) => {
+        checkPage(55);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(10.5);
+        doc.setTextColor(13, 27, 53);
+        doc.text(`${idx + 1}. ${v.term} (${v.pos}) — [IT: ${v.it}]`, margin, y);
+        y += 13;
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9.5);
+        doc.setTextColor(60, 60, 60);
+        const defLines = doc.splitTextToSize(`Meaning: ${v.meaning}`, pageW - margin * 2);
+        doc.text(defLines, margin, y);
+        y += defLines.length * 12 + 8;
+      });
+
+      doc.save("paolo-oct17-lesson-vocab-notes.pdf");
+    }
+
+    // ----------------------------------------------------
     // INITIALIZATION
     // ----------------------------------------------------
     document.addEventListener("DOMContentLoaded", () => {
+      if (typeof lucide !== "undefined") lucide.createIcons();
+      if (typeof tippy !== "undefined") {
+        tippy("[data-tippy-content]", { animation: "scale", theme: "light-border" });
+      }
+      renderVocabGrid();
+      updateMasteryMeter();
+      renderFlashcard();
+      renderQuiz();
+      loadPromptsLocal();
+      initVocabChart();
       initLab();
       initVocalTract();
       initCanvas();
