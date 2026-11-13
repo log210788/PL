@@ -1,0 +1,767 @@
+﻿# Krisp ID: 01a1d3d9f745720c81870218d8e54499 | Started (BKK): 2026-11-13 17:30 | Duration: 63.2 min
+Lewis | 00:00
+ Hey Blan, how are you doing today?
+Paolo | 00:03
+ Man, I'm at you.
+Lewis | 00:06
+ Yeah, very good, thank you very much is your do you have a Microsoft account?
+Paolo | 00:12
+ Yes, it is a big problem.
+Lewis | 00:18
+ Yeah, anyway, did you hit "Yes"? Sorry...
+Paolo | 00:23
+ And you use this Microsoft accounter with for mail...
+Lewis | 00:31
+ Yes, I use Azure. Is it Azure? The backend, yeah, so I still use that, and I have my architecture plans, my and other people's plans inside, so...
+Paolo | 00:48
+ Inside. Okay...
+Lewis | 00:48
+ It's... Yeah, and your whole office. Does your whole office use it?
+Paolo | 00:54
+ This CCE is, a program. We use, my Windows for work, for workload for some task. It's a. It's a very important. It's a need to use the Windows. Especially, we use, teams where for meeting, for calling because sometimes we need to see together some particular category of problem, of trouble, of work and so on. Now, but we use this program, because it's very, t very easy. We don't have Apple TC we use wind.
+It's in normal for us maybe in another company another work use Apple computer but it's very hard to use because very a lot of program don't use the plug don't use the problem Apple my big gaze as a big p big money is a big...
+Lewis | 02:54
+ Microsoft Office is the most profitable thing made by a human. The most profitable thing in human history.
+Paolo | 03:02
+ Yes.
+Lewis | 03:04
+ It was crazy. But...
+Paolo | 03:07
+ What do you think about Invidia? Co? On Invidia?
+Lewis | 03:12
+ I wanted to ask you. [Laughter]...
+Paolo | 03:16
+ [Laughter] I have an idea today, so I studied and now I think that... [Laughter] I won't tell you.
+Lewis | 03:29
+ Yes, what do you think?
+Paolo | 03:34
+ I think that the... This company is a lot of crazy, insane, and very insane. Maybe. MI the title of Invidia laws very e very power very...
+Lewis | 04:01
+ Hey...
+Paolo | 04:01
+ Money in this week during an easy week...
+Lewis | 04:06
+ Yeah, it lost a lot of, share value. A lot of share value.
+Paolo | 04:12
+ Share... Yes, share value...
+Lewis | 04:17
+ The problem is he was very irresponsible.
+Paolo | 04:24
+ Yes...
+Lewis | 04:25
+ Very irresponsible. Probably the most... He has the biggest... The most important company in the world...
+Paolo | 04:32
+ Yeah...
+Lewis | 04:33
+ At the moment. And he's married Marri...
+Paolo | 04:39
+ [Laughter] We are on the same page.
+Lewis | 04:43
+ Yeah, and he must know his company and his security team. China is trying to get you. It's inexcusable what he did. It's so bad. Very bad. If she is a spy, which it seems like she is, a spy. But I mean helping China, as far as... Yeah, her company...
+Paolo | 05:20
+ You can write it on... It's fine.
+Lewis | 05:26
+ Aa yeah, I'm sorry, a spy. Yeah, SPY... But we would actually say she's a op...
+Paolo | 05:36
+ Yes, as a spy. The man was a spy. The old man...
+Lewis | 05:42
+ Yes.
+Paolo | 05:43
+ Was a spcastm.
+Lewis | 05:44
+ Yeah, the woman was fine, but she's more a, she's we weren't she's not really a spy. She's a we would say she's a Chinese asset. She's a Chinese asset.
+Paolo | 05:59
+ She doesn't spy or...
+Lewis | 06:02
+ Well, a spy is slightly different, so what a spy... I'm English, so we have special spy terms, right? Because of MI6, a spy. What he does is he gets other people...
+Paolo | 06:18
+ Yeah. Okay.
+Lewis | 06:20
+ A spy. Guess other people in English. English spy. But she is not a spy, she is the asset of a spy. So she was... She was doing something before she had a weird company. And so... And a spy is what we call her handler. Her handler, we call it the person that controls her.
+So a spy, in the English way, a spy goes out into the world and he infects people. He doesn't actually do the spying. It's too dangerous. In the English spy, he gets... People like this lady to do it. Or, for example, someone already in the company and they will motivate them.
+For example, she got very rich because they spent 3 billion...
+Paolo | 07:36
+ To be you...
+Lewis | 07:36
+ In the company or something. Yeah, they went from, I think, 3 million to 3 billion in a year per company. So what's going on there? Yeah, but she was selling the server time to Alibaba. Yeah. So...
+Well, supposedly this is all you know, hearsay, not hearsay. You know what it... You know, hear everything, believe nothing here. Everything believe nothing. Right...
+Paolo | 08:09
+ When I was a child, we often saw a film, a movie like 00:07. And these facts, these arguments, these topics remind me of a spy. This famous spy. But this movie was a very interesting movie. They detail about the life of a spy.
+So like Jasmine, it's popular, it's a very important character. I like to see this movie. Another one, another time. Yeah, I think that Jasmine is a very spy of all this movie.
+Lewis | 09:29
+ Yeah, he's a good character.
+Paolo | 09:30
+ Yes, he's a go to k...
+Lewis | 09:33
+ He's a good character, and it is quite funny how it is about sex, right? Yeah, fooding...
+Paolo | 09:44
+ He's very...
+Lewis | 09:49
+ Sexy, very sexy.
+Paolo | 09:49
+ Sexy and the past. Yes. She is very easy. Walk is very... He was very sexy.
+Lewis | 10:02
+ Yeah. And now, Jensen Huang, right, Jensen...
+Paolo | 10:06
+ She do want.
+Lewis | 10:07
+ Wang, he, his employees, he's been fired right today. He was fired, but right now... Invidia is trying to get him back to be CEO right now. Crazy. But how can he allow himself?
+It's... He has his relationship with the president. He has so many bands like industry bands in China, and if that relationship turns out that he signed off on giving service to them, he's going to be in a lot of trouble.
+That's illegal. It's illegal? Yeah. To supply China.
+Paolo | 11:01
+ But Invidia is a company, that building schedule of BC media is a professor of...
+Lewis | 11:15
+ A GPU.
+Paolo | 11:16
+ A GPT.
+Lewis | 11:17
+ A GPU.
+Paolo | 11:18
+ Yes...
+Lewis | 11:18
+ Yeah. So it does lots of maths. It does small maths like 1 plus 23 plus 45 plus 67 times three, very fast. But a processor, a CPU does bigger maths, but slower.
+Paolo | 11:36
+ It is all...
+Lewis | 11:37
+ But the GPU, the CPU does it fast, really fast. Yeah, and he made something else called Kuda. I don't know what Kuda is.
+Paolo | 11:50
+ I don't know what Koda is another unit.
+Lewis | 11:57
+ It's yes, he... It's the cause, but it's the program. So everyone uses the Kuda program. That's why Invidia is so famous, because they built the free software. So even I was using it many years ago, and it's just the best. That's why everyone uses it. Yeah...
+Paolo | 12:21
+ So you tell me that Fuda is a free, but the and, in Invidia is, I have to pay to have a Invidia on p Circas.
+Lewis | 12:39
+ Exactly.
+Paolo | 12:40
+ Okay...
+Lewis | 12:40
+ You have to pay for the GPU...
+Paolo | 12:42
+ It should be...
+Lewis | 12:43
+ The GPU graphics start.
+Paolo | 12:44
+ The graphic z.
+Lewis | 12:45
+ Yeah, and yeah, they're so expensive.
+Paolo | 12:50
+ But it's important for p circa to go. R to go is very well not to go very well to works well.
+Lewis | 13:05
+ Yeah, you don't... I mean, nowadays, you don't need one. Okay? For a normal computer, you don't need one because the processor... Yes. Graphics, it has
+Paolo | 13:19
+ Yes.
+Lewis | 13:19
+ Graphics, it has graphics on the processor...
+Paolo | 13:23
+ Okay...
+Lewis | 13:24
+ But it's called Iris UHD, I think it's something like that. It's standard, it's not that good. It's okay. It's you can run a business...
+Paolo | 13:35
+ Yes.
+Lewis | 13:35
+ Off a... Completely fine, but as soon as you want to do anything like challenging a video...
+Paolo | 13:43
+ Yeah, gaming...
+Lewis | 13:43
+ Game or... Lots of maths or computing. For example, a library, like lots of images. You need a graphics... Card. And yeah, I have a 4060, so RTX 4060, which is... It's okay, it's pretty good...
+Paolo | 14:10
+ It's pretty...
+Lewis | 14:10
+ But it's... Nowhere. It's good for the price I paid 700 pounds. Not for a laptop. And it has it inside the laptop.
+Paolo | 14:23
+ A moment. Sorry...
+Lewis | 14:24
+ The 4060. Sorry...
+Paolo | 14:27
+ Hello, John, team. She's... When they message you, no, you look fat. I shall have AP on you still.
+Sorry, here we have something... We have something we need to work on...
+Lewis | 15:05
+ It's Friday. Yeah...
+Paolo | 15:07
+ Dom. Dom...
+Lewis | 15:10
+ But, I think, yeah, I can't believe how irresponsible. However, and however, he must be having the time well before the time of his life. You know, he has two mistresses, too. Yeah, mistresses. A mistress is, your not your wife.
+Paolo | 15:40
+ Like mystery.
+Lewis | 15:42
+ No. So a mistress, I'll type it mistress. Here we... Go, miss. Chris ts is someone who is your she's your girlfriend, but not your wife. And he had at least two he they found another one who works she works for Invidia, she works for Invidia. Yeah, but, what's really funny is, everyone's saying, you know, when do I get my Chinese spy?
+You know, but, how today? I don't know if I told you last week. My keyboard's not working, but.
+Paolo | 16:31
+ Do you ever SA pick about now?
+Lewis | 16:35
+ About the woman...
+Paolo | 16:37
+ Yes. M...
+Lewis | 16:38
+ Okay...
+Paolo | 16:38
+ About the mistress and you together.
+Lewis | 16:44
+ Well, yeah, not the new one. She's from America. The mistress, the new one... Where is she? One second... She's on screen...
+Paolo | 17:03
+ Do you think every CEO of the company has a mistress?
+Lewis | 17:17
+ No because the CEO of Jack G bt is gay so no he's safe. This is her here, Kimberly.
+Paolo | 17:37
+ This is a wife she's wife is a mistress...
+Lewis | 17:43
+ Another mistress. Another one. Yes...
+Paolo | 17:46
+ Is a she. Is she very beautiful, wouldn't it? No...
+Lewis | 17:51
+ Yeah, she's very beautiful...
+Paolo | 17:52
+ She's young, she's very young than he.
+Lewis | 17:59
+ He is then he is...
+Paolo | 18:00
+ Yeah, there it is.
+Lewis | 18:01
+ Yeah, he's sixty. I think she is, I don't know, yeah, I think so. Have you seen his wife?
+Paolo | 18:14
+ No...
+Lewis | 18:14
+ Have you? Here we go...
+Paolo | 18:16
+ I never...
+Lewis | 18:16
+ Are you ready?
+Paolo | 18:20
+ I imagine that it's she's.
+Lewis | 18:24
+ No. You...
+Paolo | 18:25
+ No.
+Lewis | 18:26
+ Can't imagine. No.
+Paolo | 18:29
+ I have only a wife, and I stay calm...
+Lewis | 18:35
+ Th. This is why he cheated, I think...
+Paolo | 18:39
+ This now I schedule a divorce...
+Lewis | 18:44
+ A divorce... Or does it say that? I don't know if they divorced yet, I don't know. No, they're not divorced yet, they...
+Paolo | 19:00
+ Maybe it's a fake news.
+Lewis | 19:04
+ It's up ramp up means to get ready. So it's getting bigger, right? They're...
+Paolo | 19:14
+ Okay.
+Lewis | 19:14
+ Getting divorced. They're getting divorced, but it's building up to 140 billion. She'll get half, but I think it's not a good look. I don't think when...
+Paolo | 19:36
+ No.
+Lewis | 19:36
+ He cheats on his wife, it's very bad. But yes, I think most people have, most directors have. How can I say mistresses for...
+Paolo | 19:53
+ Is for sure.
+Lewis | 19:53
+ Sure. I was younger. I was on a project, and we built a club so you bring your mistress to...
+Paolo | 20:03
+ In a clubse...
+Lewis | 20:04
+ Yeah, well, I'll show you. Actually, I don't know if it's the crazy bare, where was it again? Co-plants. Here we go. This place, here we go. So it was a weird place, a really weird place. Long time ago, but we built it, and so you would come with your... You had to wear a smoking jacket, so you had to own one. Really nice.
+But you would come with your girlfriend. It was like a secret. The place was a secret.
+Paolo | 20:49
+ Are they're plans...?
+Lewis | 20:51
+ Yeah, so you can bring your girlfriend because you have a wife.
+Paolo | 20:57
+ But easy change your wife in this place people change why or no is like...
+Lewis | 21:08
+ No, they don't swap, they have a girlfriend as well. This is where they can bring their girlfriend. So, because it was hidden, and you can go there and not everyone's allowed in. You have to be a member.
+So a lot of, I would say wealthy men in London, they would become members. It was a small place, and they would bring their girlfriends here because they knew no one to come in.
+Paolo | 21:42
+ Do you have to pay something to...?
+Lewis | 21:44
+ Yeah.
+Paolo | 21:46
+ Okay...
+Lewis | 21:47
+ It was a year for membership was 2000 pounds a year.
+Paolo | 21:51
+ About for one year or to enter...
+Lewis | 21:55
+ For one. For one year, and...
+Paolo | 21:58
+ From it's no expive.
+Lewis | 22:00
+ It's not expensive. It's not expensive, but it is expensive. When you're in there, it is expensive. It's like 30 pounds a cocktail. It's quite a lot. Yeah, we sell, we sold a lot of, as you can see, a lot of champagne, but it was weird. It was weird. Weird...
+Paolo | 22:23
+ Yes...
+Lewis | 22:23
+ Place, but...
+Paolo | 22:23
+ We will.
+Lewis | 22:25
+ Weird. Me and my friend... Who we... My first restaurant I owned with my friend... When we worked for the same company, we built this place together, but it was crazy, really crazy.
+Paolo | 22:43
+ So you went to the festival with your friend. All your friends.
+Lewis | 22:50
+ So the first one was with...
+Paolo | 22:51
+ The first...
+Lewis | 22:51
+ Me and my friend. Yeah, me and my friend, me, my friend, and his wife... Me and my friend and his wife, it was okay. But, she cheated on him. They got divorced. So big problems.
+Paolo | 23:07
+ Yes, they got...
+Lewis | 23:08
+ Yeah.
+Paolo | 23:10
+ Divorce. They got divorced?
+Lewis | 23:14
+ It's not good. It's not good. She... They had the kids. They had the kid as well, but made it worse.
+Paolo | 23:20
+ Yes.
+Lewis | 23:20
+ Yeah...
+Paolo | 23:22
+ The divorce is a problem for kids, not for the couple.
+Lewis | 23:28
+ Yes, I think so. Yeah, and I think Ross found it very hard because he found out when I found out. It's very embarrassing. Yeah, I feel really bad for him, and it was very difficult, as you can imagine. Very difficult. Yeah...
+Paolo | 23:57
+ The kids needs, to have the parents e...
+Lewis | 24:05
+ Yes.
+Paolo | 24:07
+ Because they have to go grow to grow with dad and mother and dad, in particular cases, I think e when wife and husband don't go agree...
+Lewis | 24:34
+ Don't agree.
+Paolo | 24:35
+ Don't agree...
+Lewis | 24:37
+ Yeah...
+Paolo | 24:38
+ They choose is God divorce.
+Lewis | 24:47
+ You say, would they... When they don't agree, then they get the divorce, however, I think they should stay together.
+Paolo | 24:56
+ Yes...
+Lewis | 24:58
+ I think.
+Paolo | 25:01
+ They shouldn't. They shouldn't say to... Well...
+Lewis | 25:07
+ I don't know. I think after the kids grow up...
+Paolo | 25:10
+ Yeah...
+Lewis | 25:12
+ I think 18 you can if you. If all your children are eighteen. I think you can get a divorce like my Loom and dad. My Loom and dad did not get on. They my Loom and dad are very different. My Loom is not sociable, and my dad is very sociable, and my dad is funny and everyone.
+Paolo | 25:40
+ Your mother is shy.
+Lewis | 25:43
+ Yeah, not shy. Yeah, she's not confident.
+Paolo | 25:52
+ Yes, she confident she doesn't sociable...
+Lewis | 25:59
+ She's not sociable. She's.
+Paolo | 26:01
+ She notable...
+Lewis | 26:03
+ Yeah, and she's not confident. Yeah...
+Paolo | 26:05
+ Yes, like my Loom. Yes, my father was very sociable. We, no, he, was very sociable. He stayed, maybe one hour e to a bar with other friends to talk about life about. So I think this is. Character. My character is like my father, my wife, my so story. My Loom, in my Loom was born in north of Italy, and the mentaly is, not like the South of Italy is a very smaller very.
+Lewis | 27:11
+ The mentality is different. It's, like smaller community.
+Paolo | 27:17
+ Yeah...
+Lewis | 27:17
+ Yeah.
+Paolo | 27:19
+ It's not sociable. And they think only about her day life. Know, sometimes I think them. I like the wants EA moment. I think they. They are selfish people. Selfish people.
+Lewis | 27:58
+ Really? Okay, yeah, right now, I think my mother is not selfish, but, yeah, I think she's. No, she's not selfish, but my dad is more for other people. He's more helps people, but my mother, I think it's not my mother.
+I think women I think women, have to for obvious reasons, their children. Yeah, I can I understand that, but my dad is will. Will he knows the benefit in helping his friends. So because he his friends help him, he helps they help us. My dad understands helping people that will help us the community, whereas my Loom does not. My Loom does not understand that at all. She's like, why? But... It's. I think it's hard for a man to explain. Well, you know, if we do this, then the kids get this you know, they might get free this or they might it's complicated this but you' but men understand it men understand the bigger picture.
+I think in the community I think...
+Paolo | 29:40
+ I what do you think about your sister?
+Lewis | 29:47
+ So what do I think about my sisters?
+Paolo | 29:50
+ So she's very selfish. She's very confident. She's. She helps other people.
+No. Comment.
+Lewis | 30:15
+ I think well, they both have daughters. So I... They are very defensive, obviously just like my mother. But they will not do as much compared to the males in my family. The males in my family do way more charity work, way more... My sisters are like this and my brothers... My sisters and I are in another category in another planet.
+But my sisters, I can feel it. They do everything to look after. Again, this is correct, because who else will do it? Who else will do it? The children and the nieces.
+Paolo | 31:04
+ Yes.
+Lewis | 31:05
+ Whereas me and my brothers, we do everything for our nieces and our sisters and our parents. But the community and our other friends and we will help more. My... I wouldn't say my sisters are selfish, they're just very... Selective. But it's difficult, I think, because I think it is... Men's job that was the same to plant trees. To plant trees that you will never sit under. Okay, two trees that you will never sit under.
+So it's our job to go and build things and do things for society, but my sisters would not do it. Yeah, or my mother, or maybe my aunt. One of my aunts. Maybe...
+Paolo | 32:11
+ Probably. We are altruist altruistic as a opposite selfish no...
+Lewis | 32:34
+ Opposite of selfish. That we're, very, giving now, we're very, giving, yeah, we're very giving or we're very charitable. Charitable, I would say, yeah, like charity, charitable...
+Paolo | 32:55
+ Charity yes add to other people yes...
+Lewis | 33:00
+ Yeah. I think that's... I think men are more charitable and more... We call it philanthropy. Philanthropy? Yeah, for sure.
+Paolo | 33:18
+ Yeah...
+Lewis | 33:18
+ My sisters, my mother, and my grandmother... Get ready for this... My dad's... When I go to visit her, she says the same thing. Your granddad... I hate him. Do you know what he did? He wasted money and I was like, "How did he waste money?" Granddad was always good with money. He was great with money. How did he waste money? He paid for his sister's funeral. I was like, "That's not wasting money..."
+Paolo | 33:57
+ For funeral...
+Lewis | 33:59
+ That's my sister's funeral. But yeah, my grandmother hates... She's so frugal. You say frugal, yeah, frugal, not to... Doesn't spend any money and...
+Paolo | 34:15
+ For is...
+Lewis | 34:15
+ Frugal, yeah, and...
+Paolo | 34:17
+ As frugal is for food frugal.
+Lewis | 34:23
+ No, for...
+Paolo | 34:25
+ She spent a lot of money for as or for...
+Lewis | 34:30
+ No, frugal is when you do not spend money. It's when you won't even spend money on yourself. You watch every...
+Paolo | 34:37
+ Okay...
+Lewis | 34:38
+ Penny, every...
+Paolo | 34:40
+ Yes...
+Lewis | 34:40
+ Cent you watch. My grandmother is frugal...
+Paolo | 34:45
+ Okay is she's stingymmm...
+Lewis | 34:52
+ Stingy... Stingy. Yes, she only... For example, she would not buy my dad shoelaces, the ones you put in the shoe. My dad had no shoelaces when he was six, and she was like, "Nope, I'm not buying another pair of shoelaces."
+But so she thinks it's a good thing, right? Because she grew up in Scarcity. Scarcity,
+Paolo | 35:31
+ Scarcity yeah...
+Lewis | 35:33
+ Yeah. So she haunts... If I go in her house, she has old newspapers. Old newspapers. And... Your mother? Is she charitable?
+Paolo | 35:48
+ My mother is stingy is a stingy during a month and they she need a lot of pharmacy okay so she spent a lot of salary of money. So we have to. We need to pay attention to spend our money, our salary. But when Ie. Got married. When I got married, my Loom e given me 2000 of whole year.
+It's a gift when I get to mar is a traditional...
+Lewis | 36:49
+ Yeah...
+Paolo | 36:50
+ A gift to normal.
+Lewis | 36:54
+ Wedding GIF.
+Paolo | 36:59
+ My father had a lot a big heart. My father. So, if she. He wasn't stingy. She was. He was, chari charitable and, so, he ent hasn't money. It's a 2. It's to face or pounds. It's to face or pounds.
+Lewis | 37:47
+ My parents, they're slightly different. My parents, to their children, they will help them, but they won't...
+Paolo | 38:01
+ Hey.
+Lewis | 38:01
+ They don't know what's going on, they don't they are not, wise enough, they're not wise enough. So, for example, my brother is sick, he has a heart condition, he can't work, so what, he's... Sick, yes, he's sick, yeah. And so, he'll call me up and say, hey, Louis, can I borrow some money? And I say, no, you can have it. You have it because you can't pay me back. It's impossible. You can have the money. You can have the money. That, but he doesn't want to ask me all the time, okay? He doesn't want to ask me, so he'll call my mum. He'll call my mum. Hey mum, can I borrow ten pounds?
+Right, ten pounds...
+Paolo | 38:51
+ For example.
+Lewis | 38:52
+ Yeah. She'll start shouting and you didn't pay me back, Ra, you didn't give me the money. I say to my mother, "He's sick, he can't work, he is not allowed to work. How can he ever pay you back? Stop shouting at him. Give him the money or don't give him the money."
+Okay? But he could never pay you back. I say to my brother, "Call me. Never call my mom. Call me." So why is she doing that? She knows he has a bad heart. He's a builder, so he can't do what he normally does.
+Why does she torment him? Why can't he work for the next two, three years at least?
+Paolo | 39:42
+ Hey...
+Lewis | 39:42
+ But she will. She doesn't quite understand how to truly help my brother, okay? She doesn't know. She's not wise enough to understand. We have to do something big here. There's a big problem. We need to bring him into the family again... We need to make it so he doesn't have to ask for money, that everyone is helping. We're cooking him his meals and he's living in the family house. But my parents don't think short-term.
+So, yeah, they do not understand people's problems, like my brother.
+Paolo | 40:25
+ It's that big...
+Lewis | 40:26
+ I think...
+Paolo | 40:26
+ A problem, man.
+Lewis | 40:27
+ It's a big problem and you can imagine it makes my brother really upset because how he feels he doesn't want to... He wants to work. He's a hard worker, but he will have a heart attack and...
+Paolo | 40:42
+ Yes.
+Lewis | 40:42
+ Fall off.
+Paolo | 40:43
+ Okay...
+Lewis | 40:44
+ Yeah, he's young.
+Paolo | 40:45
+ So e he that it doesn't work now?
+Lewis | 40:50
+ No...
+Paolo | 40:51
+ No, that's...
+Lewis | 40:51
+ It doesn't work, and he lives alone. He lives alone and he has to pay. Well, the government pays his rent...
+Paolo | 41:00
+ Yes...
+Lewis | 41:01
+ But he has no money after that. After the rent, he has no money, so...
+Paolo | 41:06
+ But he can't work.
+Lewis | 41:11
+ He can't work.
+Paolo | 41:12
+ They can't for a attack. He askedsped.
+Lewis | 41:16
+ Yeah. Yeah, and he has to take medication, and it makes him drowsy and makes them drowsy, so it's very sad. But the thing is, I've discovered my parents are not organized. They've never been. They don't know how to organize the family.
+Now I understand it, and now I have... Come away. Because you can't organize with them.
+Paolo | 41:48
+ Yes...
+Lewis | 41:48
+ I can organize with my sister, but not with them. They do not understand.
+Paolo | 41:54
+ Can't come away means you go for your way and your family goes for another way.
+Lewis | 42:03
+ Yeah, friends, but...
+Paolo | 42:07
+ Okay?
+Lewis | 42:08
+ I know that, for example, when I started my business for free, I gave a percentage of my business to my brothers...
+Paolo | 42:19
+ Yes.
+Lewis | 42:20
+ Okay? Because it's the right thing to do. Okay, you know.
+Paolo | 42:25
+ As for you, do you decide?
+Lewis | 42:27
+ Yeah...
+Paolo | 42:30
+ Give it the 3% of. Yeah. You decide.
+Lewis | 42:35
+ Exactly. Yeah, so they still get paid, okay? My mother will say to me, "You need to do more for your brothers." I'm like, "What are you? Are you crazy?" They're like, "You need to get a house. You need to help your brothers get a house."
+I'm like, "I already gave them a percentage of a business they don't even work in." I see. Yeah, well, I think I'm right. My parents...
+Paolo | 43:16
+ Right.
+Lewis | 43:16
+ Yeah, I think I'm right. It helps my younger brothers the most, okay? My brother Theo, my brother Rees, and Jay has a baby, so it helps a lot, right? It helps a lot...
+Paolo | 43:31
+ Yes...
+Lewis | 43:31
+ But now...
+Paolo | 43:38
+ In another country, you is, very. The distance is a very big is very. You don't understand the other problems, the female problems, because you live in another country. So it's a very, it's very important that you may you make what you want. This is my opinion.
+Okay, I say no...
+Lewis | 44:22
+ Yeah, what I've learned is from Italy, from Asia, the family is stronger in Italy and Asia in England. I can help my siblings, but they will not help me, right? But because I'm the oldest male, they told me to do it.
+Paolo | 44:44
+ Is one way. It's not right. It's wrong. It's in one way. It was wrong.
+Lewis | 44:52
+ Yeah, but I think it's okay because, in a way, because my brothers, I should help them. But now I don't have to worry. Now I can... How can I say?
+Paolo | 45:09
+ Finish by...
+Lewis | 45:11
+ Yeah. Yeah. Now I don't have to worry about. My. My brothers, like I...
+Paolo | 45:19
+ Yes...
+Lewis | 45:19
+ Obviously I have to worry, but now I know, I have fulfilled my obligation as a brother.
+Paolo | 45:27
+ Yeah.
+Lewis | 45:28
+ Yeah, which is...
+Paolo | 45:28
+ You filled your obligation fi...
+Lewis | 45:32
+ Yeah, I feel...
+Paolo | 45:33
+ You complete your obe.
+Lewis | 45:35
+ Yeah, exactly. I completed my obligation to them, and now I can do what I want. I don't have the burden anymore.
+Paolo | 45:46
+ Yes...
+Lewis | 45:46
+ So to say.
+Paolo | 45:48
+ You don't have an obligation to...
+Lewis | 45:51
+ No.
+Paolo | 45:51
+ Your brother.
+Lewis | 45:55
+ But my Loom will try to make me do more, and I'll be like, whoa. I've already done it. I've already done it, yeah. And she's like, yeah, I...
+Paolo | 46:07
+ No, yeah...
+Lewis | 46:08
+ Remember. Yeah, because my brothers are not as hungry as I am, they're not as... Yeah, the O is... But he has the heart problem. Yeah...
+Paolo | 46:24
+ I TED to help my family and my sister, my brother-in-law. I think that... They work and they have to resolve the problems, and for some time, I pay, for example, a pizza or other, but during life, the people become egoistic for me and won't want a lot. He asked...
+Lewis | 47:18
+ Yeah, my, yeah, I understand, completely my brothers don't my other brothers don't want more, they don't want anything more...
+Paolo | 47:29
+ Yeah...
+Lewis | 47:29
+ They never...
+Paolo | 47:32
+ Help you...
+Lewis | 47:33
+ Called me up...
+Paolo | 47:34
+ Never ask you...
+Lewis | 47:35
+ They never asked me. No, it's okay. However, the problem was, when I was younger, I paid for my brothers. So, for example, I paid for their travel and their school uniform. Because when I was young, I actually, when I was 18, I actually made more than my dad.
+Yeah, so it was a bit unusual and very unusual because I had my job when I was fourteen, I did...
+Paolo | 48:09
+ Yeah.
+Lewis | 48:09
+ An internship, and when I got to eighteen, I was doing very well. Unusual, very unusual. And. And so I think it was difficult for my dad. It was difficult, yeah, because I was lucky I got the right job early on.
+Yeah, and. And so my mother. I was paying for my brothers that.
+Paolo | 48:35
+ Hey...
+Lewis | 48:36
+ Yeah, but I think because of that, because of my...
+Paolo | 48:44
+ Yeah.
+Lewis | 48:44
+ Loom was asking, and so...
+Paolo | 48:45
+ Asking this.
+Lewis | 48:47
+ Yeah, and so I think it's stuck with me to help them, yeah, because she was always like, "You need to help your brother." So, for example, food, clothes, everything, transportation.
+Paolo | 49:12
+ Bar, barber shop...
+Lewis | 49:13
+ Yeah, exactly. Yeah, everything...
+Paolo | 49:14
+ Barber. Sh...
+Lewis | 49:15
+ Entertainment going out... Yeah, and then, yeah, everything, and so, I think it stuck with me to look after my brothers like that. And then, yeah, that now...
+Paolo | 49:38
+ Talk after. It's a verb. It's a verb to look after. Yes. I look after to my kids, okay.
+Lewis | 49:53
+ But I think the downside is I was looking after my brothers when I should have been starting a family. This is the problem. This is the problem. Yeah, so now, because I looked after my brothers, I love isolation. I love being alone because I have already helped...
+Paolo | 50:23
+ Yeah.
+Lewis | 50:23
+ So much. Now I'm already tired in a way.
+Paolo | 50:31
+ You made a lot of your family, I think...
+Lewis | 50:35
+ No, not too much, just...
+Paolo | 50:37
+ Not too much, but if you have money, you know...
+Lewis | 50:42
+ Yeah, but we...
+Paolo | 50:44
+ You can't make a more you can't make or you can do a lot...
+Lewis | 50:56
+ Yeah, you can't...
+Paolo | 50:59
+ You can...
+Lewis | 50:59
+ Do more.
+Paolo | 51:00
+ Do more.
+Lewis | 51:00
+ Yeah, but it's fine, it's in the past now. It's in the past...
+Paolo | 51:05
+ Yes.
+Lewis | 51:05
+ Which is fine because my mother didn't work...
+Paolo | 51:10
+ Yeah.
+Lewis | 51:11
+ And so...
+Paolo | 51:11
+ She didn't want.
+Lewis | 51:13
+ Yeah, so I think when your mother doesn't work and money is tight, it's not bad, but it's tight. She wants money, right? She this is the thing. She wanted money, because she doesn't work.
+Paolo | 51:32
+ Yeah...
+Lewis | 51:32
+ Yeah...
+Paolo | 51:36
+ But your mother didn't work. And this e it was a cho a choose.
+Lewis | 51:49
+ Well, she so I think she didn't have the confidence.
+Paolo | 51:57
+ I call...
+Lewis | 51:59
+ Yeah, she started to work after I left the home. When I left, then she started working, but she was not the same. She her money...
+Paolo | 52:16
+ Yeah...
+Lewis | 52:16
+ She kept her money and my dad's money.
+Paolo | 52:25
+ Probably. The confident is a problem...
+Lewis | 52:31
+ Yes, for her, it's, it was a HUGE...
+Paolo | 52:35
+ For her, yes...
+Lewis | 52:36
+ PROBLEM. Yeah...
+Paolo | 52:38
+ It's a huge problem...
+Lewis | 52:42
+ She's a strange person. How can I say? Yeah, she's very strange. What's the best way to describe her?
+Paolo | 52:54
+ Best way to describe...
+Lewis | 52:58
+ She gives a good impression, but she doesn't mean it. She doesn't mean it. Yeah, she everyone loves her, but she doesn't like anyone. Yeah, she likes to just stay away, but she's polite...
+Paolo | 53:23
+ Yeah...
+Lewis | 53:26
+ She's very polite and nice, and...
+Paolo | 53:28
+ Okay...
+Lewis | 53:29
+ Yeah, but she's...
+Paolo | 53:30
+ She's very polite, but she thinks to stay away she...
+Lewis | 53:39
+ Yeah, she doesn't like people coming to the house. She doesn't like anybody but my...
+Paolo | 53:46
+ Okay...
+Lewis | 53:46
+ Dad. My dad loves everyone. My dad loves everyone. Which is normal, I think.
+Paolo | 53:53
+ Yeah...
+Lewis | 53:53
+ But yeah...
+Paolo | 53:56
+ Karak is a K no kak there is a Karak Karacter's character.
+Lewis | 54:10
+ She's a character. Yes, she is a character, and people like her, people really like her, they really do, but, how can I say she hides away. M...
+Paolo | 54:26
+ His awayly I...
+Lewis | 54:28
+ Hides? Yeah, hide is like this.
+Paolo | 54:34
+ Okay.
+Lewis | 54:34
+ Yeah, hide to hide, yeah, she hides away and...
+Paolo | 54:37
+ Yes, to ide the, on plans, you know, for example, or back see hide away. Yes, okay. M...
+Lewis | 54:50
+ So, she doesn't like...
+Sweet strange. Sorry, I was just being a message. Yeah...
+Paolo | 55:10
+ Yes...
+Lewis | 55:10
+ She's very strange, and she cannot plan. She has big arguments with my sister. My sister is the best planner. My sister and I plan. We plan
+Paolo | 55:32
+ We plan with new schedule every. Yeah, okay.
+Lewis | 55:39
+ YY yeah, me and my sister were the opposite to our parents because we watched. We watched who? Yeah. For example...
+Paolo | 55:53
+ You use a bed watch, you know, every moment.
+Lewis | 56:03
+ Yeah, we're so good at it. That's why my sister and I...
+Paolo | 56:04
+ Okay...
+Lewis | 56:09
+ Basically, project managers, right? Project managers because we plan this, that, and go...
+Paolo | 56:18
+ Go. Okay...
+Lewis | 56:18
+ Yeah. And how about you are you like, how what did you learn from your parents? What did you learn from your parents?
+Paolo | 56:30
+ What do you like? When I was young, my father and my mother help me to grow up to go to university. And so they helped me they give me a lot of money because I don't I didn't to work. And so I think the life is w to back comedator.
+It's a cycle. And but you... I think that the money is a big problem. But I need money to survive, not to... To leave. No, to leave and... A day I don't have problems. This is because money is... A comedian is... An issue to leave. No.
+I have a huge heart because I love to help my parents-in-law and my parents. Yes, I see parents-in-law, yes, and I love to throughout my colleagues during the day at work or during the work day. My wife is like me, my wife thinks about our life strictly family.
+But she's very scheduled, she's very programmed, I think tomorrow it will rain, so we need an umbrella, we need... My place to stay calm. What is the problem? Stay calm... They think all day. Sometimes I say, "Relax, stay calm. Day life isn't very small."
+It's very... Yes, life is short. Yes, and so we have a lot of problems, but sometimes I need to relax myself, and my wife doesn't relax.
+Lewis | 60:00
+ Yep, yeah, always thinking yeah, always yeah. Parlo, I'm very sorry I have to run to my next lesson, I'm so sorry. It's...
+Paolo | 60:11
+ Thank you. Thank you very much.
+Lewis | 60:11
+ So fun, I love...
+Paolo | 60:12
+ Have a good...
+Lewis | 60:12
+ The chat. You too. I gotta run, but love you, chat. Thank you, Pala. Always a pleasure, thank you. Okay.
